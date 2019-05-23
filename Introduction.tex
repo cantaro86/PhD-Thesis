@@ -1,0 +1,109 @@
+
+
+\chapter{Introduction}\label{Introd}
+%\blindtext
+\minitoc% Creating an actual minitoc
+
+
+\vspace{5em}
+
+The problem of pricing a European call option was first solved mathematically in the paper of \cite{BS73}. 
+Even if it is quite evident that this model is too simplistic to represent the real features of the market, it is 
+still nowadays one of the most used model to price and hedge options.
+The reason for its success is that it gives a closed form solution for the option price, and that the hedging strategy is easily 
+implementable.
+The Black-Scholes model considers a \emph{complete} market, i.e. a market where it is possible to create a portfolio containing cash 
+and shares of the underlying stocks, such that following a particular trading strategy it is always possible to replicate
+the payoff of the option. In this framework, this particular portfolio is called \emph{replicating portfolio} and
+the trading strategy to hedge the option is called \emph{delta hedge}.
+However, this model does not consider many features that characterize the real market. 
+
+In the Black-Scholes model 
+the stock price follows a geometric Brownian motion. This is equivalent to assume that the log-returns are 
+normally distributed. 
+However, a rigorous statistical analysis of financial data
+reveals that the normality assumption is not a very good approximation of
+reality (see \cite{Cont01}). Indeed, it is easy to see that empirical log-return distributions have
+more mass around the origin and along the tails (\emph{heavy tails}).
+This means that normal distribution underestimates the probability of large
+log-returns, and considers them just as rare events. In the real market instead,
+log-returns manifest frequently high peaks, that come more and more evident
+when looking at short time scales. The log-returns peaks correspond to sudden
+large changes in the price, which are called \emph{jumps}. 
+There is a huge literature of option pricing models that consider an underlying process with a discontinuous path.
+Most of these models consider the log-prices dynamics following a \emph{Lévy process}. 
+ 
+
+A second issue of the Black-Scholes model is that it does not consider the presence of market frictions such as
+bid/ask spread, transaction fees and budget constraints.
+The securities in the market are traded with a bid-ask spread, and this means that there are two prices for the
+same security. But the Black-Scholes formula just gives one price.
+Moreover, the replicating portfolio cannot be perfectly implemented,
+since the delta-hedging strategy involves continuous time trading. 
+This is impractical because the presence of transaction costs makes it infinitely costly.
+Another kind of market friction that needs to be considered are the budget constraints. 
+A bound in the budget or a restriction in the possibility of 
+selling short, clearly restricts the set of possible trading strategies.
+
+Many authors attempted to include the presence of proportional transaction costs in option pricing models.
+In \cite{Le85}, in order to avoid continuous trading, the author specifies 
+a finite number of trading dates. He obtains a Black-Scholes-like
+nonlinear partial differential equation (PDE) with an adjusted volatility term, that takes into account the transaction costs. 
+However, trading at fixed dates is not optimal, and the option price goes to infinity as the number of dates grows.
+Further work in this direction has been done by \cite{BoVo92}, which consider a multi-period binomial model (see \cite{CRR79})
+with transaction costs. Here again, the cost of the replicating portfolio depends on the number of time periods. 
+Recent developments in this direction are for instance \cite{Mocio07}, \cite{FlMaSe14} and \cite{Sengu14} 
+who consider different features of the market such as jumps, stochastic volatility and stochastic interest rate respectively.  
+
+A different approach has been introduced by \cite{HoNe89}. The authors use an alternative definition of the option price
+called \emph{indifference price}, based on the concepts of \emph{expected utility} and \emph{certainty equivalent}.  
+An overview of these concepts applied to several incomplete market model can be found in \cite{Carmona}.
+As long as the perfect replicating portfolio is no longer implementable in presence of transaction costs, the 
+hedging strategy cannot be anymore riskless. 
+The model has to take into account the risk profile of the writer/buyer to describe his trading preferences.
+\cite{HoNe89} define the option price as the value that makes an investor indifferent between holding a portfolio with an option
+and without, in terms of expected utility of the final wealth.
+They show that it is impossible to hedge perfectly the option. The optimal strategy is to keep the portfolio's value within
+a band called \emph{no transaction region}. Using numerical experiments, they verify that this strategy outperforms the one 
+proposed in \cite{Le85}.
+This approach has been further developed in \cite{DaPaZa93}, where the problem is formulated rigorously as a singular 
+stochastic optimal control problem. The authors prove that the value functions of the two optimization problems
+can be interpreted as the solutions of the associated Hamilton-Jacobi-Bellman (HJB) equation in the viscosity sense. 
+They prove also that the numerical scheme, based on the \emph{Markov chain approximation}, converges to the viscosity solution.
+Numerical methods for this model are presented in \cite{DaPa94}, \cite{ClHo97} and \cite{Mon03}, \cite{Mon04}.
+In \cite{WhWi97} and \cite{BaSo98} the problem is simplified by using asymptotic analysis methods for small levels of 
+transaction costs. The authors, starting from the general HJB variational inequality, derive a simpler non-linear PDE for the option price. 
+Further developments are presented in the thesis work of \cite{Damgaard}, where the author 
+studies the robustness of the model from a theoretical and numerical point of view. 
+He found that under particular conditions the model is quite robust with respect to the choice of the utility function. 
+
+In this thesis the main goal is to develop and analyze a model for pricing options when the market is incomplete due to the presence of jumps and transaction costs. 
+The topics of the thesis are based on the three papers 
+\cite{Canta2}, \cite{Canta} and the contributed chapter \emph{Indifference pricing in a market with transaction costs and jumps} by N. Cantarutti, J. Guerra, M. Guerra and 
+M.R. Grossinho, published in the book of \cite{Matthias}.\\
+Portfolio models with transaction costs and Lévy processes have already been introduced in the financial literature, see for instance \cite{OkSu01} and \cite{BKR01}, 
+but these models have never been used to price options. Another lack in these models is the absence of a possible bankruptcy event, which becomes a relevant point 
+when dealing with jump processes.  
+The main goal of this thesis is to introduce a new pricing model that considers all the above features. 
+We analyze its theoretical properties, such as the existence of a viscosity solution of the nonlinear 
+Partial Integro-Differential Equation (PIDE) associated to the model, and develop numerical methods to solve the problem under different assumptions, i.e. ignoring the 
+possibility of default and not.
+We present numerical results that are new in the literature and compare them with numerical values obtained from existing reference models. 
+
+
+
+In Chapter \ref{Chapter1}, we introduce the general theory for Lévy processes, with a deeper focus on the particular Lévy processes that are commonly used in financial modeling:  
+the \emph{Merton} and \emph{Variance Gamma} processes.   
+In Chapter \ref{Chapter2} we make a small summary of the main assumptions and theorems of the \emph{No arbitrage theory} for derivative pricing. After that we present 
+the most common numerical finite differences methods used to solve the option PIDE. 
+The Chapter \ref{Chapter3} is a digression based on the paper \cite{Canta2} on the application of the multinomial method to solve option pricing problems under the Variance Gamma process. 
+In Chapter \ref{Chapter4} we present the general optimal control theory for jump processes and the definition of viscosity solutions. 
+Under this framework, in Chapter \ref{Chapter5}, we will develop the model for option pricing in presence of proportional transaction costs. This model is a singular stochastic
+control problem, which is a generalization of the \cite{DaPaZa93} model. We derive the general HJB equation and prove that the value function of the optimization problem 
+can be interpreted as its viscosity solution.  
+In Chapter \ref{Chapter6} we solve the problem numerically. 
+First, we consider the simplified problem where the number of variables is reduced by one thanks to the property of the exponential utility function. 
+The numerical results are also presented in \cite{Canta} and \cite{Matthias}.\\
+Then we solve the general problem with four variables, considering the possibility of default. In the end we also show that the moment matching method developed for 
+the Variance Gamma process, can be used to solve these kind of problems with good performance. 
+

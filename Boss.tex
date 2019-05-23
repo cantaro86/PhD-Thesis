@@ -1,0 +1,97 @@
+\documentclass[a4paper,10pt]{book}
+\usepackage[utf8]{inputenc}
+
+\usepackage {graphicx}
+\usepackage {amsfonts}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+\usepackage{dsfont}
+\usepackage{textcomp}
+
+%\usepackage{natbib}
+
+%Options: Sonny, Lenny, Glenn, Conny, Rejne, Bjarne, Bjornstrup
+\usepackage[Bjornstrup]{fncychap}
+%\usepackage{blindtext}
+\usepackage{minitoc}
+
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+%  \renewcommand{\abstractname}{Motivations}
+
+\newcommand{\numberset}{\mathbb}
+\newcommand{\N}{\numberset{N}}
+\newcommand{\R}{\numberset{R}}
+\newcommand{\E}{\numberset{E}}
+\newcommand{\C}{\numberset{C}}
+\newcommand{\PP}{\numberset{P}}
+\newcommand{\Q}{\numberset{Q}}
+\newcommand{\SI}{\mathcal{S}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\OO}{\mathcal{O}}
+
+\newtheorem{Theorem}{Theorem}[section]
+\newtheorem{Definition}{Definition}[section]
+\newtheorem{Remark}{Remark}
+
+
+\newtheoremstyle{exampstyle}
+{\topsep} % Space above
+{\topsep} % Space below
+{} % Body font
+{} % Indent amount
+{\bfseries} % Theorem head font
+{.} % Punctuation after theorem head
+{.5em} % Space after theorem head
+{} % Theorem head spec (can be left empty, meaning `normal')
+
+
+% riquadro attorno al testo
+\newbox{\riquadrobox}
+\newenvironment{riquadro}[1]
+{\setlength{\dimen255}{\parindent}%
+\begin{lrbox}{\riquadrobox}\begin{minipage}{#1}
+\setlength{\parindent}{\dimen255}}
+{\end{minipage}\end{lrbox}\fbox{\usebox{\riquadrobox}}}
+
+%%%%%%%%% A different title
+%\usepackage{titlesec, blindtext, color}
+%\definecolor{gray75}{gray}{0.75}
+%\newcommand{\hsp}{\hspace{20pt}}
+%\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
+
+
+\graphicspath{{./pics/}}
+
+\begin{document}
+   
+
+\input{./Title.tex}
+
+\dominitoc[n] % Initialization
+\tableofcontents
+
+\input{./Introduction.tex}
+\input{./Cap1_in.tex}
+\input{./Cap2_in.tex}
+\input{./Cap3_in.tex}
+\input{./Cap4_in.tex}
+\input{./Cap5_in.tex}
+\input{./Cap6_in.tex}	
+
+
+%\pagenumbering{roman}
+%\frontmatter
+%\mainmatter
+
+
+\bibliographystyle{apalike}
+\bibliography{/home/nicola/Documenti/ISEG/Bibliografia/trans_cost.bib,/home/nicola/Documenti/ISEG/Bibliografia/book.bib,/home/nicola/Documenti/ISEG/Bibliografia/fin_math.bib,/home/nicola/Documenti/ISEG/Bibliografia/viscosity.bib,/home/nicola/Documenti/ISEG/Bibliografia/num_meth.bib,/home/nicola/Documenti/ISEG/Bibliografia/phd_thesis.bib,/home/nicola/Documenti/ISEG/Bibliografia/Levy.bib,/home/nicola/Documenti/ISEG/Bibliografia/control.bib}
+
+
+\end{document}
