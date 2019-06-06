@@ -25,7 +25,7 @@ However, a rigorous statistical analysis of financial data
 reveals that the normality assumption is not a very good approximation of
 reality (see \cite{Cont01}). Indeed, it is easy to see that empirical log-return distributions have
 more mass around the origin and along the tails (\emph{heavy tails}).
-This means that normal distribution underestimates the probability of large
+This means that normal distribution underestimates the probability of large positive and negative
 log-returns, and considers them just as rare events. In the real market instead,
 log-returns manifest frequently high peaks, that come more and more evident
 when looking at short time scales. The log-returns peaks correspond to sudden
@@ -34,7 +34,7 @@ There is a huge literature of option pricing models that consider an underlying 
 Most of these models consider the log-prices dynamics following a \emph{Lévy process}. 
  
 
-A second issue of the Black-Scholes model is that it does not consider the presence of market frictions such as
+A second issue of the Black-Scholes model is that it does not consider the presence of market frictions i.e.
 bid/ask spread, transaction fees and budget constraints.
 The securities in the market are traded with a bid-ask spread, and this means that there are two prices for the
 same security. But the Black-Scholes formula just gives one price.
@@ -57,13 +57,13 @@ who consider different features of the market such as jumps, stochastic volatili
 
 A different approach has been introduced by \cite{HoNe89}. The authors use an alternative definition of the option price
 called \emph{indifference price}, based on the concepts of \emph{expected utility} and \emph{certainty equivalent}.  
-An overview of these concepts applied to several incomplete market model can be found in \cite{Carmona}.
+An overview of these concepts applied to several incomplete market models can be found in \cite{Carmona}.
 As long as the perfect replicating portfolio is no longer implementable in presence of transaction costs, the 
 hedging strategy cannot be anymore riskless. 
 The model has to take into account the risk profile of the writer/buyer to describe his trading preferences.
 \cite{HoNe89} define the option price as the value that makes an investor indifferent between holding a portfolio with an option
 and without, in terms of expected utility of the final wealth.
-They show that it is impossible to hedge perfectly the option. The optimal strategy is to keep the portfolio's value within
+They show that it is impossible to hedge perfectly the option. The optimal strategy is to keep the portfolio's values within
 a band called \emph{no transaction region}. Using numerical experiments, they verify that this strategy outperforms the one 
 proposed in \cite{Le85}.
 This approach has been further developed in \cite{DaPaZa93}, where the problem is formulated rigorously as a singular 
@@ -78,20 +78,20 @@ studies the robustness of the model from a theoretical and numerical point of vi
 He found that under particular conditions the model is quite robust with respect to the choice of the utility function. 
 
 In this thesis the main goal is to develop and analyze a model for pricing options when the market is incomplete due to the presence of jumps and transaction costs. 
-The topics of the thesis are based on the three papers 
+The topics of the thesis are based on the two papers 
 \cite{Canta2}, \cite{Canta} and the contributed chapter \emph{Indifference pricing in a market with transaction costs and jumps} by N. Cantarutti, J. Guerra, M. Guerra and 
 M.R. Grossinho, published in the book of \cite{Matthias}.\\
-Portfolio models with transaction costs and Lévy processes have already been introduced in the financial literature, see for instance \cite{OkSu01} and \cite{BKR01}, 
-but these models have never been used to price options. Another lack in these models is the absence of a possible bankruptcy event, which becomes a relevant point 
-when dealing with jump processes.  
-The main goal of this thesis is to introduce a new pricing model that considers all the above features. 
-We analyze its theoretical properties, such as the existence of a viscosity solution of the nonlinear 
+Portfolio models with transaction costs and Lévy processes have already been introduced in the financial literature, see for instance \cite{OkSu01}, \cite{BKR01} and \cite{Kab16} 
+but these models have never been used to price options.  
+We analyze its theoretical properties, such as the existence of a viscosity solution \todo{decide if put the proofs of viscosity solutions} 
+of the nonlinear \todo{This part can be modified later}
 Partial Integro-Differential Equation (PIDE) associated to the model, and develop numerical methods to solve the problem under different assumptions, i.e. ignoring the 
 possibility of default and not.
-We present numerical results that are new in the literature and compare them with numerical values obtained from existing reference models. 
+We present numerical results that are new in the literature and compare them with numerical values obtained from existing reference models. We also prove that 
+the proposed numerical scheme is monotone, stable and consistent, and its solution converges to the viscosity solution of the continuous problem.
+\todo{I should add here the last results on computational time and rate of convergence.}
 
-
-
+\todo{In the following lines the contents of the chapters can be modified later. Check it in the end.}
 In Chapter \ref{Chapter1}, we introduce the general theory for Lévy processes, with a deeper focus on the particular Lévy processes that are commonly used in financial modeling:  
 the \emph{Merton} and \emph{Variance Gamma} processes.   
 In Chapter \ref{Chapter2} we make a small summary of the main assumptions and theorems of the \emph{No arbitrage theory} for derivative pricing. After that we present 
@@ -102,7 +102,7 @@ Under this framework, in Chapter \ref{Chapter5}, we will develop the model for o
 control problem, which is a generalization of the \cite{DaPaZa93} model. We derive the general HJB equation and prove that the value function of the optimization problem 
 can be interpreted as its viscosity solution.  
 In Chapter \ref{Chapter6} we solve the problem numerically. 
-First, we consider the simplified problem where the number of variables is reduced by one thanks to the property of the exponential utility function. 
+First, we consider the simplified problem where the number of variables is reduced by one thanks to the assumption of no default and the property of the exponential utility. 
 The numerical results are also presented in \cite{Canta} and \cite{Matthias}.\\
 Then we solve the general problem with four variables, considering the possibility of default. In the end we also show that the moment matching method developed for 
 the Variance Gamma process, can be used to solve these kind of problems with good performance. 
