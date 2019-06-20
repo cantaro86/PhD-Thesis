@@ -725,15 +725,15 @@ The Lévy measure is:
            \end{cases}
 \end{equation}
 \newline
-If we consider a Brownian motion with drift $X_t = \theta t + \sigma W_t$ and substitute the time variable with the gamma subordinator
+If we consider a Brownian motion with drift $X_t = \theta t + \bar\sigma W_t$ and substitute the time variable with the gamma subordinator
 $T_t \sim \Gamma(t,\kappa t)$ ($\mu=1$),
 we obtain the \textbf{variance gamma} process:
 \begin{equation}\label{VG_process}
- X_{T_t} = \theta T_t + \sigma W_{T_t} .
+ X_{T_t} = \theta T_t + \bar\sigma W_{T_t} .
 \end{equation}
 It depends on three parameters:
 \begin{itemize}
- \item $\sigma$, the volatility of the Brownian motion
+ \item $\bar\sigma$, the volatility of the Brownian motion
  \item $\kappa$, the variance of the Gamma process
  \item $\theta$, the drift of the Brownian motion
 \end{itemize}
@@ -743,41 +743,41 @@ processes. In this case the two increasing processes are Gamma processes:
  X_t = Y^p_t - Y^n_t,
 \end{equation}
 with $Y^p_t \sim \Gamma(\mu_p t, \kappa_p t)$ and $Y^n_t \sim \Gamma(\mu_n t, \kappa_n t)$. For the specific relation between the parameters
-$\mu_p,\kappa_p,\mu_n,\kappa_n$ and $\sigma,\kappa,\theta$ look \cite{MCC98}.\\
+$\mu_p,\kappa_p,\mu_n,\kappa_n$ and $\bar\sigma,\kappa,\theta$ look \cite{MCC98}.\\
 \newline
 The pdf of $X_t$ can be computed conditioning on the realization of $T_t$:
 \begin{align}\label{VG_density}
  f_{X_t}(x) &= \int_y f_{X_t,T_t}(x,y) dy = \int_y f_{X_t|T_t}(x|y) f_{T_t}(y) dy \\ \nonumber
-         &= \int_0^{\infty} \frac{1}{\sigma \sqrt{2\pi y}} e^{-\frac{(x -\theta y)^2}{2\sigma^2 y}}
+         &= \int_0^{\infty} \frac{1}{\bar\sigma \sqrt{2\pi y}} e^{-\frac{(x -\theta y)^2}{2\bar\sigma^2 y}}
          \frac{y^{\frac{t}{\kappa} -1}}{\kappa^{\frac{t}{\kappa}} \Gamma(\frac{t}{\kappa})}
           e^{-\frac{y}{\kappa}} \, dy \\ \nonumber
-         &= \frac{2 \exp(\frac{\theta x}{\sigma^2})}{\kappa^{\frac{t}{\kappa}} \sqrt{2\pi}\sigma \Gamma(\frac{t}{\kappa}) }
-            \biggl( \frac{x^2}{2\frac{\sigma^2}{\kappa} + \theta^2} \biggr)^{\frac{t}{2\kappa}-\frac{1}{4}} 
+         &= \frac{2 \exp(\frac{\theta x}{\bar\sigma^2})}{\kappa^{\frac{t}{\kappa}} \sqrt{2\pi}\bar\sigma \Gamma(\frac{t}{\kappa}) }
+            \biggl( \frac{x^2}{2\frac{\bar\sigma^2}{\kappa} + \theta^2} \biggr)^{\frac{t}{2\kappa}-\frac{1}{4}} 
             K_{\frac{t}{\kappa}-\frac{1}{2}} 
-            \biggl( \frac{1}{\sigma^2} \sqrt{x^2 \bigl(\frac{2\sigma^2}{\kappa}+\theta^2 \bigr)} \biggr),
+            \biggl( \frac{1}{\bar\sigma^2} \sqrt{x^2 \bigl(\frac{2\bar\sigma^2}{\kappa}+\theta^2 \bigr)} \biggr),
 \end{align}
 where the function $K$ is a modified Bessel function of the second kind (see \cite{MCC98} for the computations).\\
 The characteristic function can be obtained by conditioning too: 
 \begin{align*}
- \phi_{X_t}(u) &= \biggl( 1-i \kappa \bigl( u\theta +\frac{i}{2}\sigma^2 u^2 \bigr) \biggr)^{-\frac{t}{\kappa}} \\  
-	       &= \biggl( 1-i\theta \kappa u + \frac{1}{2} \sigma^2 \kappa u^2 \biggr)^{-\frac{t}{\kappa}}.
+ \phi_{X_t}(u) &= \biggl( 1-i \kappa \bigl( u\theta +\frac{i}{2}\bar\sigma^2 u^2 \bigr) \biggr)^{-\frac{t}{\kappa}} \\  
+	       &= \biggl( 1-i\theta \kappa u + \frac{1}{2} \bar\sigma^2 \kappa u^2 \biggr)^{-\frac{t}{\kappa}}.
 \end{align*}
 \newline
 The VG Lévy measure is
 \begin{equation}\label{VG_measure}
- \nu^{X_t}(dx) = \frac{e^{\frac{\theta x}{\sigma^2}}}{\kappa|x|} \exp 
- \left( - \frac{\sqrt{\frac{2}{\kappa} + \frac{\theta^2}{\sigma^2}}}{\sigma} |x|\right) dx,
+ \nu^{X_t}(dx) = \frac{e^{\frac{\theta x}{\bar\sigma^2}}}{\kappa|x|} \exp 
+ \left( - \frac{\sqrt{\frac{2}{\kappa} + \frac{\theta^2}{\bar\sigma^2}}}{\bar\sigma} |x|\right) dx,
 \end{equation}
 and the Lévy exponent is 
 \begin{equation}
- \eta(u) = -\frac{1}{\kappa} \log(1-i\theta \kappa u + \frac{1}{2} \sigma^2 \kappa u^2).
+ \eta(u) = -\frac{1}{\kappa} \log(1-i\theta \kappa u + \frac{1}{2} \bar\sigma^2 \kappa u^2).
 \end{equation}
 Using the formula for the moments (\ref{moments}) we obtain:
 \begin{align}\label{VG_cumulants}
  \E[X_t] &= t\theta. \\ \nonumber
- \mbox{Var}[X_t] &= t(\sigma^2 + \theta^2 \kappa). \\ \nonumber
- \mbox{Skew}[X_t] &= \frac{t (2\theta^3\kappa^2 + 3 \sigma^2 \theta \kappa)}{\bigl(\mbox{Var}[X_t])^{3/2}}. \\ \nonumber
- \mbox{Kurt}[X_t] &= \frac{t (3\sigma^4 \kappa + 12\sigma^2 \theta^2 \kappa^2 +6\theta^4\kappa^3)}{\bigl(\mbox{Var}[X_t]\bigr)^2}.\nonumber 
+ \mbox{Var}[X_t] &= t(\bar\sigma^2 + \theta^2 \kappa). \\ \nonumber
+ \mbox{Skew}[X_t] &= \frac{t (2\theta^3\kappa^2 + 3 \bar\sigma^2 \theta \kappa)}{\bigl(\mbox{Var}[X_t])^{3/2}}. \\ \nonumber
+ \mbox{Kurt}[X_t] &= \frac{t (3\bar\sigma^4 \kappa + 12\bar\sigma^2 \theta^2 \kappa^2 +6\theta^4\kappa^3)}{\bigl(\mbox{Var}[X_t]\bigr)^2}.\nonumber 
 \end{align}
 \\
 The Lévy-It\={o} decomposition (\ref{Levy_Ito}) for a pure jump finite variation process, such that $\int_{|x|<1} x \nu(dx) < \infty$, 
@@ -793,7 +793,7 @@ stock price SDE (\ref{exp_sde2}) for a finite variation process:
 \end{align}
 \\
 Consider the process (\ref{VG_process}). We can take its expectation 
-$$\E[X_{T_t}] = \theta \E[T_t] + \sigma \E[W_{T_t}] = \theta t,$$ 
+$$\E[X_{T_t}] = \theta \E[T_t] + \bar\sigma \E[W_{T_t}] = \theta t,$$ 
 which is equal to the expectation of (\ref{Levy_Ito3}). Using (\ref{Exp_poiss}) we obtain
 \begin{align}
  \E[X(t)] &= \tilde b t + \E \biggl[ \int_{\R} x N(t,dx)\biggr] \\ \nonumber
@@ -801,8 +801,8 @@ which is equal to the expectation of (\ref{Levy_Ito3}). Using (\ref{Exp_poiss}) 
 \end{align}
 and therefore $ \tilde b = \theta - \int_{\R} x \nu(dx) $.\\
 We can compute the integral using the explicit formula (\ref{VG_measure}) for the Lévy measure.
-Call $$A = \frac{\theta}{\sigma^2} \hspace{2em} \mbox{and} \hspace{2em} 
-B=\frac{|\theta|}{\sigma^2}\sqrt{1+\frac{2\sigma^2}{\kappa \theta^2}}$$
+Call $$A = \frac{\theta}{\bar\sigma^2} \hspace{2em} \mbox{and} \hspace{2em} 
+B=\frac{|\theta|}{\bar\sigma^2}\sqrt{1+\frac{2\bar\sigma^2}{\kappa \theta^2}}$$
 with $A<B$, and solve the integral:
 \begin{align*}
  \int_{\R} \frac{x}{\kappa |x|} e^{Ax-B|x|} &= \int_{0}^{\infty} \frac{1}{\kappa} e^{(A-B)x} 
@@ -843,8 +843,8 @@ Obviously the two representations are equivalent.
  \item \textbf{Merton model generator}:\\
  In the case of $c=\infty$, the 1-dim generator has the form:  
  \begin{align}\label{Merton_gen}
-  (\LL f)(S)  &= \;  \mu S \frac{\partial f(S)}{\partial S} + \frac{1}{2} \sigma^2 S^2 \frac{\partial^2 f(S)}{\partial S^2} \\ \nonumber
-  &+ \; \int_{\R} \bigl( f(Se^x) - f(S) - S(e^x-1)\frac{\partial f(S)}{\partial S} \bigr) \nu(dx), 
+  (\LL f)(s)  &= \;  \mu s \frac{\partial f(s)}{\partial s} + \frac{1}{2} \sigma^2 s^2 \frac{\partial^2 f(s)}{\partial s^2} \\ \nonumber
+  &+ \; \int_{\R} \bigl( f(s e^x) - f(s) - s(e^x-1)\frac{\partial f(s)}{\partial s} \bigr) \nu(dx), 
  \end{align}
 with $$ \mu = \bar b + \frac{1}{2}\sigma^2 + \int_{\R} ( e^{x} - 1 ) \nu(dx). $$
 The integral in the last expression is 
@@ -853,26 +853,26 @@ The integral in the last expression is
 \end{align*}
 In the case we choose the representation with $c=0$, the equivalent generator is:
  \begin{align}\label{Merton_gen}
-  (\LL f)(S)  &= \;  \mu'S \frac{\partial f(S)}{\partial S} + \frac{1}{2} \sigma^2 S^2 \frac{\partial^2 f(S)}{\partial S^2} \\ \nonumber
-  &+ \; \int_{\R} \bigl( f(Se^x) - f(S) \bigr) \nu(dx), 
+  (\LL f)(s)  &= \;  \mu's \frac{\partial f(s)}{\partial s} + \frac{1}{2} \sigma^2 s^2 \frac{\partial^2 f(s)}{\partial s^2} \\ \nonumber
+  &+ \; \int_{\R} \bigl( f(se^x) - f(s) \bigr) \nu(dx), 
  \end{align}
 with $$ \mu' = \bar b + \frac{1}{2}\sigma^2. $$
  \item \textbf{Variance Gamma generator}:\\
  In the case with $c = 0$, the generator is:
  \begin{equation}\label{VG_gen}
-  (\LL f)(S) = \int_{\R} \bigl( f(Se^x) - f(S) \bigr) \nu(dx).
+  (\LL f)(s) = \int_{\R} \bigl( f(se^x) - f(s) \bigr) \nu(dx).
  \end{equation}
  \newline
  For $c = \infty$ 
  \begin{equation*}
-  (\LL f)(S) = \mu' \frac{\partial f(S)}{\partial S} 
-  + \int_{\R} \biggl( f(Se^x) - f(S) - S(e^x-1)\frac{\partial f(S)}{\partial S} \biggr) \nu(dx).
+  (\LL f)(s) = \mu' \frac{\partial f(s)}{\partial s} 
+  + \int_{\R} \biggl( f(s e^x) - f(s) - s(e^x-1)\frac{\partial f(s)}{\partial s} \biggr) \nu(dx).
  \end{equation*}
- with $\mu' = \int_{\R} S(e^x-1)\nu(dx)$.
+ with $\mu' = \int_{\R} s(e^x-1)\nu(dx)$.
 \end{itemize}
 In general the SDE representation with $c = \infty$ is preferable. 
 
-Now let us compute the coefficient $\mu'$ coefficient in the VG generator. Let us compute the integral
+Now let us compute the coefficient $\mu'$ in the VG generator. Let us consider the integral
 $$ \int_{\R} (e^x-1) \nu(dx). $$
 We use the relation between the Lévy measure and the transition probability (see Definition \ref{trans_prob}) of the process:
 \begin{equation}
@@ -881,12 +881,12 @@ We use the relation between the Lévy measure and the transition probability (se
 This relation is presented by \cite{Cont} in Chapter 3.6, and a proof can be found in Corollary 8.9 of \cite{Sato}. \\
 Let us compute first the expected value of the exponential VG process
 \begin{align*}
-\E[ e^{X_t}] &= \phi_{X_t}(-i) = \exp \bigl( -\frac{t}{\kappa} \log(1-\theta \kappa -\frac{1}{2}\sigma^2 \kappa ) \bigr)\\
+\E[ e^{X_t}] &= \phi_{X_t}(-i) = \exp \bigl( -\frac{t}{\kappa} \log(1-\theta \kappa -\frac{1}{2}\bar\sigma^2 \kappa ) \bigr)\\
  &= e^{w t}
 \end{align*}
 where we define the new parameter 
 \begin{equation}
- w = - \frac{1}{\kappa} \log(1-\theta \kappa -\frac{1}{2}\sigma^2 \kappa).
+ w = - \frac{1}{\kappa} \log(1-\theta \kappa -\frac{1}{2}\bar\sigma^2 \kappa).
 \end{equation}
 The integral becomes
 \begin{align*}

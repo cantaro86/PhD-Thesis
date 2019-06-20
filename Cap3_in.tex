@@ -1,6 +1,6 @@
 
 
-\chapter{Application of multinomial method to VG process}\label{Chapter3}
+\chapter{Multinomial methods for Variance Gamma}\label{Chapter3}
 %\blindtext
 \minitoc% Creating an actual minitoc
 
@@ -9,7 +9,7 @@
 
  
 In this chapter we make a digression about the application of a multinomial approximation for the Variance Gamma (VG) process.
-This is a summary of the main points of the paper \cite{Canta2}. In Chapter \ref{Chapter6} this method is applied to solve the option pricing problem with 
+The chapter collects the main results presented in the paper \cite{Canta2}. In Chapter \ref{Chapter6} this method is applied to solve the option pricing problem with 
 transaction costs.\\
  
 The VG process has nice analytical properties and 
@@ -52,7 +52,7 @@ schemes to solve the American VG PIDE.
 The tree method was first introduced by \cite{CRR79} for a market where the log-price can change only in two different ways: 
 an upward jump, or a downward jump. For this reason the model is called \emph{binomial model}. The authors 
 prove that when the number of time steps goes to infinity, the discrete random walk of the log-price converges to the Brownian motion
-and the option price converges to the Black-Scholes price (\cite{BS73}).
+and the option price converges to the Black-Scholes price.
 The \emph{multinomial model} is a generalization of the binomial model, and at each time step it considers 
 more than just two possible future states.
 A general multinomial method for pricing European and American options under exponential L\'evy processes is described in \cite{MaSoSz}. 
@@ -94,15 +94,15 @@ enough to model the features of a stochastic process up to its fourth moment.
 \subsection{Moment matching}
 
 To determine the parameters of the Markov chain we require that its local moments are equal to that of the continuous process.
-First, we rewrite the continuous process (\ref{VG_sde}), after passing to the log-variable $Y_t = \log(S_t)$ following Section \ref{VG_section2}, 
-as the sum of a drift term and a martingale term:
+First, we rewrite the continuous process (\ref{VG_sde}) using the log-variable $Y_t = \log(S_t)$ (as explained in Section \ref{VG_section2}) 
+obtaining:
 \begin{align}\label{log_martingale}
- Y_{t+\Delta t}-Y_t &= (r+\omega)\Delta t + \int_{\R \backslash \{0\}} x N(\Delta t,dx) \\ \nonumber
-		    &= (r+\omega + \theta)\Delta t + \int_{\R \backslash \{0\}} x \tilde N(\Delta t,dx)
+ Y_{t+\Delta t}-Y_t &= (r+\omega)\Delta t + \int_{\R} x N(\Delta t,dx) \\ \nonumber
+		    &= (r+\omega + \theta)\Delta t + \int_{\R} x \tilde N(\Delta t,dx)
 \end{align}
-where $\theta = \int_{\R \backslash \{0\}} x \nu(dx) = \E \bigl[ \int_{\R \backslash \{0\}} x N(1,dx) \bigr]$ is the expected value of the VG process in \ref{VG_process}, 
+where $\theta = \int_{\R} x \nu(dx) = \E \bigl[ \int_{\R} x N(1,dx) \bigr]$ is the expected value of the VG process in (\ref{VG_process}), 
 when $\Delta t=1$. 
-The integral with respect to the compensated Poisson measure $\tilde N(\Delta t,dx)$ is a martingale (see Appendix \ref{random_measures}).
+The integral with respect to the compensated Poisson measure $\tilde N(\Delta t,dx)$ is a martingale as discussed in Section \ref{random_measures}.
 
 We can pass to log-prices $Y_n = \log(S_n)$ in the discrete Eq. (\ref{Discr_S}), and write it as the sum of a drift component and a 
 random variable with $L$ possible outcomes:
@@ -110,7 +110,7 @@ random variable with $L$ possible outcomes:
  \Delta Y = Y_{n+1} - Y_n &= (L-l) \log(u) + (l-1) \log(d) \\ \nonumber
   &= \bar b\, \Delta t + (L-2l+1) \alpha(\Delta t).
 \end{align}
-The term $\bar b\, \Delta t$ is the drift term, while $l$ is a random variable that assumes values in $[1,2,...,L]$ with probability $p_l$. 
+The term $\bar b\, \Delta t$ is the drift term, while $l$ is a random variable that assumes values in $\{1,2,...,L\}$ with probability $p_l$. 
 It has to satisfy the martingale condition:
 $$ \E \bigl[(L-2l+1) \alpha(\Delta t) \bigr] = \alpha(\Delta t) \sum_{l=1}^L p_l (L-2l+1) = 0, $$
 with $\alpha(\Delta t)$ a function of $\Delta t$.
@@ -131,7 +131,7 @@ of the continuous process (\ref{log_martingale}):
 \begin{equation}\label{moment_matching}
  \alpha(\Delta t)^k\, \E \bigl[ (L-2l+1)^{k} \bigr] = \mu_k.
 \end{equation}
-We fix $L=5$, and using the relation between central moments and cumulants (Eq. (\ref{moment_cumulants}) 
+We fix $L=5$, and using the relation between central moments and cumulants (Eq. (\ref{moment_cumulants}) )
 we solve the linear system of equations for the transition probabilities:
 \begin{align}\label{probabilities1}
  p_1 &= \frac{1}{196 \alpha(t)^4} \biggl[ \frac{3}{2} c_2^2 -2 c_2\alpha(t)^2 + 2 c_3 \alpha(t) +\frac{1}{2} c_4  \biggr] \\ \nonumber
@@ -140,13 +140,13 @@ we solve the linear system of equations for the transition probabilities:
  p_4 &= \frac{1}{196 \alpha(t)^4} \biggl[ -6 c_2 + 32c_2 \alpha(t)^2 + 4c_3 \alpha(t) -2 c_4  \biggr] \\ \nonumber
  p_5 &= \frac{1}{196 \alpha(t)^4} \biggl[ \frac{3}{2} c_2^2 -2 c_2\alpha(t)^2 - 2 c_3 \alpha(t) +\frac{1}{2} c_4 \biggr].
 \end{align}
-The drift parameter is $\bar b = r+\omega + \theta$.
+The drift parameter corresponds to $\bar b = r+\omega + \theta$.
 The only missing parameter to determine is $\alpha(\Delta t)$. This is a function of the time increment $\Delta t$ and can be determined using the 
 higher order terms in the moment matching condition together with the condition of positive probabilities.
 
-Recall that the well known binomial model \cite{CRR79} assumes the value $\alpha(\Delta t) = \tilde \sigma \sqrt{\Delta t}$,
+Recall that the well known binomial model \cite{CRR79} assumes the value $\alpha(\Delta t) = \sigma \sqrt{\Delta t}$,
 that represents the volatility of the increments in the time interval $\Delta t$.
-In the trinomial model, the parameter $\alpha(\Delta t)$ assumes value $\alpha(\Delta t) = \frac{1}{2} \tilde \sigma \sqrt{3\Delta t}$, see for instance \cite{YaPr01}.
+In the trinomial model, the parameter $\alpha(\Delta t)$ assumes value $\alpha(\Delta t) = \frac{1}{2} \sigma \sqrt{3\Delta t}$, see for instance \cite{YaPr01}.
 For the multinomial method a good representation for $\alpha(\Delta t)$ is:
 \begin{equation}\label{alphat}
  \alpha(\Delta t) = \sqrt{c_2} \sqrt{\frac{3+\bar \kappa}{12}},
@@ -166,7 +166,7 @@ This choice guarantees that the probabilities $p_i$ for $i=1...5$ are always pos
 \end{align}
 where $s = c_3 / \sqrt{c_2^3}$ is the skewness.
 \begin{Remark}
- The standard deviation of every L\'{e}vy process with finite moments follows the square root rule. This means that the term $\alpha(\Delta t)$ has to be proportional
+ The standard deviation of every L\'{e}vy process with finite moments follows the square root propagation rule. This means that the term $\alpha(\Delta t)$ has to be proportional
  to the square root of $\Delta t$. In the binomial and trinomial models, the proportionality constant is explicit, while for the pentanomial method it is implicit
  in the formula (\ref{alphat}). Expanding the formula using the expression (\ref{VG_cumulants}) for the cumulants, it is possible to check that the square root rule is
  satisfied at first order in $\sqrt{\Delta t}$.
@@ -177,9 +177,9 @@ where $s = c_3 / \sqrt{c_2^3}$ is the skewness.
 \subsection{Convergence}
 
 
-We call a generic jump process (\ref{Levy_Ito3}) with first four cumulants $c_1$,$c_2$,$c_3$,$c_4$ derived through (\ref{VG_cumulants}), 
+We call a generic jump process (\ref{Levy_Ito3}) with first four cumulants $c_1$,$c_2$,$c_3$,$c_4$ as in (\ref{VG_cumulants}), 
 the \emph{approximated process} $X^A$. 
-The cumulant generating function of the increment $\Delta X^A$ has the following series representation (see \ref{cumulant_sec} ):
+The cumulant generating function of the increment $\Delta X^A$ has the following series representation (see Section \ref{cumulant_sec} ):
 \begin{equation}\label{cum_gen_appr}
  H_{\Delta X^{A}}(u) = ic_1 u -\frac{c_2u^2}{2} -\frac{ic_3u^3}{3!} + \frac{c_4u^4}{4!} + \mathcal{O}(u^5).
 \end{equation}

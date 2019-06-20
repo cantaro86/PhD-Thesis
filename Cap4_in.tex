@@ -11,30 +11,27 @@ The fundamental equation of dynamic programming is a nonlinear evolution equatio
 The value function is the optimum value of the payoff considered as a function of the initial data.
 This principle was introduced in the 1950s by Bellman, see \cite{Bellman}. 
 For controlled Lévy processes,
-the approach yields a certain nonlinear PIDE, usually of first or second order, called Hamilton-Jacobi-Bellman (HJB) equation. The value function satisfies, at least formally,
-the HJB equation.
+the approach yields a certain nonlinear PIDE, usually of first or second order, called Hamilton-Jacobi-Bellman (HJB) equation. 
+Under appropriate conditions the value function satisfies the HJB equation.
 
 The theory of viscosity solutions, provides a convenient framework in which to study HJB equations.
-Typically, the value function is not smooth enough to satisfy the HJB in the classical sense. However, under quite general assumptions, it can be considered as the unique viscosity
+Typically, the value function is not smooth enough to satisfy the HJB in the classical sense. However, under certain assumptions, it is the unique viscosity
 solution of the HJB equation with appropriate boundary conditions. For a general review of the theory of viscosity solution see \cite{CIL92}.
 
-The first notion of viscosity solution has been introduced by \cite{CL83} for deterministic optimal control problems, dealing with HJB equations of first order. The theory has
-been immediately extended by \cite{PLL83} in the second order case for diffusion processes.
-Uniqueness results for general second order equations were first presented by \cite{Je88}, who extended the classical Maximum principle to semi-convex functions. 
-At its maximum, a semi-convex function is differentiable but can fail to be twice differentiable. However Jensen proved that there are twice differentiable points arbitrarily close
-to the maximum point.
-The uniqueness results were immediately generalized to all the equations with coefficients satisfying standard Lipschitz conditions,
-in \cite{Is89} and \cite{IsLi90}. The main tool in this extension is the \emph{Ishii's lemma}, which plays a key role in most of the uniqueness proofs.
-The viscosity solution theory has been further extended by \cite{Soner86}, \cite{Soner86b} and \cite{Sayah91} for piecewise deterministic processes with random jumps.
-An important paper for viscosity solution of Lévy-type PIDEs (PIDEs that involve the generator of a Lévy process) is \cite{BaIm08}, where the Ishii's
+The first notion of viscosity solution has been introduced by \cite{CL83} for first order partial differential equations. The theory has
+been immediately extended by \cite{PLL83} for second order PDEs.
+Uniqueness results for general second order equations are presented in \cite{Je88}, \cite{Is89} and \cite{IsLi90}. 
+The main development of these works is the \emph{Ishii's lemma}, which plays a key role in most of the uniqueness proofs.
+The viscosity solution theory has been further extended by \cite{Soner86b}, \cite{Soner86} and \cite{Sayah91} for piecewise deterministic processes with random jumps.
+An important paper for viscosity solution of Lévy-type PIDEs (PIDEs involving the generator of a Lévy process) is \cite{BaIm08}, where the Ishii's
 lemma is extended. 
 Other important works that deserve to be mentioned are \cite{Ph98}, that analyzes HJB equations for optimal stopping problems under Lévy processes and \cite{CoVo05} that analyze
-the solution of PIDEs derived from option prices problems (plain vanilla and barrier options) for finite and infinite activity Lévy processes.
+the solution of linear PIDEs derived from option prices problems (plain vanilla and barrier options) for finite and infinite activity Lévy processes.
 \vspace{1em}
 
-\section{Optimal control framework (finite horizon)}\label{Optimal_control_framework}
+\section{Optimal control framework}\label{Optimal_control_framework}
 
-We consider a control model where the state of the system is governed by the SDE with values in $\R^n$:
+We consider a framework where the state of the system is governed by the controlled SDE:
 \begin{align}\label{controlled_SDE}
  dX_t =& b(t,X_{t-},\alpha_t) dt + \sigma (t,X_{t-},\alpha_t) dW_t \\ \nonumber
       &+ \int_{\R} \gamma(t,X_{t-},\alpha_t,z) \tilde N(dt,dz)
