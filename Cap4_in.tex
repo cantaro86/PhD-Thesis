@@ -31,109 +31,124 @@ the solution of linear PIDEs derived from option prices problems (plain vanilla 
 
 \section{Optimal control framework}\label{Optimal_control_framework}
 
-We consider a framework where the state of the system is governed by the controlled SDE:
+We consider a framework where the state of the system is governed by the controlled SDE with values in $\R^n$:
 \begin{align}\label{controlled_SDE}
  dX_t =& b(t,X_{t-},\alpha_t) dt + \sigma (t,X_{t-},\alpha_t) dW_t \\ \nonumber
-      &+ \int_{\R} \gamma(t,X_{t-},\alpha_t,z) \tilde N(dt,dz)
+      &+ \int_{\R} \gamma(t,X_{t-},\alpha_t,z) \tilde N(dt,dz).
 \end{align}
-where we consider a $d$-dimensional Brownian motion and a $l$-dimensional compensated Poisson random process.
-The coefficients $b: [0,T]\times \R^n \times A \to \R^n$, $\sigma: [0,T]\times \R^n \times A \to \R^{n\times d}$, 
-$\gamma: [0,T]\times \R^n \times A \times \R^n \to \R^{n\times l}$ are continuous functions with respect to $(t,X_{t-},\alpha_t)$ and $\gamma(t,X_{t-},\alpha_t,\cdot)$ is also bounded
-uniformly in $\alpha \in \mathcal{A}$ in any neighborhood of $z=0$. 
+where we consider a $d$-dimensional Brownian motion and a $l$-dimensional compensated Poisson random measure. 
+The coefficients $b: [0,T]\times \R^n \times A \to \R^n$, $\sigma: [0,T]\times \R^n \times A \to \R^{n \times d}$, 
+$\gamma: [0,T]\times \R^n \times A \times \R^n \to \R^{n \times l}$ are continuous functions with respect to $(t,x,a)$ and $\gamma(t,x,a,\cdot)$ is also bounded
+uniformly in $a \in A$ in any neighborhood of $z=0$. 
+In order to simplify the notation, all the indexes in the vectorial equation (\ref{controlled_SDE}) are suppressed 
+(see Theorem 1.16 in \cite{OksendalSulem} for the description of the indexed equation).
 
-The set $\mathcal{A}$ is the set of all adapted and progressively measurable processes $\alpha: [0,T]\times \Omega \to  A$ with $A$ compact, such that:
-$$ \E \biggl[ \int_0^T (\alpha_t)^m dt \biggr] < \infty \quad \mbox{ for } \quad m=1,2. $$
+The set $\mathcal{A}$ is the set of all progressively measurable processes $\alpha: [0,T]\times \Omega \to  A$ with $A$ compact.
+In this thesis we only consider Markovian controls such that $\alpha_t := \alpha(t,X_{t^-}) \to a \in A$, with $t\in [0,T]$.
 
-The process in (\ref{controlled_SDE}) is a general jump-diffusion process with coefficients depending on time, state and on the control $\alpha_t=a \in A$. 
-In Chapter (\ref{Chapter1}), Section \ref{existence_uniqueness} we presented existence and uniqueness conditions for a time-homogeneous SDE. Thanks to \cite{Skorohod}, we can extend 
+The process in (\ref{controlled_SDE}) is a generalized jump-diffusion process with coefficients depending on time, state and on the control. 
+In Chapter (\ref{Chapter1}), Section \ref{existence_uniqueness} we presented existence and uniqueness conditions for a time-homogeneous SDE. Following \cite{Skorohod}, we can extend 
 the conditions for the SDE in (\ref{controlled_SDE}).
-Assume again the existence of a function $\rho : \R^n\to \R $ such that
+Let us consider a function $\rho : \R^n \to \R $ such that
 \begin{equation}\label{rho}
- \int_{\R^n} |\rho(z)|^2 \nu(dz) < \infty.
+ \int_{\R} |\rho(z)|^2 \nu(dz) < \infty.
 \end{equation}
 We have the following:
 \begin{itemize}
  \item[(C1)] \textbf{Lipschitz condition} There exist $K >0$, such that $\forall x,y \in \R^n$, $\forall t \in [0,T]$ and $\forall a \in A$
  \begin{align}\label{Lipschitz_control}
-  &|b(t,x,a) - b(t,y,a)| + || \sigma(t,x,a) - \sigma(t,y,a) || \leq K|x-y|,\\  
-  & |\gamma(t,x,a,z) - \gamma(t,y,a,z)| \leq |\rho(z)|\,|x-y|. \label{Lipschitz_control2}
- \end{align}
-
- \item[(C2)] \textbf{Linear growth condition}. There exist $K>0$, such that $\forall x \in \R^n$,
- \begin{align}\label{Growth_control}
-  &|b(t,x,a)|^2 + ||\sigma(t,x,a)||^2 \leq K (1+|x|^2).\\ 
-  & |\gamma(t,x,a,z)| \leq |\rho(z)| (1+|x|). \label{Growth_control2}
+  &|b(t,x,a) - b(t,y,a)| + || \sigma(t,x,a) - \sigma(t,y,a) || \leq K |x-y|,\\  
+  & ||\gamma(t,x,a,z) - \gamma(t,y,a,z)|| \leq |\rho(z)|\,|x-y|. \label{Lipschitz_control2}
  \end{align}
 \end{itemize}
+\begin{Theorem}
+ The assumptions (\ref{Lipschitz_control}) ensure that for each control $\alpha \in \mathcal{A}$, there exists a unique strong solution of (\ref{controlled_SDE}) with given initial 
+ conditions.
+\end{Theorem}
+See Chapter 3 of \cite{Skorohod}.
+
+Note that the Lipschitz conditions (\ref{Lipschitz_control}) and the continuity of $b$, $\sigma$, $\gamma$, imply the growth conditions:
+\begin{align}
+ & |b(t,x,a)| + ||\sigma(t,x,a)||  \leq K |1+|x|| \\  
+ & || \gamma(t,x,a,z) || \leq \rho(z) (1+|x|) \label{Growth_control2}
+\end{align}
+
+
 \begin{Definition}
- Let us define $\mathcal{T}_{t_0,T}$ as the set of all stopping times in $[t_0,T]$.
+ Let us define $\mathcal{T}_{t_1,t_2}$ as the set of all $\mathcal{F}_s$-stopping times for each $ s \in [t_1,t_2]$.
 \end{Definition}
 \begin{Theorem}
- Let (\ref{Lipschitz_control}),(\ref{Lipschitz_control2}),(\ref{Growth_control}) and (\ref{Growth_control2}) hold. 
+ Let us consider the process described by (\ref{controlled_SDE}) and the hypothesis (\ref{Lipschitz_control}) and (\ref{Lipschitz_control2}) satisfied. 
  For any $k \in [0,2]$, there exist $C>0$ such that $\forall h,t \in [0,T]$, $x,y \in \R^n$, 
  $\alpha \in \mathcal{A}$ and $\tau \in \mathcal{T}_{0,h}$
  \begin{align}
   \E_{t,x}\bigl[ |X_{\tau}|^k \bigr] &\leq C (1+|x|^k) \\ \label{cond_2}
   \E_{t,x}\bigl[ |X_{\tau} - x|^k \bigr] &\leq C (1+|x|^k)h^{k/2} \\ \label{cond_3}
   \E_{t,x}\biggl[ \biggl( \sup_{0\leq s\leq h} |X_{s} - x| \biggr)^k \biggr] &\leq C (1+|x|^k)h^{k/2} \\ 
-  \E_{t,x,y}\bigl[ |X_{\tau} - Y_{\tau}|^k \bigr] &\leq C |x-y|^2, \\ \nonumber
+  \E_{t,x,y}\bigl[ |X_{\tau} - Y_{\tau}|^k \bigr] &\leq C |x-y|^2 \\ \nonumber
  \end{align}
 \end{Theorem}
 where we used the simple notation $\E_{t,x}[\cdot]$ to indicate the expectation conditioned on the initial value $X_t=x$.   
-A detailed proof of the previous theorem can be found in the appendix of \cite{Ph98}.
+A detailed proof of the previous theorem can be found in the appendix of \cite{Ph98}. \\
 
-Let us consider the space $\mathcal{C}_q$ defined in \ref{Cp}. We want to analyze the convergence properties of two integral operators:
-We define the integral operators that appear in the infinitesimal generator of a controlled SDE of type (\ref{controlled_SDE}).
-For $\phi \in C^{1,2}([0,T] \times \R^n) $ consider the operator:  
+\noindent
+For $\delta > 0$, let us define the following two useful integral operators.
+
+For $\phi \in C^{1,2}([0,T] \times \R^n) $ consider the operator:\footnote{Inside the operators $\mathcal{I}^{1,\delta,a}$ and $\mathcal{I}^{1,\delta,a}$, 
+the scalar product considers only the $k$-column (for $1\leq k \leq l$) of the $n\times l$ matrix $\gamma(t,x,a,z)$. As explained in the beginning of the section, 
+we suppressed the indexes to simplify the notation. }
 \begin{equation}
  \mathcal{I}^{1,\delta,a}(t,x,\phi) = \int_{|z|<\delta}
-\biggl[ \phi(t,x + \gamma(t,x,a,z)) - \phi(t,x) - \gamma(t,x,a,z) \cdot D_x \phi(t,x) \biggr] \nu(dz)
+\biggl[ \phi(t,x + \gamma(t,x,a,z)) - \phi(t,x) - D_x \phi(t,x) \cdot \gamma(t,x,a,z) \biggr] \nu(dz)
 \end{equation}
-where $D_x \phi$ corresponds to the gradient of $\phi$.
-For $\phi \in \mathcal{C}_2([0,T] \times \R^n) $ and $p \in \R^n$, consider the operator:
+where $D_x \phi$ corresponds to the gradient of $\phi$.\\
+For $\phi \in \mathcal{C}_2([0,T] \times \R^n) $ (the space $\mathcal{C}_q$ was defined in \ref{Cp}) and $p \in \R^n$, consider the operator:
 \begin{equation}
 \mathcal{I}^{2,\delta,a}(t,x,p,\phi) = \int_{|z|\geq \delta}
 [ \phi(t,x+ \gamma(t,x,a,z)) - \phi(t,x) - p \cdot \gamma(t,x,a,z)] \nu(dz)
 \end{equation}
-\begin{Theorem}
- The integral operators $\mathcal{I}^{1,\delta,a}$ and $\mathcal{I}^{2,\delta,a}$ converge and are uniformly bounded in $a$.
-\end{Theorem}
-\begin{proof}
- Consider the one dimensional case. For a general proof see \cite{Ph98}.
- For $|z|<\delta$, using a first order Taylor approximation on $\phi(t,x + \gamma(t,x,a,z))$, we obtain:
- \begin{align*}
- & \bigg|\phi(t,x + \gamma(t,x,a,z)) - \phi(t,x) - \gamma(t,x,a,z) \frac{\partial \phi(t,x)}{\partial x} \bigg| \\ 
- & \leq \gamma(t,x,a,z)^2 \sup_{y \in B(x,\delta)} \bigg| \frac{\partial^2 \phi(t,y)}{\partial y^2}\bigg| 
- \end{align*}
- Using the linear growth condition (\ref{Growth_control2}) and the equation (\ref{rho}) concludes the proof.\\
- For $|z|\geq \delta$, and $\phi \in \mathcal{C}_2([0,T] \times \R) $, all the terms in the integral are bounded. Thanks to the moment condition (assumption \textbf{M} 
- in Chapter \ref{Chapter1}) and to the equations (\ref{Growth_control2}) and (\ref{rho}), we can conclude the proof.
-\end{proof}
-Finally for $\phi \in C^{1,2}([0,T] \times \R^n) \bigcap \mathcal{C}_2([0,T] \times \R^n)$ we can define the 
-\textbf{Integral operator} for $p=D_x \phi(t,x)$:
-\begin{align}\label{int_oper}
- \mathcal{I}^{a}(t,x,\phi) &= \mathcal{I}^{1,\delta,a}(t,x,\phi) + \mathcal{I}^{2,\delta,a}(t,x,D_x \phi,\phi)\\ \nonumber
- &= \int_{\R}
-\biggl[ \phi(t,x + \gamma(t,x,a,z)) - \phi(t,x) - \gamma(t,x,a,z) D_x \phi(t,x) \biggr] \nu(dz), 
-\end{align}
-and the integral operator in the generator (\ref{RN_log_gen}), is a special one-dimensional case with $\gamma(t,x,a,z) = z$.
+We can check that the integral operators $\mathcal{I}^{1,\delta,a}$ and $\mathcal{I}^{2,\delta,a}$ are well defined.
+
+For $|z|<\delta$, using a first order Taylor approximation on $\phi(t,x + \gamma(t,x,a,z))$, we obtain:
+\begin{align*}
+ & \bigg|\phi(t,x + \gamma(t,x,a,z)) - \phi(t,x) - D_x \phi(t,x) \cdot \gamma(t,x,a,z) \bigg| \\ 
+ & \leq \bigg| \frac{1}{2} \gamma(t,x,a,z)^T \cdot \sup_{y \in B(x,\rho(z)(1+|x|) )}  D_{xx} \phi(t,y) \cdot \gamma(t,x,a,z) \bigg| 
+\end{align*}
+Using the growth condition (\ref{Growth_control2}) and the equation (\ref{rho}) we can see that the integral is well defined.
+
+For $|z|\geq \delta$, by definition $\phi \in \mathcal{C}_2([0,T] \times \R^n) $ have quadratic growth and therefore are bounded by 
+the moment condition (assumption \textbf{M} 
+in Chapter \ref{Chapter1}). Using equations (\ref{Growth_control2}) and (\ref{rho}), the verification is completed.\\
 
 \noindent
-The general \textbf{Lévy operator} can be obtained with $\gamma(t,x,a,z) = z$, $\delta = 1$ and $p=0$ in this way:
+Finally, for $\phi \in C^{1,2}([0,T] \times \R^n) \bigcap \mathcal{C}_2([0,T] \times \R^n)$ we can define the 
+\textbf{Integral operator}:
+\begin{align}\label{int_oper}
+ \mathcal{I}^{a}(t,x,\phi) &= \mathcal{I}^{1,\delta,a}(t,x,\phi) + \mathcal{I}^{2,\delta,a}(t,x,D_x \phi,\phi)\\ \nonumber
+ &= \int_{\R^n}
+\biggl[ \phi(t,x + \gamma(t,x,a,z)) - \phi(t,x) - D_x \phi(t,x) \cdot \gamma(t,x,a,z) \biggr] \nu(dz), 
+\end{align}
+and the integral operator in the generator (\ref{RN_log_gen}), is a special case with $\gamma(t,x,a,z) = z$.
+
+\noindent
+The 1 dimensional \textbf{Lévy operator} can be obtained with $\gamma(t,x,a,z) = z$, $\delta = 1$ and $p=0$ in this way:
 \begin{align*}
 \mathcal{I}_L(t,x,\phi) &= \mathcal{I}^{1,1,0}(t,x,\phi) + \mathcal{I}^{2,1,0}(t,x,0,\phi)\\  
-                   &= \int_{\R} \biggl[ \phi(t,x+ z) - \phi(t,x) - z D_x \phi(t,x) 1_{|z|<1}(z) \biggr] \nu(dz) 
+                   &= \int_{\R} \biggl[ \phi(t,x+ z) - \phi(t,x) - z D_x \phi(t,x) \mathbbm{1}_{|z|<1}(z) \biggr] \nu(dz) 
 \end{align*}
-The \textbf{integro-differential operator} is defined as:
+The \textbf{controlled integro-differential operator} is defined as:
 \begin{equation}\label{int_diff_oper}
  \LL^{a}(t,x,\phi) = A^{a} \phi(t,x) + \mathcal{I}^{a}(t,x,\phi)
 \end{equation}
 with 
-$$A^{a} \phi(t,x) = b(t,x,a) D_x \phi(t,x) + \frac{1}{2} \mbox{Tr} \biggl( \sigma(t,x,a)\sigma^T(t,x,a) \; D_x^2 \phi(t,x) \biggr) $$
+$$A^{a} \phi(t,x) = b(t,x,a) D_x \phi(t,x) + \frac{1}{2} \sigma(t,x,a) \; D_x^2 \phi(t,x) $$
+
+
 
 \subsection{Dynamic Programming Principle}
 
-Define the cylindrical region $Q = [t_0,T) \times \mathcal{O}$, with $\mathcal{O} \subseteq \R^n$ an open set. With abuse of notation we define the first exit time from $Q$ as 
+Define the cylindrical region $Q = [t_0,T) \times \mathcal{O}$, with $\mathcal{O} \subseteq \R^n$ an open set. 
+With abuse of notation we define the first exit time from $Q$ as 
 \begin{equation}\label{exit_time_def}
  \tau = \inf \{ s: (s,X_s) \not\in Q \}. 
 \end{equation}
@@ -142,51 +157,51 @@ does not have lateral boundaries but only terminal boundary at $\{ T \} \times R
 
 \noindent
 Let $f:[0,T]\times \R^n \times A \to \R$ and $g: \bigl( [0,T)\times \R^n \backslash \mathcal{O} \bigr) \bigcup \bigl( \R^n \times \{T\} \bigr) \to \R$ two continuous functions. 
-We assume that
-\begin{enumerate}
- \item $g$ is lower bounded.
- \item For $C > 0$, they both satisfy the conditions:
- \begin{equation}\label{Lipschitz_f}
-  |f(t,x,a) - f(s,y,a)| + |g(t,x)-g(s,y)| \leq C (|t-s|+|x-y|).
- \end{equation}
+We assume that there exists $C < \infty$, they satisfy the condition:
+% \begin{equation}\label{Lipschitz_f}
+%  |f(t,x,a) - f(s,y,a)| + |g(t,x)-g(s,y)| \leq C (|t-s|+|x-y|).
+% \end{equation}
  \begin{equation}\label{linear_growth_f}
-  |f(t,x,a)| + |g(t,x)| \leq C (1+|x|).
+  |f(t,x,a)| + |g(t,x)| \leq C (1+|x|^2) \quad \quad \forall a \in A.
  \end{equation}
-\end{enumerate}
-Denote by $\mathcal{A}_{t,x}$ the non-empty subset of $\mathcal{A}$ dependent on the current state $(t,x)$ such that $\E_{t,x} [\int_{t}^{\tau} f(s,X_s,\alpha_s) ds] < \infty $. 
-We define the \textbf{cost functional}
+Denote by $\mathcal{A}_{t,x}$ the subset of $\mathcal{A}$ dependent on the current state $(t,x)$ such that $\E_{t,x} [\int_{t}^{\tau} |f(s,X_s,\alpha_s)| ds] < \infty $. 
+We define the \textbf{objective function}
 \begin{equation}\label{cost_functional}
- J(t,x;\alpha) = \E_{t,x} \biggl[ \int_t^{\tau} f(s,X_s,\alpha) ds + g(\tau, X_{\tau}) \biggr] . 
+ J(t,x;\alpha) = \E_{t,x} \biggl[ \int_t^{\tau} f(s,X_s,\alpha_s) ds + g(\tau, X_{\tau}) \biggr] . 
 \end{equation}
-Thanks to the growth condition \ref{linear_growth_f} and to equation (\ref{cond_3}), we can prove easily that the cost functional is well defined. 
-The objective is to maximize the cost function over the set of control processes $\mathcal{A}_{t,x}$. We introduce the \textbf{value function}
+Thanks to the growth condition \ref{linear_growth_f} and to equation (\ref{cond_3}), we can verify easily that the objective function is well defined. 
+We want to maximize the objective function over the set of control processes $\mathcal{A}_{t,x}$. We introduce the \textbf{value function}
 \begin{equation}\label{general_value_function}
  V(t,x) = \sup_{\alpha \in \mathcal{A}_{t,x}} J(t,x,\alpha).
 \end{equation}
 If the optimal control $\hat \alpha$ exists, we have $V(t,x) = J(t,x,\hat \alpha)$.
-In this thesis we only consider Markovian controls in the form $\alpha_s \in \mathcal{A}$ such that $\alpha_s = a(s,X_s)$ with $a \in A$. We also always assume that the value function is 
+We also always assume that the value function is 
 measurable.
 \newline
 
 \noindent
 The dynamic programming principle (DPP) is a fundamental principle in the theory of stochastic control. It is formulated as follows:
-\begin{Theorem} Dynamic Programming Principle:
+\begin{Theorem} \textbf{Dynamic Programming Principle}:
  \begin{itemize}
   \item For all $\alpha \in \mathcal{A}_{t,x}$ and all stopping time $\theta \in \mathcal{T}_{t,\tau}$:
   \begin{equation}\label{DPP1}
-   V(t,x) \geq \E_{t,x} \biggl[ \int_t^{\theta} f(s,X_s,\alpha) ds + V(\theta, X_{\theta}) \biggr]. 
+   V(t,x) \geq \E_{t,x} \biggl[ \int_t^{\theta} f(s,X_s,\alpha_s) ds + V(\theta, X_{\theta}) \biggr]. 
   \end{equation}
   \item For all $\epsilon > 0$, there exists $\alpha \in \mathcal{A}_{t,x}$ such that $\forall \theta \in \mathcal{T}_{t,\tau}$: 
   \begin{equation}\label{DPP2}
-      V(t,x) \leq \E_{t,x} \biggl[ \int_t^{\theta} f(s,X_s,\alpha) ds + V(\theta, X_{\theta}) \biggr] + \epsilon. 
+      V(t,x) \leq \E_{t,x} \biggl[ \int_t^{\theta} f(s,X_s,\alpha_s) ds + V(\theta, X_{\theta}) \biggr] + \epsilon. 
   \end{equation}
  \end{itemize}
  Since $\epsilon$ is arbitrary, we can write the DPP in the following form:
   \begin{equation}\label{DPP3}
-   V(t,x) = \sup_{\alpha \in \mathcal{A}_{t,x}} \E_{t,x} \biggl[ \int_t^{\theta} f(s,X_s,\alpha) ds + V(\theta, X_{\theta}) \biggr]. 
+   V(t,x) = \sup_{\alpha \in \mathcal{A}_{t,x}} \E_{t,x} \biggl[ \int_t^{\theta} f(s,X_s,\alpha_s) ds + V(\theta, X_{\theta}) \biggr]. 
   \end{equation}
 \end{Theorem}
-The proof of the DPP is quite technical. Good references are \cite{Pham} and \cite{FlemingSoner}.
+The proof of the DPP is quite technical and is presented in the main textbooks on stochastic control theory.   
+A proof based on the assumptions presented above can be found in \cite{Gol16}.\\
+However, since the main problem in this thesis (see Chapter \ref{Chapter5}) is a singular control problem (see Section \ref{singular_control}), 
+some assumptions will be different from the previous general presentation.
+We will need to refer to the specific proof of the DPP presented in \cite{Kab16}.    \\
 
 
 \noindent
@@ -195,33 +210,47 @@ on every $\mathcal{A}_{\theta, X_{\theta}}$ with
 $\theta \in \mathcal{T}_{t,\tau}$. In order to determine the $\epsilon$-optimal control $\alpha_t$, it suffices to consider the DPP with a stopping time $\theta$
 arbitrarily close to $t$.
 
-\subsection{HJB equation}
+\subsection{HJB equation (formal derivation)}
 
 In this section we assume that the value function is continuously differentiable and obtain a formal nonlinear PIDE satisfied by the value function.
 In general however, the value function is not necessarily differentiable, and the notion of \emph{viscosity solution} should be considered.
 The Hamilton-Jacobi-Bellman equation (HJB) is the infinitesimal version of the DPP. It describes the local behavior of the value function when the stopping time $\theta$ converges to $t$. 
-The HJB equation is also called dynamic programming equation.
+The HJB equation is also called \textbf{dynamic programming equation}.
 \newline
 
 \noindent
-Let us consider the stopping time $\theta = t + h$ in the DPP (\ref{DPP3}) and a constant control $\alpha_s = a$. 
+Let us consider the stopping time $\theta = t + h$, with $h>0$, in the DPP (\ref{DPP1}) and a constant control $\alpha_s = a$ for $s \in [t,\theta]$. 
 Subtract $V(t,x)$ from both sides and then divide by $h$. This yields
 \begin{align*}
-   0 =& \sup_{a \in A} \E_{t,x} \biggl[ \int_t^{t+h} f(s,X_s,a) ds + V(t+h, X_{t+h}) - V(t,x) \biggr]. \\ 
-     =& \sup_{a \in A} \E_{t,x} \biggl[ \frac{1}{h} \int_t^{t+h} f(s,X_s,a) 
+   0 \geq& \E_{t,x} \biggl[ \int_t^{t+h} f(s,X_s,a) ds + V(t+h, X_{t+h}) - V(t,x) \biggr]. \\ 
+     \geq& \E_{t,x} \biggl[ \frac{1}{h} \int_t^{t+h} f(s,X_s,a) 
      + \biggl( \frac{\partial V}{\partial s} + \LL^{a}V \biggr)(s, X_{s}) \, ds \biggr]. \\
 \end{align*}
-where we used the Dynkin formula (Eq. \ref{Dynkin_formula}) assuming $V \in C^{1,2}$, with $\LL^{\alpha}$ the integro-differential operator \ref{int_diff_oper} 
-for the constant control $a$.
-By sending $h \to 0$ and using the mean value theorem we obtain the \textbf{dynamic programming equation}:
-\begin{equation}\label{DPE}
- \frac{\partial V(t,x)}{\partial t} + \sup_{a \in A} \biggl( f(t,x,a) + \LL^{a}V(t,x)  \biggr) = 0.
+where we used the Dynkin formula (Eq. \ref{Dynkin_formula}) assuming $V \in C^{1,2}$, with $\LL^{\alpha}$ the integro-differential operator \ref{int_diff_oper}.
+By sending $h \to 0$ and using the mean value theorem we obtain the equation:
+\begin{equation}
+ \frac{\partial V(t,x)}{\partial t} + \biggl( f(t,x,a) + \LL^{a}V(t,x)  \biggr) \leq 0.
 \end{equation}
-It is convenient to multiply by $-1$ the equation (for a clear interpretation of the viscosity solution) and to define the Hamiltonian function $\mathcal{H}$ 
-that contains all the terms depending on the control $a$.
+Since this hold true for every $a \in A$, then:
+\begin{equation}
+ -\frac{\partial V(t,x)}{\partial t} - \sup_{a \in A} \biggl( f(t,x,a) + \LL^{a}V(t,x)  \biggr) \geq 0.
+\end{equation}
+On the other hand, suppose there exists the optimal control $\alpha^*$, then:
+\begin{equation}
+ 0 = \E_{t,x} \biggl[ \int_t^{t+h} f(s,X^*_s,\alpha^*_s) ds + V(t+h, X^*_{t+h}) - V(t,x) \biggr],
+\end{equation}
+where $X^*$ is the optimal state, solution of (\ref{controlled_SDE}), with the control $\alpha^*$.
+Using similar arguments as above we obtain:
+\begin{equation}
+ -\frac{\partial V(t,x)}{\partial t} - \biggl( f(t,x,\alpha_t^*) + \LL^{\alpha_t^*} V(t,x)  \biggr) = 0.
+\end{equation}
+Since $A$ is compact, and $b$, $\sigma$, $\gamma$ and $f$ are continuous, under these hypothesis the supremum is always attained.
+We can combine the two results and write the \textbf{dynamic programming equation}:
+\begin{equation}\label{DPE}
+ -\frac{\partial V(t,x)}{\partial t} - \sup_{a \in A} \biggl( f(t,x,a) + \LL^{a}V(t,x)  \biggr) = 0.
+\end{equation}
+Let us define the Hamiltonian function
 \begin{align} \nonumber
- 0 = & \frac{\partial V(t,x)}{\partial t} + \sup_{a \in A} \biggl( f(t,x,a) + \LL^{a}V(t,x)  \biggr) \\ \nonumber
- 0 = & - \frac{\partial V(t,x)}{\partial t} - \sup_{a \in A} \biggl( f(t,x,a) + \LL^{a}V(t,x)  \biggr) \\ \label{DPE2}
  0 = & - \frac{\partial V(t,x)}{\partial t} - \mathcal{H}\bigl( t,x,D_x V, D_{xx} V, \mathcal{I}^a(t,x,V) \bigr) 
 \end{align}
 where for $(t,x,p,M,I^a) \in Q \times \R^n \times S^n \times \R$:\footnote{$S^n$ is the set of symmetric matrices of dimension $n$.} 
@@ -238,16 +267,29 @@ The regular terminal and lateral boundary conditions of this PIDE are:
 \end{equation}
 
 
-\subsection{Singular control}
+\section{Singular control}\label{singular_control}
 
-When the control space $A$ is unbounded, the Hamiltonian (\ref{Hamiltonian}) may take infinite values. Let us assume that $A$ is a closed cone in $\R^n$ such that 
+In the previous section, the theory of stochastic control for generalized jump-diffusion processes is presented under the assumption that the control process 
+takes values in a compact space.
+In this section this assumption is relaxed, and the control space $A$ is assumed to be unbounded.
+When the problem coefficients are linear functions of the control, the form (\ref{DPE}) for the HJB equation is no more valid. 
+We will present a formal derivation of the HJB equation, which under these assumptions has the form of 
+a \textbf{variational inequality}. 
+A rigorous basis to this derivation can be given a posteriori by means of a verification theorem, or by viscosity solution theory 
+for more details we refer to Chapter 8.4 of \cite{FlemingSoner} or to Theorem 5.2 of \cite{OksendalSulem}. \\ 
+We then present the general formulation for singular control problems.
+The name \emph{singular} comes from the fact that the control process can be singular with respect to the Lebesgue measure $dt$.
+
+\subsection{Derivation of the variational inequality}
+
+When the control space $A$ is unbounded, the Hamiltonian (\ref{Hamiltonian}) may take infinite values. Let us assume that $A$ is a closed cone in $\R^n$ i.e. 
 \begin{equation}\label{unbounded_set}
  a \in A, \quad \lambda > 0 \Longrightarrow \lambda a \in A.
 \end{equation}
-Let us assume also that the control influences linearly the dynamics of the system and the running cost function.
+Let us assume also that the control influences linearly the dynamics of the system and the objective function.
 \begin{align}\label{linear_control}
- & b(t,x,\alpha_t) = \hat b(t,x) + \alpha_t, \quad \sigma(t,x,\alpha_t) = \hat \sigma(t,x), \\ 
- & \hat \gamma(t,x,\alpha_t,z) = \gamma(t,x,z), \quad f(t,x,\alpha_t) = \hat f(t,x) + \alpha_t. 
+ & b(t,x,a) = \hat b(t,x) + a, \quad \sigma(t,x,a) = \hat \sigma(t,x), \\ 
+ & \gamma(t,x,a,z) = \hat \gamma(t,x,z), \quad f(t,x,a) = \hat f(t,x) + a. 
 \end{align}
 The Hamiltonian becomes
 \begin{align*}
@@ -281,31 +323,62 @@ The last equation can be written in a more compact form. We have the following \
  \max \biggl\{ \frac{\partial V(t,x)}{\partial t} + \hat f(t,x) + \LL^{a=0}V(t,x) \,,\, H\bigl( D_x V(t,x) \bigr) \biggr \} =0 \quad \mbox{for} \quad (t,x)\in Q. 
 \end{equation}
 
+\subsection{General formulation}
 
+Let us consider a state system governed by the following SDE:
+\begin{align}\label{singular_SDE}
+ dX_t =& \hat b(t,X_{t-}) dt + \hat \sigma (t,X_{t-}) dW_t \\ \nonumber
+      &+ \int_{\R} \hat \gamma(t,X_{t-},z) \tilde N(dt,dz) + \kappa(t,X_{t-}) d\xi_t .
+\end{align}
+where $\kappa : [0,T] \times \R^n \to \R^n$ is continuous. 
+The process $\xi : [0,T] \times \Omega \to \R^n$ is an $\mathcal{F}_t$-progressively measurable, cádlág, bounded variation, 
+non-decreasing process, with $\xi(0^-) = 0$.   
 
+The objective function is:
+\begin{equation}\label{singular_cost_functional}
+ J^{\xi}(t,x) = \E_{t,x} \biggl[ \int_t^{\tau} f(s,X_s) ds + \int_t^{\tau} h(t,X_{t-}) d\xi(s) + g(\tau, X_{\tau}) \biggr] . 
+\end{equation}
+where $f$, $h$ and $g$ are continuous functions satisfying the quadratic growth condition. 
+\begin{equation}\label{controlled_VF}
+ V(t,x) = \sup_{\xi} J^{\xi}(t,x).
+\end{equation}
 
+Under certain assumptions, it can be proved that the value function (\ref{controlled_VF}) is a viscosity solution of a variational inequality 
+with a form as in (\ref{variational_inequality}).\\
 
+\noindent
+In the previous section we derived the variational inequality using an heuristic argument. In this section, the assumptions (\ref{unbounded_set}) and (\ref{linear_control})
+are replaced by considering directly the integral of $\alpha_t$ as our main control, and by enlarging the class of controls such that it can contain non absolute continuous processes
+as well (we refer to Chapter 8.3 of \cite{FlemingSoner} for more details). 
 
 
 \section{Viscosity solutions theory}
 
 
 This section is dedicated to the definition of viscosity solutions.
-Here I follow closely the theory presented in \cite{Cont}, \cite{Pham} and \cite{BaIm08}.
+In the literature there are different definitions of viscosity solution depending on the context. 
+For instance, the theory presented in \cite{Pham} considers only the PDE case, while in \cite{Cont}
+only linear PIDEs are considered. 
+Other important references are \cite{FlemingSoner}, \cite{Ph98} and \cite{BaIm08} among others.
 In the general discontinuous viscosity solutions approach, there is no
 need to prove a priori the continuity of the value function $V$. The continuity will actually follow from
-a strong comparison principle. Here I present the general theory for semi-continuous value functions following \cite{Cont}.
-Recall the definition of semi-continuous function:
-\begin{Definition}
- Suppose $\mathcal{X}$ is a topological space and $x_0$ is a point in $\mathcal{X}$.
- The function $f: \mathcal{X} \to \R$ is \textbf{upper semi-continuous} (USC) in $x_0$ if for every $\epsilon > 0$ exists a neighborhood of $x_0$, $U_{x_0}$, such that
- $$ f(x) \leq f(x_0) + \epsilon \quad \quad \forall x \in U_{x_0}. $$
-\end{Definition}
-\begin{Definition}
- Under the same assumptions,
- the function $f: \mathcal{X} \to \R$ is \textbf{lower semi-continuous} (LSC) in $x_0$ if for every $\epsilon > 0$ exists a neighborhood of $x_0$, $U_{x_0}$, such that
- $$ f(x) \geq f(x_0) - \epsilon \quad \quad \forall x \in U_{x_0}. $$
-\end{Definition}
+a strong comparison principle. 
+
+\noindent
+Here we present the definition for continuous viscosity solutions introduced in \cite{Kab16}, which is suitable for the problem proposed in this thesis (Chapter \ref{Chapter5}).
+
+
+% Recall the definition of semi-continuous function:
+% \begin{Definition}
+%  Suppose $\mathcal{X}$ is a topological space and $x_0$ is a point in $\mathcal{X}$.
+%  The function $f: \mathcal{X} \to \R$ is \textbf{upper semi-continuous} (USC) in $x_0$ if for every $\epsilon > 0$ exists a neighborhood of $x_0$, $U_{x_0}$, such that
+%  $$ f(x) \leq f(x_0) + \epsilon \quad \quad \forall x \in U_{x_0}. $$
+% \end{Definition}
+% \begin{Definition}
+%  Under the same assumptions,
+%  the function $f: \mathcal{X} \to \R$ is \textbf{lower semi-continuous} (LSC) in $x_0$ if for every $\epsilon > 0$ exists a neighborhood of $x_0$, $U_{x_0}$, such that
+%  $$ f(x) \geq f(x_0) - \epsilon \quad \quad \forall x \in U_{x_0}. $$
+% \end{Definition}
 
 
 
@@ -319,7 +392,7 @@ F(t,x,u,D_t u,D_x u,D_{xx}u,\I(t,x,u)) = 0 \quad \mbox{ for } \quad (t,x) \in Q 
 u(t,x) = g(t,x) \quad \mbox{ for } \quad (t,x) \not \in Q
 \end{cases}
 \end{equation}
-where $g \in C^0 \bigcap \mathcal{C}_2([0,T] \times (\R\backslash \OO))$ is a given function and 
+where $g \in C^0 \bigcap \mathcal{C}_2([0,T] \times (\R^n \backslash \OO))$ is a given function and 
 $F$ is a continuous function that satisfies the following elliptic/parabolic local and non local conditions. 
 For all $t\in [0,T); \; x \in \OO; \; r,\hat r \in \R; \; q,\hat q \in \R; \; 
 p \in \R^n; \; M,\hat M \in \SI^n; \; \I, \hat \I \in \R$:
@@ -331,35 +404,48 @@ p \in \R^n; \; M,\hat M \in \SI^n; \; \I, \hat \I \in \R$:
 \end{itemize}
 where the matrix ordering is intended with this meaning:
 $$ \hat M \geq M \Leftrightarrow \hat M - M \mbox{ is positive semi-definite.} $$
-We can now introduce the viscosity solution definition:
+
+Having in mind our specific problem, we will assume that the viscosity subsolution and supersolution are continuous on $[0,T]\times \R^n$.
+We can now introduce the definitions:
 \begin{Definition}
- An USC function $u$ is a \textbf{viscosity subsolution} of (\ref{parabolic_PIDE})
+ A continuous function $u$ is a \textbf{viscosity subsolution} of (\ref{parabolic_PIDE})
  if for any $(\bar t, \bar x) \in [0,T]\times \R^n$ and any test function $ \phi \in C^{1,2}([0,T] \times \R^n) \bigcap \mathcal{C}_2([0,T] \times \R^n)$ 
  such that $u-\phi$ has a global maximum at $(\bar t,\bar x)$ the following is satisfied:
 \begin{align}\label{subsolution}
  & F\biggl( \bar t,\bar x,u(\bar t,\bar x),D_t \phi(\bar t,\bar x), D_x \phi(\bar t,\bar x),D_{xx}\phi(\bar t,\bar x),\I(\bar t, \bar x,\phi(\bar t,\bar x))\biggr) \leq 0 \\ \nonumber
- &  \quad \quad \mbox{ for } \quad (\bar t,\bar x) \in Q, \\ \nonumber
- & \min \biggl\{ F \biggl( \bar t,\bar x,u(\bar t,\bar x), D_t \phi(\bar t,\bar x), D_x \phi(\bar t,\bar x), 
- D_{xx}\phi(\bar t,\bar x),\I(\bar t, \bar x,\phi(\bar t,\bar x)) \biggr) ,\\ \nonumber 
- & \quad \quad u(\bar t,\bar x) - g(\bar t,\bar x) \biggr\} \leq 0  \quad  \mbox{ for } \quad (\bar t,\bar x) \in \partial Q, \\ \nonumber
- & u(\bar t,\bar x) - g(\bar t,\bar x) \leq 0  \quad  \mbox{ for } \quad (\bar t,\bar x) \not \in \bar Q.
+ &  \quad \quad \mbox{ for } \quad (\bar t,\bar x) \in Q.
 \end{align}
 \end{Definition}
+
+\noindent
 In the same way we define:
 \begin{Definition}
- A LSC function $u$ is a \textbf{viscosity supersolution} of (\ref{parabolic_PIDE})
+ A continuous function $u$ is a \textbf{viscosity supersolution} of (\ref{parabolic_PIDE})
  if for any $(\bar t, \bar x) \in [0,T]\times \R^n$ and any test functions $ \phi \in C^{1,2}([0,T] \times \R^n) \bigcap \mathcal{C}_2([0,T] \times \R^n)$ 
  such that $u-\phi$ has a global minimum at $(\bar t,\bar x)$ the following is satisfied:
 \begin{align}\label{supersolution}
  & F\biggl( \bar t,\bar x,u(\bar t,\bar x),D_t \phi(\bar t,\bar x), D_x \phi(\bar t,\bar x),D_{xx}\phi(\bar t,\bar x),\I(\bar t, \bar x,\phi(\bar t,\bar x))\biggr) \geq 0 \\ \nonumber
- &  \quad \quad \mbox{ for } \quad (\bar t,\bar x) \in Q, \\ \nonumber
- & \max \biggl\{ F \biggl( \bar t,\bar x,u(\bar t,\bar x), D_t \phi(\bar t,\bar x), D_x \phi(\bar t,\bar x), 
- D_{xx}\phi(\bar t,\bar x),\I(\bar t, \bar x,\phi(\bar t,\bar x)) \biggr) ,\\ \nonumber 
- & \quad \quad u(\bar t,\bar x) - g(\bar t,\bar x) \biggr\} \geq 0  \quad  \mbox{ for } \quad (\bar t,\bar x) \in \partial Q, \\ \nonumber
- & u(\bar t,\bar x) - g(\bar t,\bar x) \geq 0  \quad  \mbox{ for } \quad (\bar t,\bar x) \not \in \bar Q.
+ &  \quad \quad \mbox{ for } \quad (\bar t,\bar x) \in Q.
 \end{align}
 \end{Definition}
 
+\noindent
 When a function is both a viscosity subsolution and supersolution, it is called a \textbf{viscosity solution}.
 
-
+% \begin{align}\label{subsolution}
+%  & F\biggl( \bar t,\bar x,u(\bar t,\bar x),D_t \phi(\bar t,\bar x), D_x \phi(\bar t,\bar x),D_{xx}\phi(\bar t,\bar x),\I(\bar t, \bar x,\phi(\bar t,\bar x))\biggr) \leq 0 \\ \nonumber
+%  &  \quad \quad \mbox{ for } \quad (\bar t,\bar x) \in Q, \\ \nonumber
+%  & \min \biggl\{ F \biggl( \bar t,\bar x,u(\bar t,\bar x), D_t \phi(\bar t,\bar x), D_x \phi(\bar t,\bar x), 
+%  D_{xx}\phi(\bar t,\bar x),\I(\bar t, \bar x,\phi(\bar t,\bar x)) \biggr) ,\\ \nonumber 
+%  & \quad \quad u(\bar t,\bar x) - g(\bar t,\bar x) \biggr\} \leq 0  \quad  \mbox{ for } \quad (\bar t,\bar x) \in \partial Q, \\ \nonumber
+%  & u(\bar t,\bar x) - g(\bar t,\bar x) \leq 0  \quad  \mbox{ for } \quad (\bar t,\bar x) \not \in \bar Q.
+% \end{align}
+% 
+% \begin{align}\label{supersolution}
+%  & F\biggl( \bar t,\bar x,u(\bar t,\bar x),D_t \phi(\bar t,\bar x), D_x \phi(\bar t,\bar x),D_{xx}\phi(\bar t,\bar x),\I(\bar t, \bar x,\phi(\bar t,\bar x))\biggr) \geq 0 \\ \nonumber
+%  &  \quad \quad \mbox{ for } \quad (\bar t,\bar x) \in Q, \\ \nonumber
+%  & \max \biggl\{ F \biggl( \bar t,\bar x,u(\bar t,\bar x), D_t \phi(\bar t,\bar x), D_x \phi(\bar t,\bar x), 
+%  D_{xx}\phi(\bar t,\bar x),\I(\bar t, \bar x,\phi(\bar t,\bar x)) \biggr) ,\\ \nonumber 
+%  & \quad \quad u(\bar t,\bar x) - g(\bar t,\bar x) \biggr\} \geq 0  \quad  \mbox{ for } \quad (\bar t,\bar x) \in \partial Q, \\ \nonumber
+%  & u(\bar t,\bar x) - g(\bar t,\bar x) \geq 0  \quad  \mbox{ for } \quad (\bar t,\bar x) \not \in \bar Q.
+% \end{align}

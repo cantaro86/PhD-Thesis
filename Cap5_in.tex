@@ -7,7 +7,7 @@
 \vspace{5em}
 
 \section{Transaction cost models for the portfolio selection problem}
-In the mathematical finance literature, the first application of stochastic optimal control theory to finance appears in the seminal paper \cite{Me71}.
+In the mathematical finance literature, the first application of stochastic optimal control theory to finance appears in the seminal paper \cite{Me69}.
 This is the classical \emph{Merton optimal portfolio problem}, and is formulated as follows. An investor has a portfolio consisting of two assets, one ``risk free" $B$,
 and the other ``risky" $S$. The portfolio follows the process
 \begin{equation}\label{Merton_problem1}
@@ -18,18 +18,22 @@ and the other ``risky" $S$. The portfolio follows the process
 \end{equation} 
 with $\mu>r$ and $\sigma>0$. If we denote with $\mathcal{W}_t = B_t + S_t$  the wealth at time $t$, and with $\pi_t$ the fraction of wealth invested in the risky asset, such that
 $S_t = \pi_t \mathcal{W}_t$ and $B_t = (1-\pi_t) \mathcal{W}_t$. The model also takes into account the investor consumption $c(t) \geq 0$ for all $t$. 
-The optimization problem can be formulated considering the utility function of the consumption, and consists in maximizing the objective function
+The optimization problem can be formulated considering the utility function of the consumption and some terminal conditions, and consists in maximizing the objective function
 \begin{equation}
- J(x;\pi,c) = \E_x \biggl[ \int_0^{\infty} e^{-\beta t} \mathcal{U}(c(t)) dt \biggr],
+ J(x;\pi,c) = \E_x \biggl[ \int_0^{T} e^{-\beta t} \mathcal{U}(c(t)) dt + g(T,\mathcal{W}_T) \biggr],
 \end{equation}
 where $\beta > 0$ and $\mathcal{U}: [0,\infty) \to \R$ is a concave and increasing utility function, such that $\mathcal{U}(0)=0$.
+In the paper the function $g$ is called \emph{bequest valuation function} and is assumed to be concave.
 We indicate the initial portfolio value with $x = (B_0,S_0)$. 
 The wealth $\mathcal{W}$ takes values in $\OO = (0,\infty)$ and has state dynamics
 \begin{equation}
  d \mathcal{W}_t = (1-\pi_t) \mathcal{W}_t r dt + \pi_t \mathcal{W}_t (\mu dt + \sigma dW_t) - c(t)dt.
 \end{equation}
 The control $\alpha_t$ is a two dimensional vector $(\alpha^1_t,\alpha^2_t) = (\pi_t,c_t)$, with values in $A = \R \times [0,\infty)$. 
-This is an infinite horizon problem with running cost $f(t,\mathcal{W}_t,c_t) = e^{-\beta t} \mathcal{U}(c_t)$. 
+This is a finite horizon problem with an objective function of type (\ref{cost_functional})
+and HJB equation as in (\ref{DPE}). 
+Even if in this case the control space $A$ is not compact, the supremum in (\ref{DPE}) is attained thanks to the concave structure of the problem.
+
 Merton, using the utility $\mathcal{U}(c) = \frac{1}{\gamma} c^{\gamma}$ with $0<\gamma<1$ (of HARA type) obtained an explicit solution for the problem. In particular he found that 
 the optimal control
 \begin{equation}\label{Merton_policy}
@@ -39,28 +43,32 @@ is a constant and does not depend on the state variables.
 This means that the optimal fraction of the risky and risk free assets in the portfolio is constant.
 The line containing all the optimal points in the $(B,S)$ plane is the so called \textbf{Merton line}.
 
-In Chapter \ref{Chapter4} we have not considered infinite horizon control problems because they are not relevant for the thesis.
-The Merton optimal portfolio problem can be formulated as well in a finite time horizon setting, and removing the consumption rate. The objective function becomes
-\begin{equation}\label{Merton_problem2}
- J(t,x;\pi) = \E_{t,x} \biggl[ \mathcal{U}\biggl( \mathcal{W}^{\pi}(T) \biggr) \biggr] \quad \mbox{ for } \quad t \in [t_0,T].
-\end{equation}
-It turns out that the finite horizon solution is the same as the original infinite horizon Merton problem. The optimal policy is still given by formula (\ref{Merton_policy}).
-For the explicit derivation see for instance \cite{Pham}.
+%In Chapter \ref{Chapter4} we have not considered infinite horizon control problems because they are not relevant for the thesis.
+%The Merton optimal portfolio problem can be formulated as well in a finite time horizon setting, and removing the consumption rate. The objective function becomes
+%\begin{equation}\label{Merton_problem2}
+% J(t,x;\pi) = \E_{t,x} \biggl[ \mathcal{U}\biggl( \mathcal{W}^{\pi}(T) \biggr) \biggr] \quad \mbox{ for } \quad t \in [t_0,T].
+%\end{equation}
+%It turns out that the finite horizon solution is the same as the original infinite horizon Merton problem. The optimal policy is still given by formula (\ref{Merton_policy}).
+%For the explicit derivation see for instance \cite{Pham}.
 
 \noindent
 The Merton portfolio selection problem is the first optimal portfolio problem solved by stochastic control theory methods. 
+In \cite{Me71} the author extends the results to different utility functions.
 All the successive models are generalizations of the Merton model, where by 
 the word ``generalizations", we mean that under some particular choices of the parameters, the Merton problem is included in those models as a special case.
 For what concerns this thesis, we review the main portfolio selection problems that have appeared in the literature, considering the presence of proportional transaction costs.
-The first model with transaction costs and consumption was introduced by \cite{Co86} and then extended by \cite{DaNo90}. We refer to \cite{ShSo94}
-for the study of the viscosity solution of the same problem. Since it is a model for portfolio consumption, it is formalized as a infinite horizon problem.
-This problem was extended in several works. Principal contributions are 
-\cite{DaYi09}, \cite{Dai10}, \cite{LiuLo02}, \cite{LiuLo07}, \cite{BKR01}, \cite{OkSu01}, where the last three also consider the presence of jumps in the dynamics of the underlying
-asset.\\
-A different approach is used when the portfolio process is introduced for the purpose of pricing a derivative contract.
-In \cite{HoNe89} the authors study the problem of option pricing with transaction costs. The problem is formalized as a singular stochastic control problem in \cite{DaPaZa93}.
-In this section we present the DPZ model, which is the building block of this thesis, and then extend it considering the presence of jumps, following the work presented in the paper
-\cite{Canta}.
+The first portfolio selection model with transaction costs and consumption was introduced by \cite{Co86} and then extended by \cite{DaNo90}. We refer to \cite{ShSo94}
+for a viscosity solution approach to the same problem. 
+Other important contributions are 
+\cite{DaYi09}, \cite{Dai10}, \cite{LiuLo02}, \cite{LiuLo07}, \cite{BKR01}, \cite{OkSu01}, \cite{Kab16} where the last four articles use Lévy processes to model the stock dynamics. 
+All the cited works are portfolio optimization models formulated as infinite horizon problems, and do not involve the pricing of the options.
+
+Further assumptions are needed when the portfolio process is introduced for the purpose of pricing a derivative contract.
+The main contributions on option pricing with transaction costs, using the \emph{indifference pricing} approach are
+\cite{HoNe89} and \cite{DaPaZa93} (DPZ). The problem is formalized as a finite horizon singular stochastic control problem.
+In this section we present the DPZ model, which is the building block of this thesis, and then extend it following the framework introduced by \cite{Kab16}, 
+who consider the stock dynamics described by Lévy processes.
+The main results of this Chapter are collected in the paper \cite{Canta}.
 
 
 \subsection{Davis - Panas - Zariphopoulou (DPZ)}\label{DPZ_sec}
@@ -68,31 +76,36 @@ In this section we present the DPZ model, which is the building block of this th
 This is the market model with proportional transaction costs presented in \cite{DaPaZa93}. 
 The authors consider a portfolio composed by one risk-free asset $B$ (bank account) paying a fixed interest rate $r > 0$ and a stock $S$. 
 The symbol $Y$ denotes the number of shares of the stock $S$ that the investor holds. 
-The state of the portfolio at time $t\in [t_0,T]$ is $(B^{\pi}_t,Y^{\pi}_t,S_t)$ and evolves following the SDE:
+The state of the portfolio at time $t\in [t_0,T]$ is $(B^{\pi}_t,Y^{\pi}_t,S_t)$, and is the solution of the following the SDE:
 \begin{equation}\label{DPZ_porfolio_dynamics}
  \begin{cases}
- dB^{\pi}_t &=  rB_t dt - (1+\theta_b)S_t dL_t + (1-\theta_s) S_t dM_t \\
+ dB^{\pi}_t &=  rB^{\pi}_t dt - (1+\theta_b)S_t dL_t + (1-\theta_s) S_t dM_t \\
  dY^{\pi}_t &=  dL_t - dM_t \\
  dS_t &=  S_t \left( \mu dt + \sigma dW_t \right).
 \end{cases}
 \end{equation} 
-The parameters $\theta_b$, $\theta_s \geq 0$ are the proportional transaction costs when buying and selling respectively.\\
-This portfolio is a generalization of the portfolio in the Merton problem (\ref{Merton_problem1}), where there is a new state variable $Y_t$ and a different way to represent the 
-action of the control. Here the control $\pi(t) = (L(t),M(t))$ is the trading strategy and represents the 
+for a particular strategy $\{\pi_t\}_{t \in [t_0,T]} := \{(L_t,M_t)\}_{t \in [t_0,T]}$.
+The parameters $\theta_b$, $\theta_s \geq 0$ are the proportional transaction costs when buying and selling respectively.
+This portfolio equation is a generalization of the portfolio in the Merton problem (\ref{Merton_problem1}), 
+where there is a new state variable $Y$ and the action of the controls is represented with a different approach.
+The control process $\{\pi_t\}_{t \in [t_0,T]} := \{(L_t,M_t)\}_{t \in [t_0,T]}$ represents the trading strategy and indicates the 
 cumulative number of shares bought and sold respectively in $[t_0,T]$.
-The strategy $\pi(t)$ is a right-continuous, $\mathcal{F}_t$-progressively measurable, nondecreasing process with bounded variation in every finite time interval and such that
+The strategy $\pi(t)$ is a cádlág, $\mathcal{F}_t$-progressively measurable, nondecreasing process with bounded variation in every finite time interval and such that
 $ \pi(t_0^-) = ( L(t_0^-) , M(t_0^-) ) = (0,0) $, allowing for an initial transaction at $t_0$.\\
-The authors do not require that the controls are continuous processes. Indeed $(dL_t,dM_t)$ are allowed to be singular with respect to the Lebegue measure $dt$.
-In the discontinuous points of $L_t$ and $M_t$ we indicate the process variation with $\Delta L_t= L(t)-L(t^-)$ and $\Delta M_t= M(t)-M(t^-)$.
-In order to understand better the mechanism, let us make a recap:
-\begin{itemize}
- \item Variation in the number of shares:
- $$\Delta Y^{\pi}_t =  \underbrace{\Delta L_t}_{\mbox{shares bought}} - \underbrace{\Delta M_t}_{\mbox{shares sold}} $$
- \item Variation in the bank account:
- $$ \Delta B^{\pi}_t =  - \underbrace{(1+\theta_b)S_t}_{\mbox{adjusted price}} \Delta L_t + \underbrace{(1-\theta_s) S_t}_{\mbox{adjusted price}} \Delta M_t $$
-\end{itemize}
+In the discontinuity points of $L_t$ and $M_t$ we indicate the process variation with $\Delta L_t= L(t)-L(t^-)$ and $\Delta M_t= M(t)-M(t^-)$.
+
+% In order to understand better the mechanism, let us make a recap:
+% \begin{itemize}
+%  \item Variation in the number of shares:
+%  $$\Delta Y^{\pi}_t =  \underbrace{\Delta L_t}_{\mbox{shares bought}} - \underbrace{\Delta M_t}_{\mbox{shares sold}} $$
+%  \item Variation in the bank account:
+%  $$ \Delta B^{\pi}_t =  - \underbrace{(1+\theta_b)S_t}_{\mbox{adjusted price}} \Delta L_t + \underbrace{(1-\theta_s) S_t}_{\mbox{adjusted price}} \Delta M_t $$
+% \end{itemize}
+% we can identify this problem as a singular stochastic control problem as described in Chapter \ref{singular_control}.
+
+
 \begin{Definition}
-We define the \textbf{cash value} function $c(y,s)$ as the value in cash when the shares in the portfolio are liquidated:  
+We define the \textbf{cash value} function $c(y,s)$ as the value in cash when the shares in the portfolio are liquidated, i.e.  
 long positions are sold and short positions are covered.
 \begin{equation}\label{cost_function}
 c(y,s) = \begin{cases} 
@@ -113,18 +126,18 @@ This constant may be interpreted as the \emph{credit availability} of the invest
 \begin{Definition}
 We define the \textbf{solvency region}:
 \begin{equation}\label{solvency_region}
- \mathcal{S} = \biggl\{ (B_t,Y_t,S_t) \in \R \times \R \times \R^+ : \mathcal{W}_t > -C  \biggr\}.
+ \mathcal{S} := \biggl\{ (b,y,s) \in \R \times \R \times \R^+ : b + c(y,s) > -C  \biggr\}.
 \end{equation} 
 \end{Definition}
 \begin{Definition}\label{admissible_strategies1}
-The set of \textbf{admissible trading strategies} $\Pi(B_0)$, is defined   
+The set of \textbf{admissible trading strategies} $\Pi(t_0,b,y,s)$, is defined   
 as the set of all right-continuous, nondecreasing, $\mathcal{F}_t$-progressively measurable processes  
-$\pi(t)$, such that $(B^\pi(t),Y^\pi(t),S(t))$ is a solution of (\ref{DPZ_porfolio_dynamics}) with initial values $( B_0,Y_0=0,S_0 )$, 
+$\{\pi_t\}_{t \in [t_0,T]}$, such that $(B^\pi(t),Y^\pi(t),S(t))$ is a solution of (\ref{DPZ_porfolio_dynamics}) with initial values $(B^\pi_{t_0} = b, Y^\pi_{t_0} = y, S_{t_0} = s)$, 
 and 
 \begin{equation}
  \mathcal{W}^{\pi}_t \in \mathcal{S}
 \end{equation}
-for $t \in [t_0,T]$.
+for $t \in [t_0,T]$ almost surely.
 \end{Definition}
 
 
