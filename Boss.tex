@@ -37,11 +37,13 @@
 \newcommand{\I}{\mathcal{I}}
 \newcommand{\F}{\mathcal{F}}
 \newcommand{\OO}{\mathcal{O}}
+\newcommand{\xx}{\mathrm{x}}
+
 
 \newtheorem{Theorem}{Theorem}[section]
 \newtheorem{Definition}{Definition}[section]
 \newtheorem{Remark}{Remark}
-
+\newtheorem{scheme}[]{Scheme}
 
 \newtheoremstyle{exampstyle}
 {\topsep} % Space above
@@ -68,6 +70,15 @@
 %\newcommand{\hsp}{\hspace{20pt}}
 %\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
 
+\makeatletter
+%\newcommand{\ALOOP}[1]{\ALC@it\algorithmicloop\ #1%
+%  \begin{ALC@loop}}
+%\newcommand{\ENDALOOP}{\end{ALC@loop}\ALC@it\algorithmicendloop}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\newcommand{\algorithmicbreak}{\textbf{break}}
+\newcommand{\BREAK}{\STATE \algorithmicbreak}
+
 
 \graphicspath{{./pics/}}
 
@@ -79,13 +90,16 @@
 \dominitoc[n] % Initialization
 \tableofcontents
 
-%\input{./Introduction.tex}
+\frontmatter
+\input{./Introduction.tex}
+
+\mainmatter
 \input{./Cap1_in.tex}
-%\input{./Cap2_in.tex}
-%\input{./Cap3_in.tex}
+\input{./Cap2_in.tex}
+\input{./Cap3_in.tex}
 \input{./Cap4_in.tex}
 \input{./Cap5_in.tex}
-%\input{./Cap6_in.tex}	
+\input{./Cap6_in.tex}	
 
 
 %\pagenumbering{roman}

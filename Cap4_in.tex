@@ -288,17 +288,18 @@ When the control space $A$ is unbounded, the Hamiltonian (\ref{Hamiltonian}) may
 \end{equation}
 Let us assume also that the control influences linearly the dynamics of the system and the objective function.
 \begin{align}\label{linear_control}
- & b(t,x,a) = \hat b(t,x) + a, \quad \sigma(t,x,a) = \hat \sigma(t,x), \\ 
- & \gamma(t,x,a,z) = \hat \gamma(t,x,z), \quad f(t,x,a) = \hat f(t,x) + a. 
+ & b(t,x,a) = \hat b(t,x) + \kappa(t,x) a, \quad \sigma(t,x,a) = \hat \sigma(t,x), \\ 
+ & \gamma(t,x,a,z) = \hat \gamma(t,x,z), \quad f(t,x,a) = \hat f(t,x) + h(t,x) a. 
 \end{align}
 The Hamiltonian becomes
 \begin{align*}
- \mathcal{H}(t,x,p,M,I^a) =& \biggl( \hat f(t,x) \, + \hat b(t,x) p \\ \nonumber
-              &+ \frac{1}{2} \mbox{Tr} \bigl( \sigma(t,x)\sigma^T(t,x) \, M \bigr) +\hat I \biggr) + \underbrace{\sup_{a \in A} \biggl( a(p + 1) \biggr) }_{\hat H(p)} 
+ \mathcal{H}(t,x,p,M,I^a) =& \biggl( \hat f(t,x) \, + p \, \hat b(t,x) \\ \nonumber
+              &+ \frac{1}{2} \mbox{Tr} \bigl( \sigma(t,x)\sigma^T(t,x) \, M \bigr) +\hat I \biggr) + 
+              \underbrace{\sup_{a \in A} \biggl( \bigl( p \, \kappa(t,x) + h(t,x) \bigr) a \biggr) }_{\hat H(p)} 
 \end{align*}
-If for some $a\in A$ we have $a(1+p)>0$, then $\hat H(p) = \infty$. We can define 
+If for some $a\in A$ and for fixed $(t,x)$ we have $\bigl( p \, \kappa(t,x) + h(t,x) \bigr) a>0$, then $\hat H(p) = \infty$. We can define 
 \begin{equation}
- H(p) = \sup_{a \in \hat K} \biggl( a(p + 1) \biggr) \quad \mbox{ with } \quad \hat K = \{ a \in A: |a|=1 \}
+ H(p) = \sup_{a \in \hat K} \biggl( \bigl( p \, \kappa(t,x) + h(t,x) \bigr) a \biggr) \quad \mbox{ with } \quad \hat K = \{ a \in A: |a|=1 \}
 \end{equation}
 such that
 \begin{equation}
@@ -330,21 +331,35 @@ Let us consider a state system governed by the following SDE:
  dX_t =& \hat b(t,X_{t-}) dt + \hat \sigma (t,X_{t-}) dW_t \\ \nonumber
       &+ \int_{\R} \hat \gamma(t,X_{t-},z) \tilde N(dt,dz) + \kappa(t,X_{t-}) d\xi_t .
 \end{align}
-where $\kappa : [0,T] \times \R^n \to \R^n$ is continuous. 
-The process $\xi : [0,T] \times \Omega \to \R^n$ is an $\mathcal{F}_t$-progressively measurable, cádlág, bounded variation, 
-non-decreasing process, with $\xi(0^-) = 0$.   
+where $\kappa : [0,T] \times \R^n \to \R^{n \times m}$ is continuous. 
+The m-dimensional process $\xi : [0,T] \times \Omega \to \R^m$ is a predictable, cádlág, bounded variation, 
+non-decreasing process, with $\xi(0^-) = 0$. Let us denote with $\Pi$ the space of all controls $\xi$ and with $\Pi(t,x)$ the subset dependent on the current state $(t,x)$.   
 
-The objective function is:
+For $\tau$ defined in (\ref{exit_time_def}), the objective function is:
 \begin{equation}\label{singular_cost_functional}
- J^{\xi}(t,x) = \E_{t,x} \biggl[ \int_t^{\tau} f(s,X_s) ds + \int_t^{\tau} h(t,X_{t-}) d\xi(s) + g(\tau, X_{\tau}) \biggr] . 
+ J^{\xi}(t,x) = \E_{t,x} \biggl[ \int_t^{\tau} f(s,X_s) ds + \int_t^{\tau} h(s,X_{s^-}) d\xi(s) + g(\tau, X_{\tau}) \biggr] . 
 \end{equation}
-where $f$, $h$ and $g$ are continuous functions satisfying the quadratic growth condition. 
+where $f$, $h: [0,T] \times \R^n \to \R^{n \times m}$ and $g$ are continuous functions satisfying the quadratic growth condition. The value function is
 \begin{equation}\label{controlled_VF}
- V(t,x) = \sup_{\xi} J^{\xi}(t,x).
+ V(t,x) = \sup_{\Pi} J^{\xi}(t,x).
 \end{equation}
-
 Under certain assumptions, it can be proved that the value function (\ref{controlled_VF}) is a viscosity solution of a variational inequality 
-with a form as in (\ref{variational_inequality}).\\
+with a form as in (\ref{variational_inequality}).
+
+Let us assume that the value function satisfies the DPP. A straightforward modification of (\ref{DPP1}) and (\ref{DPP2}) yields the expressions: 
+\begin{Theorem} \textbf{DPP for singular control}:
+ \begin{itemize}
+  \item For all $\xi \in \Pi(t,x)$ and all stopping time $\theta \in \mathcal{T}_{t,\tau}$:
+  \begin{equation}\label{DPP11}
+   V(t,x) \geq \E_{t,x} \biggl[ \int_t^{\theta} f(s,X_s) ds + \int_t^{\theta} h(s,X_{s^-}) d\xi(s) + V(\theta, X_{\theta}) \biggr]. 
+  \end{equation}
+  \item For all $\epsilon > 0$, there exists $\xi \in \Pi(t,x)$ such that $\forall \theta \in \mathcal{T}_{t,\tau}$: 
+  \begin{equation}\label{DPP22}
+      V(t,x) \leq \E_{t,x} \biggl[ \int_t^{\theta} f(s,X_s) ds + \int_t^{\tau} h(s,X_{s^-}) d\xi(s) + V(\theta, X_{\theta}) \biggr] + \epsilon. 
+  \end{equation}
+ \end{itemize}
+\end{Theorem}
+
 
 \noindent
 In the previous section we derived the variational inequality using an heuristic argument. In this section, the assumptions (\ref{unbounded_set}) and (\ref{linear_control})

@@ -256,13 +256,13 @@ In all future calculations we consider the risk neutral VG parameters in Table \
 
 \begin{table}[!h]
 \centering
-{\begin{tabular}{||l|c|c|c||}
-\hline
- \multicolumn{4}{|c|}{Parameters} \\
-\hline
+{\begin{tabular}{llll}
+\toprule
+ \multicolumn{4}{c}{Parameters} \\
+\midrule
 $r$ & $\theta$ & $\sigma$ & $\kappa$ \\ 
 0.06 & -0.1 & 0.2 & 0.2 \\
-\hline
+\bottomrule
 \end{tabular}}
 \caption{$r$ is the risk free interest rate and $\theta, \sigma, \kappa$ are the risk neutral VG parameters.}
 \label{sample-table}
@@ -284,11 +284,12 @@ We compare the numerical results for European call and put options obtained with
  \item \emph{Multinomial}: We follow the algorithm proposed in the previous section. The number of time steps for all the computations is $N=2000$. In the table \ref{Convergence} 
  we show a convergence table for the prices of European calls, puts and American puts. It is straightforward to see that the convergence is quite fast.  
 \end{itemize}
-\begin{table}[]
-{\begin{tabular}{||l|c|c|c|c|c||}
-\hline
+\begin{table}[ht]
+\centering
+{\begin{tabular}{llllll}
+\toprule
   $N$ & Eu. Call & Eu. Put & Time & Am. Put & Time \\
-\hline
+\midrule
     50 & 4.41873125 & 2.08928091 & 0.001 & 2.36765911 & 0.007 \\
     100 & 4.41960265 & 2.09015381 & 0.002 & 2.37255454 & 0.02 \\
     200 & 4.41997010 & 2.09052201 & 0.004 & 2.37480218 & 0.07 \\
@@ -299,7 +300,7 @@ We compare the numerical results for European call and put options obtained with
     2000 & 4.42026098 & 2.09081357 & 0.10 & 2.37669869 & 6.80 \\
     2500 & 4.42026701 & 2.09081962 & 0.16 & 2.37673941 & 10.65 \\
     3000 & 4.42027102 & 2.09082364 & 0.2 & 2.37676652 & 14.78 \\
-  \hline
+  \bottomrule
 \end{tabular}}
 \caption{Convergence table for ATM European and American options with strike $K=40$ and $T=1$. The time unit is in seconds.}
 \label{Convergence}
@@ -327,19 +328,20 @@ In table \ref{Option_values} we compare directly the call/put numerical values o
 Pricing vanilla call and put European options is quite simple and the best approach is to use the closed formula derived in \cite{MCC98}.
 The big advantage of the multinomial method is in the computation of American options prices, where there is no closed formula and all the other approaches, 
 such as PIDEs and Least Squares Monte Carlo, are difficult to implement and much slower.
-\begin{table}[h!]
-{\begin{tabular}{||l|c|c|c|c||} 
-\hline
-\multicolumn{5}{|c|}{Different methods} \\
-\hline
+\begin{table}[ht]
+\centering
+{\begin{tabular}{lllll} 
+\toprule
+\multicolumn{5}{c}{Different methods} \\
+\midrule
 $S_0$ & PIDE Call & Multi Call & PIDE Put & Multi Put \\
-\hline
+\midrule
 36 & 2.1036 & 2.1131 & 3.7842 & 3.7837  \\
   38 & 3.1163 & 3.1051 & 2.7893 & 2.7756 \\
   40 & 4.4162 & 4.4203 & 2.0852 & 2.0908 \\
   42 & 5.8335 & 5.8309 & 1.5050 & 1.5014 \\
   44 & 7.4417 & 7.4524 & 1.1132 & 1.1229 \\
-\hline
+\bottomrule
 \end{tabular}}
 \caption{European Options, with strike $K=40$ and $T=1$.}
 \label{Option_values}
@@ -369,13 +371,13 @@ The run times for the multinomial algorithm are shown in the convergence table \
  \caption{American put option with strike $K=40$ and time to maturity 1 year. Comparison of PIDE prices and multinomial prices.}
  \label{AmVG}
 \end{figure}
-\begin{table}[!h]
-{\begin{tabular}{||l|r|r|r|r|r||}
-\hline
- \multicolumn{6}{|c|}{Prices comparison} \\
-\hline
+\begin{table}[ht]
+{\begin{tabular}{llllll}
+\toprule
+ \multicolumn{6}{c}{Prices comparison} \\
+\midrule
 $S_0$ & BS Eu. Put & VG Eu. Put & BS Am. Put & VG Am. Put & VG Am. PIDE Put \\
- \hline
+ \midrule
   30 & 8.1316 & 8.0809 & 10     & 10     & 10 \\
   32 & 6.5292 & 6.4055 & 8      & 8      & 8 \\
   34 & 5.1169 & 4.9851 & 6.0894 & 6      & 6 \\
@@ -390,7 +392,7 @@ $S_0$ & BS Eu. Put & VG Eu. Put & BS Am. Put & VG Am. Put & VG Am. PIDE Put \\
   52 & 0.2238 & 0.3015 & 0.2376 & 0.3242 & 0.3222 \\
   55 & 0.1178 & 0.1909 & 0.1243 & 0.2051 & 0.1990 \\
   60 & 0.0386 & 0.0880 & 0.0404 & 0.0942 & 0.0913 \\ 
- \hline 
+ \bottomrule
  \end{tabular}}
   \label{Option_values3}
   \caption{Values for European and American put options using Black-Scholes and Variance Gamma model. Strike $K=40$ and $T=1$. The BS volatility have same value of the VG volatility:  

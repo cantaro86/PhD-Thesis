@@ -8,7 +8,7 @@
 
 
 In asset pricing, one of the key issues is to be able to price options and other financial derivatives. 
-A \textbf{European call} option on a security with price process $\{S_t\}_ t$ (the so called underlying asset), is the right to 
+A \textbf{European call} option on a security with price process $\{S_t\}_{t>0}$ (the so called underlying asset), is the right to 
 buy the security at the predetermined exercise price $K$ (the strike). This right may be exercised at the expiration date $T$ of the option.
 The call option can be purchased at the price $C_t$ at time $t<T$.
 A \textbf{European put} option is similar, but gives the owner the right to sell the underlying asset at the strike price at expiration. 
@@ -22,7 +22,7 @@ Determining the correct price of an option is not a simple task.
 It requires a stochastic model for the dynamics of the underlying price and several assumptions on the market.
 This problem was solved for the first time in the celebrated paper of \cite{BS73}. 
 The Black-Scholes (BS) model is built on the concept of an \textbf{ideal market}, where all the following 
-conditions are fulfilled:
+conditions are fulfilled:  \todo{decide which of the following hypothesis need to be included or reformulate the statements}
 \begin{enumerate}
  \item \emph{There are no arbitrage possibilities (see [\ref{arbitrage_def}] below).}
  \item \emph{All participants are price takers (there is no market impact).}
@@ -81,11 +81,12 @@ As a consequence of the first fundamental theorem, under a risk neutral measure 
 \begin{equation}\label{derivative_price}
  D(0,t) \varTheta(t) = \E^{\Q} \bigl[ D(0,T) \varTheta(T) \big| \F_t \bigr] \quad \mbox{for} \quad 0\leq t \leq T.
 \end{equation}
-This is a fundamental formula that can be used to define the price of any assets or securities. For derivatives contracts, the portfolio $\varTheta(t)$ is the portfolio that
+This is a fundamental formula that can be used to define the price of any assets or securities. 
+When the asset is a derivative contract, $\varTheta(t)$ represent the values of the derivative itself. 
+If the market is complete (see definition below), $\varTheta(t)$ is the portfolio that perfectly
 replicates the payoff of the derivative, also called \emph{replicating portfolio}. The trading strategy used to replicate the payoff of a derivative contract is called \emph{hedging}. 
-Another important concept is the notion of complete market.
 \begin{Definition}
- A market model is \textbf{complete} if every derivative security can be hedged. 
+ A market model is \textbf{complete} if the payoff of every derivative security can be perfectly replicated. 
 \end{Definition}
 The ideal market assumed by Black-Scholes is complete. The completeness of a market is connected with the uniqueness of the EMM through the
 \textbf{second fundamental theorem of asset pricing}.
@@ -115,19 +116,20 @@ We consider the case $p=2$, because we are working with underlying processes wit
 
 The following theorem will be useful.
 \begin{Theorem}
- Let $\{X_t\}_t$ be a Lévy process with Lévy triplet $(b,\sigma,\nu)$, satisfying the assumption EM. The process $\{S_t\}_t$ with $\{e^{X_t}\}_t$ is a martingale if and only if
+ Let $\{X_t\}_{t>0}$ be a Lévy process with Lévy triplet $(b,\sigma,\nu)$, satisfying the assumption EM. The process $\{S_t\}_{t>0}$ with $\{e^{X_t}\}_{t>0}$ is a martingale if and only if
  \begin{equation}\label{martingale_b}
   b +\frac{1}{2} \sigma^2  + \int_{\R} \bigl( e^z-1 -z\mathbbm{1}_{\{ |z|<1 \}} \bigr) \nu(dz) = 0.
  \end{equation}
 \end{Theorem}
 \begin{proof}
- The SDE for $\{e^{X_t}\}_t$ has been computed in Eq. (\ref{exp_sde}). The exponential Lévy process is a martingale if and only if the drift is zero.
+ The SDE for $\{e^{X_t}\}_{t>0}$ has been computed in Eq. (\ref{exp_sde}). The exponential Lévy process is a martingale if and only if the drift is zero.
 \end{proof}
 Let us consider a stock price process described by the \emph{exponential Lévy model}
 \begin{equation}\label{ELM2}
  S_t = S_0 e^{L_t} = S_0 e^{rt + X_t}
 \end{equation}
-where $\{X_t\}_t$ is a Lévy process with Lévy triplet $(b,\sigma,\nu)$. Under a risk neutral measure $\Q$, the process $\{L_t\}_t$ is a Lévy process with triplet $(r+b,\sigma,\nu)$ 
+where $\{X_t\}_{t>0}$ is a Lévy process with Lévy triplet $(b,\sigma,\nu)$. Under a risk neutral measure $\Q$, the process $\{L_t\}_{t>0}$ 
+is a Lévy process with triplet $(r+b,\sigma,\nu)$ 
 satisfying (\ref{martingale_b}).  
 The discounted price is a $\Q$-martingale:
 \begin{equation}
@@ -147,9 +149,9 @@ Using the condition (\ref{martingale_b}) we obtain the fundamental relation
 \end{equation}
 The risk neutral dynamics of (\ref{ELM2}) is described by the SDE:
 \begin{equation}\label{RN_sde}
- d S_t = \; r S_{t-} dt +  \sigma S_{t-} dW_t \; + \int_{\R} S_{t-} (e^{z} - 1) \tilde N(dt,dz). 
+ d S_t = \; r S_{t^-} dt +  \sigma S_{t^-} dW_t \; + \int_{\R} S_{t^-} (e^{z} - 1) \tilde N(dt,dz). 
 \end{equation}
-For $f \in C^{2}(\R) \bigcap \mathcal{C}_2(\R)$, the associated infinitesimal generator is:
+For $f \in C^{2}(\R^+) \bigcap \mathcal{C}_2(\R^+)$, the associated infinitesimal generator is:
 \begin{align}\label{RN_inf_gen}
  \LL^S f(s) =& \; r s \frac{\partial f(s)}{\partial s}
 + \frac{1}{2} \sigma^2 s^2 \frac{\partial^2  f(s)}{\partial s^2}  \\ \nonumber
@@ -158,17 +160,19 @@ For $f \in C^{2}(\R) \bigcap \mathcal{C}_2(\R)$, the associated infinitesimal ge
 
 The derivative price $V(t,s)$ is the solution of a partial integro-differential equation according to the following theorem.
 \begin{Theorem}
- In an arbitrage free market, where the underlying price follows the exponential Lévy process (\ref{ELM2}),
- the price of any derivative security $V(t,s) \in C^{1,2}([t_0,T] \times \R) \bigcap \mathcal{C}_2([t_0,T] \times \R) $ 
- satisfies the PIDE
-\begin{equation}\label{derivative_PIDE}
- \frac{\partial V(t,s)}{\partial t} + \LL^{S} V(t,s) -r V(t,s) = 0,   
-\end{equation}
+ In an arbitrage free market, where the underlying price follows the exponential Lévy process (\ref{ELM2}), 
+ the price of any derivative security $V(t,s) \in C^{1,2}([t_0,T] \times \R^+) \bigcap \mathcal{C}_2([t_0,T] \times \R^+)$ 
+ with payoff $g(\cdot)$ such that $\E[g(S_T)]< \infty$, satisfies the PIDE
+\begin{align}\label{derivative_PIDE}
+ & \frac{\partial V(t,s)}{\partial t} + \LL^{S} V(t,s) -r V(t,s) = 0 \\
+ & V(T,s) = g(s),
+\end{align}
 where $\LL^S$ is the infinitesimal generator in (\ref{RN_inf_gen}). 
 \end{Theorem}
 \begin{proof}
- Consider the price of the security defined by the formula 
- (\ref{derivative_price}) with $\varTheta = V$, for any stopping time $0 \leq t \leq \tau \leq T$, we can use the law of iterated expectations, such that:
+ From the first theorem of asset pricing, in an arbitrage-free market every discounted asset is a martingale. 
+ Let us consider the formula 
+ (\ref{derivative_price}) with $\varTheta$ replaced by $V$. For any stopping time $\tau$ such that $0 \leq t \leq \tau \leq T$, we can use the law of iterated expectations:
  $$ D(0,t) V(t,s) = \E^{\Q}  \biggl[ \E^{\Q} \bigl[ D(0,T) V(T,S_T) \big| \F_{\tau} \bigr] \bigg| \F_t \biggr] = \E^{\Q} \bigl[ D(0,\tau) V(\tau,S_{\tau}) \big| \F_t \bigr]. $$
  The term inside the expectation can be written as $D(0,\tau) V(\tau,S_{\tau}) = D(0,t) V(t,s) + \int_t^{\tau} d\bigl(D(t,u) V(u,S_u)\bigr) du$. Using the It\=o product rule we obtain:
  $$ \E^{\Q} \biggl[ \int_t^{\tau} D(t,u) \biggl( \frac{\partial V(u,S_u)}{\partial u} + \LL^{S} V(u,S_u) -r V(u,S_u) \biggr) du \bigg| \F_t \biggr] = 0, $$
@@ -176,17 +180,6 @@ where $\LL^S$ is the infinitesimal generator in (\ref{RN_inf_gen}).
  so we can divide both sides by $\tau$ and take the limit for 
  $\tau \to 0$. Thanks to the mean value theorem and the dominated convergence theorem we can conclude the proof.
 \end{proof}
-
-
-
-
-
-
-
-
-
-
-
 
 
 Putting together the Eq. (\ref{derivative_PIDE}) and (\ref{RN_inf_gen}) we obtain the PIDE for the option price with the associated boundary conditions.
@@ -218,7 +211,7 @@ and consider $ X_t = \log \left( \frac{S_t}{S_0} \right)$ with dynamics describe
 \begin{equation}\label{SDE_log_var}
  dX_t = \biggl( b + \int_{|x|\geq 1}x \nu(dx) \biggr) dt \; + \sigma dW_t + \int_{\R} z \tilde N(dt,dz),
 \end{equation}
-as consequence of Eq. (\ref{Levy_Ito2}). It is better to represent the equation using the parameter $\mu$ in order the make the substitution (\ref{mu=r}). Using the It\=o formula,
+as in Eq. (\ref{Levy_Ito2}). It is better to represent the equation using the parameter $\mu$ in order the make the substitution (\ref{mu=r}). Using the It\=o formula,
 considering the Eq. (\ref{exp_sde2}) for the dynamics of $S_t$, we obtain
 \begin{align*}
  dX_t = d\biggl( \log \frac{S_t}{S_0}\biggr) =& \frac{1}{S_t} S_t \mu dt + \frac{1}{S_t} S_t \sigma dW - \frac{1}{2} \frac{1}{S_t^2} S_t^2 \sigma^2 dt \\
@@ -234,7 +227,7 @@ For $f \in C^{2}(\R) \bigcap \mathcal{C}_2(\R)$, the corresponding infinitesimal
           &+ \frac{1}{2} \sigma^2 \frac{\partial^2 f(x)}{\partial x^2} 
           + \int_{\R} \bigl( f(x+z)- f(x) - z \frac{\partial f(x)}{\partial x} \bigr) \nu(dz).
 \end{align}
-Of course this can be done faster by changing the variable in Eq (\ref{inf_gen_exp_levy}), $s = e^x$ and $\tilde V(t,x) := V(t,s)$. The operators change as
+Of course this can be done faster by changing the variable in Eq (\ref{PIDE_option}), $s = e^x$ and $\tilde V(t,x) := V(t,s)$. The operators change as
 \begin{equation}\label{log_var}
 s \frac{\partial}{\partial s} = \frac{\partial}{\partial x}, \hspace{2em} 
 s^2 \frac{\partial^2}{\partial s^2} = \frac{\partial^2}{\partial x^2} - \frac{\partial}{\partial x} . 
@@ -246,7 +239,7 @@ After the change of variables, the option PIDE, using (\ref{mu=r}), becomes
           &+ \frac{1}{2} \sigma^2 \frac{\partial^2 \tilde V(t,x)}{\partial x^2} 
           + \int_{\R} \bigl( \tilde V(t,x+z)- \tilde V(t,x) - z \frac{\partial \tilde V(t,x)}{\partial x} \bigr) \nu(dz)  = 0.
 \end{align}
-With terminal conditions:\\
+With boundary conditions:\\
 CALL:
 \begin{itemize}
  \item Terminal:
@@ -293,30 +286,30 @@ and the \textbf{central difference}
 The use of the forward and backward difference approximation leads to the \textbf{explicit} and \textbf{implicit} finite difference 
 schemes respectively. The central difference is not used for the time variable because it leads to bad numerical schemes.
 
-For the space variable, it is common to use the central approximation.
-For second order finite difference, such as $\partial^2 V(t,x)/\partial x^2$, we can define a symmetric finite difference approximation as the 
-forward difference of the backward difference to the first derivative, or the backward difference of the forward difference of the first derivative. 
-In either case we obtain the \textbf{symmetric central difference} approximation
+For the space variable instead, it is quite common to approximate the first order derivative by central differences.
+For second order derivatives in space, we can define the \textbf{symmetric central difference} approximation
 \begin{equation}
  \frac{\partial^2 V(t,x)}{\partial x^2} \approx \frac{V(t,x+\Delta x) + V(t,x-\Delta x) - 2V(t,x)}{ \Delta x^2} + \mathcal{O}(\Delta x^2).
 \end{equation}
-When considering PIDEs, there is an additional integral term that can be replaced by Riemann sums. But first it is necessary to localize the problem and truncate the integral.
+When considering PIDEs there is an additional integral term to discretize, 
+and can be replaced by Riemann sums. But first it is necessary to localize the problem and truncate the integral.
 
 Since numerical computations can only be performed on a finite domain, the first step is to reduce the PIDE to a bounded domain.
 The initial problem
 $$  \frac{\partial V(t,x)}{\partial t} + \LL^{X} V(t,x) -r V(t,x) = 0  \quad \mbox{ for } \quad t,x \in [t_0,T]\times \R $$
-is restricted to the domain $ t,x \in [t_0,T]\times ]-A_1,A_2[. $
-In order to have a well posed problem, we need to add artificial boundary conditions for $V(t,x)$ at everywhere outside $]-A_1,A_2[$, and not only at the boundaries $-A_1, A_2$.
+is restricted to the finite domain $ [t_0,T]\times [A_1,A_2]$, with $A_1 < A_2$.
+In order to have a well posed problem, we need to impose the boundary conditions for $V(t,x)$ everywhere outside $[t_0,T]\times [A_1,A_2]$, 
+and not only at the lateral boundaries $A_1$ and $A_2$.
 
-The next step is to replace the domain $[t_0,T]\times ]-A_1,A_2[$ by a discrete grid:
+The next step is to replace the domain $[t_0,T]\times [A_1,A_2]$ by a discrete grid:
 For $n = 0,1, ... N \in \N$, define the discrete time step $ \Delta t = \frac{T - t_0}{N} $ such that
-$t_n = t_0 + n \Delta t$. For $i = 0,1, ... M \in \N$, define the discrete time step $ \Delta x = \frac{A_1 + A_2}{N} $ such that
-$x_i = -A_1 + i \Delta x$.
-The grid is divided into equally spaced \textbf{nodes} at distance $\Delta x$ in the x-axis, and at distance $\Delta t$ in the t-axis.
-The mesh points have the form $(n \Delta t, i \Delta x)$.
+$t_n = t_0 + n \Delta t$. For $i = 0,1, ... M \in \N$, define the discrete space step $ \Delta x = \frac{A_2 - A_1}{M} $ such that
+$x_i = A_1 + i \Delta x$.
+The grid is divided into equally spaced \textbf{nodes} of distance $\Delta x$ in the x-axis, and of distance $\Delta t$ in the t-axis.
+The mesh points have the form $(t_0 + n \Delta t, A_1 + i \Delta x)$.
 At this point we concern ourselves only with the values of $V(t,x)$ on the mesh nodes. We write 
-$$ V(n \Delta t, i \Delta x) = V^n_i .$$
-The integral terms in (\ref{PIDE_log}) are restricted to the bounded domain $[-B_1,B_2]$
+$$ V(t_0 + n \Delta t, A_1 + i \Delta x) = V^n_i .$$
+The integral terms in (\ref{PIDE_log}) are restricted to the bounded domain $[-B_1,B_2]$, with $B_!,B_2 \in \R$.
 \begin{align*}
 &  \frac{\partial V(t,x)}{\partial t} - r V(t,x) 
           + \biggl( r -\frac{1}{2}\sigma^2 - \int_{-B_1}^{B_2} \bigl( e^z-1-z \bigr) \nu(dz) \biggr) \frac{\partial V(t,x)}{\partial x} \\ \nonumber
@@ -331,37 +324,37 @@ which is equivalent to
           + \int_{-B_1}^{B_2} \bigl( V(t,x+z)- V(t,x) \bigr) \nu(dz)  = 0 \\ \nonumber
           & \mbox{ for } \quad t,x \in [t_0,T]\, \times \, ]-A_1,A_2[.
 \end{align}
-The computational domain of interest becomes $[t_0,T]\, \times \, ]-A_1-B_1,A_2+B_2[$, where in the regions $[t_0,T]\, \times \, ]-A_1-B_1,-A_1[$ and 
-$[t_0,T]\, \times \, ]A_2,A_2+B_2[$ we define the boundary conditions.
+The computational domain of interest becomes $[t_0,T]\, \times \, [A_1-B_1,A_2+B_2]$, where in the regions $[t_0,T]\, \times \, [A_1-B_1,A_1]$ and 
+$[t_0,T]\, \times \, [A_2,A_2+B_2]$ we need to define the boundary conditions.
 
 In order to solve the problem (\ref{restricted_domain}) we consider the \textbf{IMEX} (Implicit-Explicit) method proposed in \cite{CoVo05b}.
-The integro-differential operator is splitted in two parts:
+The integro-differential operator is split in two parts:
 $$ \frac{\partial V(t,x)}{\partial t} + \LL V(t,x) -r V(t,x) = 0 $$
 becomes
 $$ \frac{\partial V(t,x)}{\partial t} + D V(t,x) + J V(t,x) -r V(t,x) = 0 $$
 where $D$ and $J$ stand for the differential and integral parts of $\LL$, respectively. We can replace $D V(t,x)$ with a finite difference approximation $D_{\Delta} V(t,x)$ 
 and $J V(t,x)$
 with the \textbf{trapezoidal quadrature}\footnote{The discretization of the integral depends on the activity of the Lévy process under consideration.
-We will see in the next application the two cases with finite or infinite activity.} approximation $J_{\Delta} V(t,x)$, and use the following IMEX time-stepping scheme:
+We will see in the next sections the two cases with finite or infinite activity.} approximation $J_{\Delta} V(t,x)$, and use the following IMEX time-stepping scheme:
 \begin{equation}
  \frac{V^{n+1}_{i} -V^{n}_{i}}{\Delta t} + D_{\Delta} V^{n} + J_{\Delta} V^{n+1} - r V^{n} = 0. 
 \end{equation}
-We treat the integral part in an explicit time stepping in order to avoid the inversion of the dense matrix $J_{\Delta}$. 
-We now look discuss the numerical solution of the PIDE (\ref{PIDE_log}) for the BS, Merton and VG processes. 
+We treat the integral part with an explicit time stepping in order to avoid the inversion of the dense matrix $J_{\Delta}$. 
+In the next sections let us discuss about the application of the IMEX scheme to the numerical solution of the PIDE (\ref{PIDE_log}) for the BS, Merton and VG processes. 
 
 
 \subsection{Black and Scholes PDE}
 
 The \cite{BS73} model assumes a geometric Brownian motion for the dynamics of the underlying, as we saw in (\ref{GBM2}).
-It corresponds to the exponential of a Lévy process $X_t$ with triplet $(b,\sigma,0)$, with Lévy measure $\nu = 0$.
+It corresponds to the exponential of a Lévy process $\{X_t\}_{t>0}$ with triplet $(b,\sigma,0)$, with Lévy measure $\nu = 0$.
 The BS PDE (\ref{PIDE_log}) in log-variables turns out to be
 \begin{equation}\label{BS_PDE}
 \frac{\partial  V(t,x)}{\partial t}  
           + \biggl( r -\frac{1}{2}\sigma^2 \biggr) \frac{\partial V(t,x)}{\partial x}
           + \frac{1}{2} \sigma^2 \frac{\partial^2  V(t,x)}{\partial x^2} - r  V(t,x)  = 0.
 \end{equation}
-This is the simplest case. The Lévy measure is identically null and therefore there is no integral term.
-The domain is restricted to $[t_0,T]\, \times \, ]-A_1,A_2[$. We apply the IMEX scheme, that in this case is a fully implicit scheme.  
+The Lévy measure is identically null and therefore there is no integral term.
+The domain is restricted to $[t_0,T]\, \times \, [A_1,A_2]$. We apply the IMEX scheme, that in this case is a fully implicit scheme.  
 The discretized equation becomes
 \begin{align}
 &\frac{V^{n+1}_{i} -V^{n}_{i}}{\Delta t} + 
@@ -497,7 +490,7 @@ But since we have to restrict the unbounded domain to a bounded domain, we consi
 \end{align*}
 with $\hat m = \int_{-B_1}^{B_2} \bigl( e^z-1 \bigr) \nu(dz)$ and $\hat \lambda = \int_{-B_1}^{B_2} \nu(dz)$.
 
-For $K_1,K_2 \in \R$ we choose $B_1,B_2$ such that $ \bigl[-B_1,B_2\bigr] = \bigl[ ( -K_1-1/2 )\Delta x , ( K_2+1/2 )\Delta x \bigr] $.
+For $0 < K_1 < K_2$ we choose $B_1,B_2$ such that $ \bigl[-B_1,B_2\bigr] = \bigl[ ( -K_1-1/2 )\Delta x , ( K_2+1/2 )\Delta x \bigr] $.
 \begin{equation}\label{trap_quad}
  \int_{-B_1}^{B_2}  V(t_n,x_i+z) \nu(dz) \approx \sum_{k = -K_1}^{K_2} \nu_k V^{n}_{i+k}
 \end{equation}
@@ -642,7 +635,7 @@ Using this generator and equations (\ref{derivative_PIDE}) and (\ref{mu=r}), the
  &+ \int_{|z| \geq \epsilon} V(t,x+z) \nu(dz) = (\lambda_{\epsilon} + r) V(t,x).
 \end{align}
 This equation is very similar to equation (\ref{Merton_PIDE}), except for the truncation in the integral. 
-At this point we can restrict the computational domain on $]-A_1,A_2[$ and the integral region on $[-B_1,B_2]$ and using the same discretization
+At this point we can restrict the computational domain on $[A_1,A_2]$ and the integral region on $[-B_1,B_2]$ and using the same discretization
 used for the Merton PIDE, we can solve the problem with the IMEX scheme.\\
 \begin{table}[h!]
 \begin{center}

@@ -83,27 +83,25 @@ The topics of the thesis are based on the two papers
 M.R. Grossinho, published in the book of \cite{Matthias}.\\
 Portfolio models with transaction costs and Lévy processes have already been introduced in the financial literature, see for instance \cite{OkSu01}, \cite{BKR01} and \cite{Kab16} 
 but these models have never been used to price options.  
-We analyze its theoretical properties, such as the existence of a viscosity solution \todo{decide if put the proofs of viscosity solutions} 
-of the nonlinear \todo{This part can be modified later}
-Partial Integro-Differential Equation (PIDE) associated to the model, and develop numerical methods to solve the problem under different assumptions, i.e. ignoring the 
-possibility of default and not.
-We present numerical results that are new in the literature and compare them with numerical values obtained from existing reference models. We also prove that 
+We present and analyze the theoretical properties of the model, and prove the existence of a viscosity solution 
+of the nonlinear
+Partial Integro-Differential Equation (PIDE) associated to the optimization problem. We also develop numerical methods to solve the problem under different assumptions, i.e. ignoring the 
+default event and not.
+We present new numerical results and compare them with numerical values obtained from existing reference models. We also prove that 
 the proposed numerical scheme is monotone, stable and consistent, and its solution converges to the viscosity solution of the continuous problem.
-\todo{I should add here the last results on computational time and rate of convergence.}
 
-\todo{In the following lines the contents of the chapters can be modified later. Check it in the end.}
-In Chapter \ref{Chapter1}, we introduce the general theory for Lévy processes, with a deeper focus on the particular Lévy processes that are commonly used in financial modeling:  
+In Chapter \ref{Chapter1}, we introduce the general theory for Lévy processes, with a deeper focus on the particular Lévy processes used in this thesis for financial modeling:  
 the \emph{Merton} and \emph{Variance Gamma} processes.   
 In Chapter \ref{Chapter2} we make a small summary of the main assumptions and theorems of the \emph{No arbitrage theory} for derivative pricing. After that we present 
-the most common numerical finite differences methods used to solve the option PIDE. 
+the most common numerical finite differences methods used to solve the option pricing PIDEs. 
 The Chapter \ref{Chapter3} is a digression based on the paper \cite{Canta2} on the application of the multinomial method to solve option pricing problems under the Variance Gamma process. 
-In Chapter \ref{Chapter4} we present the general optimal control theory for jump processes and the definition of viscosity solutions. 
-Under this framework, in Chapter \ref{Chapter5}, we will develop the model for option pricing in presence of proportional transaction costs. This model is a singular stochastic
+In Chapter \ref{Chapter4} we present the optimal control theory for regular and singular controls, and the definition of viscosity solutions. 
+In Chapter \ref{Chapter5}, we will develop the model for option pricing in presence of proportional transaction costs. This model is a singular stochastic
 control problem, which is a generalization of the \cite{DaPaZa93} model. We derive the general HJB equation and prove that the value function of the optimization problem 
-can be interpreted as its viscosity solution.  
+can be interpreted as the viscosity solution of the HJB equation.  
 In Chapter \ref{Chapter6} we solve the problem numerically. 
 First, we consider the simplified problem where the number of variables is reduced by one thanks to the assumption of no default and the property of the exponential utility. 
 The numerical results are also presented in \cite{Canta} and \cite{Matthias}.\\
-Then we solve the general problem with four variables, considering the possibility of default. In the end we also show that the moment matching method developed for 
+Then we solve the general problem with four variables, considering the possibility of default. Last, we also show that the moment matching method developed for 
 the Variance Gamma process, can be used to solve these kind of problems with good performance. 
 
