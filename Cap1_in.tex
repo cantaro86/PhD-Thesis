@@ -16,7 +16,7 @@ Usually it is common to model the market dynamics in a continuous time setting b
 where $S_t$ is the spot price of a financial asset at time $t$.\\
 Log-returns are preferred to the \emph{relative price change} $(S_{t+\Delta t} - S_t )/S_t$, because the sum of log-returns 
 over $n$ consecutive periods is the log-return of the period $n \Delta t$.
-The reason to use the log-returns rather than modeling directly the prices $S_t$, is that they have better statistical properties.
+The reason to use the log-returns rather than modeling directly the prices $\{S_t\}_{t \geq0}$, is that they have better statistical properties.
 Furthermore, log-returns can assume negative values, and thus can be modeled by distributions
 with ``nicer'' analytical properties.\\
 Since the renowned paper of \cite{BS73}, a common assumption is that $t$-log-returns are 
@@ -38,15 +38,15 @@ is not a very good approximation of reality.
 Indeed, empirical return distributions have substantially 
 more mass around the origin and along the tails (\emph{heavy tails}), see \cite{Cont01}.
 This means that normal distribution underestimates the probability of large positive and negative returns. 
-In the real market instead, returns manifest frequently high peaks, that comes more and more evident when 
+In the real market instead, returns manifest frequently high peaks, that come more and more evident when 
 looking at short time scales.
 The return peaks correspond to sudden large changes in the price, that cannot be reproduced by the dynamics of the Brownian motion.\\
 The Brownian motion, which is a scale invariant process with continuous paths, can be a good approximation for long 
 time scales ($\Delta t \sim$ months to years), but is not a good model to reproduce 
 the peaks of the log-returns at short time scales.
 
-In the last thirty years, a lot of research has been done on processes with jumps and their applications to the pricing of financial derivatives.\\
-A Lévy processes belong to the bigger family of semimartingales.
+In the last thirty years, a lot of research has been done on processes with jumps and their applications to financial derivatives.\\
+Lévy processes belong to the bigger family of semimartingales.
 If $\{X_t\}_{t \ge 0}$ is a Lévy process, there are relevant quantities such as the stochastic integral $\int_0^t \phi dX_t$ or any non-linear function
 $f(t,X_t)$ that are not Lévy processes anymore. For some applications it is important to consider the larger class of processes of \emph{semimartingales}, which is closed
 with respect to integration and non-linear transformations.
@@ -55,21 +55,20 @@ of \cite{Protter} and \cite{JacodShi}.\\
 \cite{Sato} is a complete reference book for the theory of Lévy
 processes and their analytical properties. 
 \cite{Applebaum} presents Lévy processes with more emphasis on stochastic calculus and stochastic differential equations (SDEs).
-For a comprehensive guide to recent applications of Lévy processes in finance some good sources are the book of 
-\cite{Cont} and \cite{Schoutens} and references therein.\\
-Some of the most relevant jump-diffusion models applied in finance are the Merton jump-diffusion model \cite{Me76} and the
-double exponential jump-diffusion model by \cite{Kou02}.
-Pure jumps models have been studied in \cite{GeMaYo01} and \cite{GeMaYo98}. Popular models
-are the $\alpha$-stable \cite{Ma63} \cite{BoPoCo97} \cite{alpha09},		
-Variance-Gamma (VG) \cite{MaSe90} \cite{MCC98}, 
-Normal-Inverse-Gaussian (NIG) \cite{BN98}, hyperbolic Lévy processes \cite{EbKe95} and CGMY \cite{CGMY02}.
-
-This chapter makes a review of the basic properties and definitions of Lévy processes.
-In the thesis only 1-dimesional Lévy processes are considered. 
-The interested reader can find all the following definitions extended for multidimensional processes in \cite{Applebaum}.\\ 
-A particular emphasis is given to the conditions for the existence of solutions of jump-diffusion type SDEs, 
-which can be applied to the particular case of exponential Lévy processes.
-In the end of the chapter there is a summary of the theoretical features of the particular exponential Lévy models used as main examples in this thesis: 
+For a comprehensive guide to applications of Lévy processes in finance some good sources are the books of 
+\cite{Cont} and \cite{Schoutens}.\\ 
+Among the most popular Lévy processes applied to finance, it is worth to mention:
+\begin{itemize}
+ \item[-] the Merton jump-diffusion model \cite{Me76}
+ \item[-] the Kou jump-diffusion model \cite{Kou02}
+ \item[-] the $\alpha$-stable \cite{Ma63}, \cite{BoPoCo97}, \cite{alpha09}
+ \item[-] the Variance-Gamma (VG) \cite{MaSe90}, \cite{MCC98}
+ \item[-] the Normal-Inverse-Gaussian (NIG) \cite{BN98}
+ \item[-] hyperbolic Lévy processes \cite{EbKe95}
+ \item[-] Carr-Geman-Madan-Yor (CGMY) model \cite{CGMY02}
+\end{itemize}
+This chapter reviews the most important points concerning the theory of Lévy processes and the stochastic calculus applied to jump processes.
+A remarkable emphasis is given to the presentation of the exponential Lévy models used in this thesis: 
 the \emph{Merton model} and the \emph{Variance Gamma model}.
 
 \section{Properties of Lévy processes}
@@ -80,12 +79,12 @@ Let $\{X_t\}_{t \ge 0}$ be a stochastic process defined on a probability space $
 where $\mathcal{F}_t$ is the natural filtration\footnote{The natural filtration is defined as $\mathcal{F}_{t}^X = \sigma\{X(s) :
 0\leq s \leq t\} $.} to which the process $\{X_t\}_{t \ge 0}$ is adapted.\\ 
 \begin{Definition}\label{LevyDef}
-We say that $X_t$ is a \textbf{Lévy Process} if:
+We say that $\{X_t\}_{t \ge 0}$ is a \textbf{Lévy Process} if:
 \begin{itemize}
- \item[(\textbf{L1})] $X(t=0) = 0$.
- \item[(\textbf{L2})] $X(t)$ has independent and stationary increments:\\ For each $0<t_1<t_2 <... <t<\infty$
-   $$ X(t_{j+1})-X(t_j) \mbox{are independent.} $$
-   $$ X(t_{j+1})-X(t_j) \overset{d}{=} X(t_{j+1}- t_{j}). $$ 
+ \item[(\textbf{L1})] $X_{t=0} = 0$.
+ \item[(\textbf{L2})] $\{X_t\}_{t \ge 0}$ has independent and stationary increments:\\ For each $0<t_1<t_2 <... <t<\infty$
+   $$ X_{t_{j+1}} - X_{t_j} \mbox{are independent.} $$
+   $$ X_{t_{j+1}} - X_{t_j} \; \overset{d}{=} \; X_{t_{j+1}- t_{j} }. $$ 
  \item[(\textbf{L3})] $\{X_t\}_{t \ge 0}$ is stochastically continuous: $\forall \epsilon > 0 $ and $\forall t \ge 0$  $$\lim_{h\to 0} \PP(|X_{t+h}-X_t| > \epsilon)=0. $$ 
 \end{itemize}
 \end{Definition}
@@ -94,31 +93,40 @@ paths, i.e. paths which are right-continuous and have left limits. \\
 Lévy processes are intrinsically connected with infinitely divisible distributions. In particular the Lévy-Khintchine formula 
 for infinitely divisible random variables, is an essential tool for the classification of the Lévy processes by the form of their
 characteristic functions.\\
-The following are some basic definitions for random variables.  
+In the following let us present some basic definitions for random variables. In $\R^n$ we indicate a vector of random variables with $X = (X^1, ..., X^n)$.\footnote{ 
+Let us recall some basic definitions. We denote the inner product for $x,y \in \R^n$ by
+$$(x,y) := \sum_{i=1}^n x_i y_i ,$$ and the Euclidean norm by $$|x| := \sqrt{(x,x)}.$$ }
 
 \begin{Definition} \label{chf}
-Let $X:(\Omega,\mathcal{F}, \PP) \to \R$.\\ 
-The \textbf{Characteristic function} $\phi_X:\R \to \C$  of $X$, is defined by
+Let $X:(\Omega,\mathcal{F}, \PP) \to \R^n$.\\ 
+The \textbf{Characteristic function} $\phi_X:\R^n \to \C$  of $X$, is defined by
 \begin{align}
-\phi_{X}(u) &= \E [e^{iuX}] \nonumber \\
-            &= \int_{\Omega} e^{iuX} \PP(d\omega) \nonumber \\
-            &= \int_{\R^d} e^{iux} f_X(dx).
+\phi_{X}(u) &= \E [e^{i(u,X)}] \nonumber \\
+            &= \int_{\Omega} e^{i(u,X)} \PP(d\omega) \nonumber \\
+            &= \int_{\R^n} e^{i(u,x)} f_X(dx).
 \end{align}
-with $f_X$ the \textbf{probability density function} (pdf) of $X$.
+for each $u \in \R^d$. We indicated with $f_X$ the \textbf{probability density function} (pdf) of $X$.
 \end{Definition}
-If $\E[|X^{n}|] < \infty$ with $n \in \N$ then
+For each $1 \leq j \leq n$ and $p \in \N$ , if $\E\bigl[ |(X^j)^{p}| \bigr] < \infty$, then 
 \begin{equation}\label{moments}
- \E[X^{n}] = i^{-n}\frac{\partial^n}{\partial u^{n}} \phi_X(u) \biggr|_{u=0} .
+ \E\biggl[ (X^j)^{p} \biggr] = i^{-p}\frac{\partial^p}{\partial u_j^{p}} \phi_X(u) \biggr|_{u=0} .
 \end{equation}
-With this property it is very easy to compute moments of all order as long as we know the analytic form 
+With this property it is straightforward to compute the moments of each component of the random vector, as long as we know the analytic form 
 of the characteristic function.
+The following properties hold for all $p>0$:
+\begin{itemize}
+ \item $\E \bigl[ |X|^p \bigr] < \infty $ if and only if $\E \bigl[ |(X^j)|^p \bigr] < \infty $ for each $1 \leq j \leq n$. 
+ \item If $\E \bigl[ |X|^p \bigr] < \infty $ then $\E \bigl[ |X|^q \bigr] < \infty $ for all $0 < q < p$.
+\end{itemize}
+For more information see sections 1.1.2 and 1.1.6 of \cite{Applebaum}.
 \begin{Definition}\label{inf_div}
- Let X be a random variable taking value in $\R$.
- We say that X is \textbf{infinitely divisible} if for all $n \in \N$ there exist i.i.d. random variables $X_1^{(n)},...,X_n^{(n)}$
+ Let $X:(\Omega,\mathcal{F}, \PP) \to \R^n$.
+ We say that X is \textbf{infinitely divisible} if for all $m \in \N$ there exist i.i.d. random variables $X_1^{(m)},...,X_m^{(m)}$
  such that
  \begin{equation}
-  X \overset{d}{=} X_1^{(n)} + ... + X_n^{(n)}.
+  X \overset{d}{=} X_1^{(m)} + ... + X_m^{(m)}.
  \end{equation}
+ The superscript $(m)$ is to remember that the random variables depend on the initial choice of $m\in \N$.
 \end{Definition}
 
 \begin{Theorem}
@@ -126,17 +134,17 @@ of the characteristic function.
 \end{Theorem}
 \begin{proof}
  For each $n \in \N$ we can write 
- $$ X(t) = X_1^{(n)}(t) + ... + X_n^{(n)}(t) $$
- where $ X_k^{(n)}(t) = X(\frac{kt}{n}) - X(\frac{(k-1)t}{n}) $ are i.i.d. by definition (\ref{LevyDef}, L2).
+ $$ X_t = \bigl( X_1^{(m)} \bigr)_t + ... + \bigl( X_m^{(m)} \bigr)_t $$
+ where $ \bigl( X_k^{(m)} \bigr)_t = X_{\frac{kt}{m}} - X_{\frac{(k-1)t}{m}} $ are i.i.d. by definition (\ref{LevyDef}, L2).
 \end{proof}
 
 The opposite implication also holds. 
 \begin{Theorem}
 Every infinitely divisible distribution is the distribution of a Lévy process. 
 \end{Theorem}
-A proof of the previous theorem can be found in \cite{Applebaum} (corollary 1.4.6).
+A proof of the previous theorem can be found in \cite{Applebaum} (Corollary 1.4.6).
 
-Other properties of infinitely divisible distribution and connections with Lévy processes can be found in \cite{Sato}.\\
+Other properties of infinitely divisible distribution and connections with Lévy processes can be found in the chapter 2 of \cite{Sato}.\\
 
 \subsection{Lévy-Khintchine representation}
 
@@ -149,23 +157,22 @@ Let $\nu(dx)$ be a Borel measure. We say it is a \textbf{Lévy measure} if it sa
  \nu (\{ 0 \} ) = 0,
 \end{equation}
 \begin{equation} \label{Levy_m}
- \int_{\R} (1\wedge x^2) \nu(dx) < \infty.
+ \int_{\R^n} (1\wedge x^2) \nu(dx) < \infty.
 \end{equation}
 \end{Definition}
 The characteristic function of an infinitely divisible random variable has the following \textbf{Lévy Khintchine representation}:
 \begin{Theorem}
- Let $X$ be an infinitely divisible random variable. Then there exist $b\in R$, $\sigma>0$
- and a Lévy measure $\nu$ on $\R$, such that $\forall u \in \R$:
+ Let $X$ be an infinitely divisible random variable. Then there exist $b\in R^n$, a positive definite $n\times n$ matrix $A$
+ and a Lévy measure $\nu$ on $\R^n$, such that $\forall u \in \R^n$:
 \begin{align}
-\phi_X(u)  &= \mathbb{E} [e^{iuX}]  \\ 
+\phi_X(u)  &= \mathbb{E} [e^{i(u,X)}]  \\ 
 	   &= e^{\eta(u)} \nonumber \\
-	   &= \exp \left[ \left( ibu - \frac{1}{2}\sigma^2u^2 + \int_{\mathbb{R}} 
-	   ( e^{iux} -1 -iux \mathbbm{1}_{(|x|<1)}(x) ) \nu(dx) \right) \right]. \nonumber		      
+	   &= \exp \left[ \left( i(b,u) - \frac{1}{2}(u,Au) + \int_{\R^n} 
+	   ( e^{i(u,x)} -1 -i(u,x) \mathbbm{1}_{(|x|<1)}(x) ) \nu(dx) \right) \right]. \nonumber		      
 \end{align}
 \end{Theorem}
 A proof can be found in \cite{Applebaum} (Theorem 1.2.14).
-
-We call the map $\eta : \R \to \C$ the \textbf{Lévy symbol}.\\
+We call the map $\eta : \R^n \to \C$, the \textbf{Lévy symbol}.
 
 Now we can easily find the Lévy Khintchine representation for a Lévy process
 \begin{Theorem}
@@ -176,7 +183,7 @@ Now we can easily find the Lévy Khintchine representation for a Lévy process
 where $\eta$ is the Lévy symbol of the random variable $X_t$ at $t=1$.
 \end{Theorem}
 See \cite{Applebaum} (Theorem 1.3.3).
-The triplet $(b,\sigma^2,\nu)$ is called \textbf{Lévy triplet}, and completely characterizes the Lévy process.
+The triplet $(b, A, \nu)$ is called \textbf{Lévy triplet}, and completely characterizes the Lévy process.
 
 \subsection{Random measures}\label{random_measures}
 
@@ -185,59 +192,63 @@ measure of the jumps of the process.
 The jump process $\{\Delta X_t\}_{t \ge 0}$ associated to the Lévy process $\{X_t\}_{t \ge 0}$ is
 defined, for each $t \geq 0$ , by
 \begin{equation}\label{jump}
- \Delta X_t = X_t - X_{t-}
+ \Delta X_t = X_t - X_{t^-}
 \end{equation}
-where $X_{t-} = \lim_{s\uparrow t} X_s $.\\ 
+where $X_{t^-} = \lim_{s\uparrow t} X_s $.\\ 
 \begin{Definition}
-Consider a set $A \in \mathcal{B}(\R \backslash \{ 0 \})$.
+Consider a set $A \in \mathcal{B}(\R^n \backslash \{ 0 \})$.
 We define the \textbf{random measure} of the jumps of the process $\{X_t\}_{t \ge 0}$ by
 \begin{align}
  N^X(t,A)(\omega) &= \# \{ s \in [0,t] \, : \; \Delta X_s(\omega) \in A  \} \\
 		   &= \sum_{s\leq t} \mathbbm{1}_A(\Delta X_s(\omega)) . \nonumber
 \end{align} 
 \end{Definition}
-This measure counts the number of jumps of size in $A$, up to time $t$.\\
-We say that $A\in \mathcal{B}(\R \backslash \{ 0 \})$ is \emph{bounded below} if $0 \not \in \bar A$ (zero does not belong to the closure of $A$). 
-If $A$ is bounded below, the following holds:
+For each $\omega \in \Omega$ and for each $0 \leq t < \infty$, the map 
+$$ A \to (N^X(t,A)(w) $$ 
+is a counting measure on $\mathcal{B}(\R^n \backslash \{ 0 \})$. %We indicate with $N^X(dt,dx)(w)$ the differential form.
+
+We say that $A\in \mathcal{B}(\R^n \backslash \{ 0 \})$ is \emph{bounded below} if $0 \not \in \bar A$ (zero does not belong to the closure of $A$). 
+
 \begin{itemize}
- \item For fixed $\omega \in \Omega$, the map $[s,t] \times A \to (N^X(t,A)(w) - N^X(s,A)(w))$ is a measure on 
- $\mathcal{B}(\R \backslash \{ 0 \})$ for every $0 \leq s \leq t < \infty$. We indicate the differential form as $N^X(dt,dx)(w)$.
- \item Fix $A\in \mathcal{B}(\R \backslash \{ 0 \})$, the process $N^X(t,A)(\omega)$ is a Poisson process with intensity 
+ \item For each $A$ bounded below, the process $\bigl \{ N^X(t,A)(\omega) \bigr \}_{t\geq 0}$ is a Poisson process with intensity 
  \begin{equation}
  \mu(A) = \mathbb{E}[N^X(1,A) ] 
  \end{equation}
- (see \cite{Applebaum} 
- Theorem 2.3.5). We call this process the \textbf{Poisson random measure}.
- \item The \textbf{Compensated Poisson random measure} is defined by:
- \begin{equation}
-  \tilde{N}(t,A) = N(t,A) - t\mu(A). 
- \end{equation}
-This is a martingale process.
+ \item If $A_1, ..., A_m \in \mathcal{B}(\R^n \backslash \{ 0 \})$ are disjoint and bounded below and $t_1, ..., t_m \in \R^+$ are distinct, then
+ the random variables $N(t_1,A_1), ..., N(t_m,A_m)$ are independent.
 \end{itemize}
-If $A$ is not bounded below, it is possible to have $\mu(A) = \infty$ and $N(t,A)$ is not a Poisson process because of the accumulation of infinite numbers of
-small jumps.
-\vspace{2em}
+(see \cite{Applebaum} Theorem 2.3.5). \\
+A random measure satisfying the properties above is called \textbf{Poisson random measure}.
+
+We can also define the \textbf{Compensated Poisson random measure}. For each $t \geq 0$ and $A$ bounded below, let us define: 
+\begin{equation}
+ \tilde{N}(t,A) = N(t,A) - t\mu(A). 
+\end{equation}
+This is a martingale-valued measure, i.e. for each $A$ the process $\bigl \{ \tilde{N}(t,A) \bigr \}_{t\geq 0} $ is a martingale.  
+If $A$ is not bounded below, it is possible to have $\mu(A) = \infty$. \\
+
+\noindent
 Now we can define the integration with respect to a random measure:
 \begin{Definition} \label{Poisson_int}
- Let $N$ be the Poisson random measure associated to a Lévy process $\{X_t\}_{t \ge 0}$, and let $f:\R \to \R$ be a Borel-measurable
+ Let $N$ be the Poisson random measure associated to a Lévy process $\{X_t\}_{t \geq 0}$, and let $f:\R^n \to \R^n$ be a Borel-measurable
  function. For any $A$ bounded below, we define the \textbf{Poisson integral} of $f$ as
  \begin{equation}
   \int_A f(x) N(t,dx)(\omega) = \sum_{x\in A} f(x) N(t,\{x\})(\omega). 
  \end{equation}
 \end{Definition}
-Since $N(t,\{x\}) \neq 0 \Leftrightarrow \Delta X(s)=x$ for at least one $s\in [0,t]$\footnote{These are the arrival 
+Since $N(t,\{x\}) \neq 0 \Leftrightarrow \Delta X_s=x$ for at least one $s\in [0,t]$\footnote{These are the arrival 
 times of the Poisson process.}, we have  
  \begin{equation}
-  \int_A f(x) N(t,dx)(\omega) = \sum_{x\in A} f(\Delta X(s)) \mathbbm{1}_A(\Delta X(s)). 
+  \int_A f(x) N(t,dx)(\omega) = \sum_{x\in A} f(\Delta X_s) \mathbbm{1}_A(\Delta X_s). 
  \end{equation}
 The Poisson integral has the following important properties: 
 \begin{Theorem}
- For each $t\geq 0$ and for any $A$ bounded below, the process $\{\int_A f(x) N(t,dx)\}_{t \ge 0}$ has the characteristic function
+ For $t\geq 0$ and for any $A$ bounded below, the random variable $\int_A f(x) N(t,dx)$ has the characteristic function
  \begin{equation}
   \E \left[ \exp \left( i u \int_A f(x) N(t,dx) \right) \right] = 
-  \exp \left( t \int_{\R} [e^{iux}-1] \mu_{A,f}(dx) \right),
+  \exp \left( t \int_{\R^n} [e^{iux}-1] \mu_{A,f}(dx) \right),
  \end{equation}
-where $\mu_{A,f}(B) = \mu(A \cap f^{-1}(B))$ for each $B \in \mathcal{B}(\R^d)$.
+where $\mu_{A,f}(B) = \mu(A \cap f^{-1}(B))$ for each $B \in \mathcal{B}(\R^n)$.
 \end{Theorem}
 This is the Theorem 2.3.7 in \cite{Applebaum}. By differentiation (see eq. \ref{moments}) we can derive:
 \begin{equation}\label{Exp_poiss}
@@ -250,23 +261,23 @@ This is the Theorem 2.3.7 in \cite{Applebaum}. By differentiation (see eq. \ref{
 \noindent
 We can also define in the same way the \textbf{compensated Poisson integral}
 \begin{equation}
-  \int_A f(x) \tilde{N}(t,dx) = \int_A f(x) N(t,dx) - t \int_A f(x) \mu(dx), 
+  \int_A f(x) \tilde{N}(t,dx) := \int_A f(x) N(t,dx) - t \int_A f(x) \mu(dx), 
 \end{equation}
-with characteristic function
+The random variable $\int_A f(x) \tilde{N}(t,dx)$ has characteristic function
 \begin{equation}
   \E \left[ \exp \left( i(u,\int_A f(x) \tilde{N}(t,dx)) \right) \right] = 
-  \exp \left( t \int_{\R^d} [e^{(i(u,x))}-1-i(u,x)] \mu_{A,f}(dx) \right).
+  \exp \left( t \int_{\R^n} [e^{(i(u,x))}-1-i(u,x)] \mu_{A,f}(dx) \right).
 \end{equation}
-for each $B \in \mathcal{B}(\R^d)$.
+for each $B \in \mathcal{B}(\R^n)$. \\
 The process $\{\int_A f(x) \tilde N(t,dx)\}_{t \ge 0}$ is a martingale. For $f \in L^2(A,\mu_A)$ it holds
 \begin{equation}
  Var \left[ \biggr|\int_A f(x) \tilde N(t,dx)\biggr|\right] = t \int_A |f(x)|^2 \mu(dx).
 \end{equation}
- 
 \begin{Theorem}
  The intensity measure $\mu$ is a Lévy measure.
 \end{Theorem}
- See Corollary 2.4.12 in \cite{Applebaum}. In the following Lévy measures are indicated with the symbol $\nu$.\\ 
+ See Corollary 2.4.12 in \cite{Applebaum}. From here on, we always indicate the Lévy measure with the symbol $\nu$.
+ 
 We can further define:
 \begin{equation}
 \int_{|x|<1} f(x) \tilde N(t,dx) = \lim_{\epsilon \to 0} \int_{\epsilon < |x| < 1} f(x) \tilde N(t,dx), 
@@ -276,81 +287,109 @@ that represents the compensated sum of small jumps.
  
 \subsection{Lévy-It\={o} decomposition}
 
-The following is a fundamental theorem which decompose a general Lévy process in the superposition 
-of independent processes: a Brownian motion with drift, a Poisson process with ``big jumps'' and a compensated Poisson process with ``small jumps''.
+The following is a fundamental theorem which decompose a general Lévy process as a superposition 
+of independent processes: a drift term, a Brownian motion, a Poisson process with ``big jumps'' and a compensated Poisson process with ``small jumps''.
 
 \begin{Theorem}
- Given a Lévy process $\{X_t\}_{t \ge 0}$ , there exist $b\in \R$, a Brownian motion $W$ with variance $\sigma^2$, and an 
- independent Poisson random measure $N$ on $\R^+ \times \R$ such that
+ Given a Lévy process $\{X_t\}_{t \ge 0}$ , there exist $b\in \R^n$, a Brownian motion $W^A$ with diffusion matrix $A$, and an 
+ independent Poisson random measure $N$ on $\R^+ \times \R^n$ such that
  \begin{equation}\label{Levy_Ito}
-  X(t) = bt + \sigma W(t) + \int_{|x|<1} x \tilde{N}(t,dx) + \int_{|x|\geq1} x N(t,dx).
+  X_t = bt + W^A_t + \int_{|x|<1} x \tilde{N}(t,dx) + \int_{|x|\geq1} x N(t,dx).
  \end{equation}
  This is called \textbf{Lévy-It\={o} decomposition}.
 \end{Theorem}
  For a proof the reader can look at Theorem 2.4.16 in \cite{Applebaum}.\\
-A lot of information on a Lévy process can be derived from integrability properties of the Lévy measure. 
-The following propositions shows that finiteness of moments depends only on the frequency of large jumps.
+A lot of information on the features of a Lévy process can be derived from the integrability conditions of its Lévy measure. 
+The next theorem shows that finiteness of moments depends only on the frequency of large jumps.
 \begin{Theorem} \label{assumptionM}
- Let $\{X_t\}_{t \ge 0}$ be a Lévy process with Lévy measure $\nu$. Then
- \begin{enumerate}
-  \item[\textbf{M:}] \label{M} $X_t$ has finite p-moment i.e. 
-  $\E[|X_t|^p]<\infty$ for $p\in R_+$ if and only if $\int_{|x| \geq 1} |x|^p \nu(dx) <\infty$.
-  \item[\textbf{EM:}] \label{EM} $X_t$ has finite exponential p-moment i.e. $\E[\exp(pX_t)]<\infty$ for $p\in R$ if and only if 
-  $\int_{|x| \geq 1} e^{xp} \nu(dx) <\infty$.
- \end{enumerate}
+ Let $\{X_t\}_{t \geq 0}$ be a Lévy process with Lévy measure $\nu$. Then
+  $\{X_t\}_{t \geq 0}$ has finite p-moment i.e. 
+  $\E[|X_t|^p]<\infty$ for $p > 0$ and for all $t\geq0$, if and only if $\int_{|x| \geq 1} |x|^p \nu(dx) <\infty$.
 \end{Theorem}
- For \textbf{M} see \cite{Applebaum} Theorem 2.5.2. 
- In \cite{Sato} a stronger result is proved (Theorem 25.3). For any non-negative measurable function $g$ with the sub-multiplicative
- property\footnote{A function is said to be sub-multiplicative if $\exists K>0$ such that $g(x+y)<Kg(x)g(y)$ } $\E[g(X)]<\infty$ if and only if $\int_{|x| > 1} g(x)^p \nu(dx) <\infty$.
- The \textbf{EM} condition is proved in \cite{Sato} in Lemma 25.7.\\
+For a proof we refer to \cite{Applebaum} theorem 2.5.2.
+In \cite{Sato} a stronger result is proved (Theorem 25.3).
+\begin{Theorem}\label{g-moment}
+ Let $\{X_t\}_{t \geq 0}$ be a Lévy process with Lévy measure $\nu$.
+ Let $g$ be a non-negative measurable function on $\R^n$ satisfying the sub-multiplicative
+ property\footnote{A function is said to be sub-multiplicative if $\exists K>0$ such that $g(x+y)<Kg(x)g(y)$.}, 
+ then $\{X_t\}_{t \geq 0}$ has finite \emph{g-moment} i.e. $\E[g(X)]<\infty$ for all $t\geq0$, if and only if $\int_{|x| > 1} g(x) \nu(dx) <\infty$.
+\end{Theorem}
 
-Most of the Lévy processes used in finance have finite first and second moments. In the following, we consider exponential
-Lévy processes as models for the asset prices, and a reasonable assumption is that prices have finite mean and variance. 
+The theorem \ref{assumptionM} is a special case of the theorem \ref{g-moment} since $g(x) = \max\{ |x|,1 \}$ is sub-multiplicative. 
+If we consider the sub-multiplicative function $g(x) = e^{(p,x)}$ with $p\in \R^n$, 
+it follows that
+$\{X_t\}_{t \geq 0}$ has finite \textbf{exponential moment} if for all $t\geq0$:  
+\begin{equation}\label{exp-moment}
+\E \bigl[ e^{(p,X_t)} \bigr]<\infty \quad \Leftrightarrow \quad  
+ \int_{|x| \geq 1} e^{(p,x)} \nu(dx) <\infty. 
+\end{equation}
+See \cite{Sato} theorem 25.17.
 
+The majority of Lévy processes used in finance have finite moments.
+For practical reasons, it makes sense to assume finite mean and variance of the price process.
+In this thesis we will model (see section \ref{Section_ELM}) the 1-dimensional dynamics of the prices with the exponential of a Lévy process, 
+i.e. $S_t = S_0 e^{X_t}$. Let us introduce the important assumption:  
 \begin{center}
 \begin{riquadro}{12cm}
-In this thesis we consider only Lévy processes with finite p-moment and exponential p-moment, for $p\in [0,2]$.
-We call these as assumptions \textbf{M} and \textbf{EM.} 
+Assumption \textbf{EM}\label{AssumptionEM}  :\\
+In this thesis we consider only 1-dimensional Lévy processes with finite exponential second moment.\\
+According to \ref{exp-moment} with $p=2$ it follows that:
+$$ \E\bigl[ S_t^2 \bigr] < \infty \quad \Leftrightarrow  \quad \int_{|x| \geq 1} e^{2x} \nu(dx) <\infty $$
 \end{riquadro}
 \end{center}
 
+The existence of the exponential 2-moment implies that $\{X_t\}_{t \geq 0}$ has finite p-moment for all $p \in \N$.
+
+
 \vspace{1.5em}
 
-Thanks to assumption \textbf{M}, we can simplify the Lévy-It\={o} formula, by adding $\pm \int_{|x| \geq 1} x t\, \nu(dx)$ 
+If we assume that $\{X_t\}_{t \geq 0}$ has finite first moment, we can simplify the Lévy-It\={o} formula, by adding the finite terms $\pm \int_{|x| \geq 1} x t\, \nu(dx)$ 
 to (\ref{Levy_Ito}). The last term becomes a martingale and the new drift becomes $b' = b+\int_{|x| \geq 1} x \nu(dx)$.\\
-We have 
+The new decomposition has the form:
 \begin{equation}\label{Levy_Ito2}
- X(t) = b't + \sigma W(t) + \int_{\R} x \tilde{N}(t,dx).
+ X_t = b't + W^A_t + \int_{\R^n} x \tilde{N}(t,dx).
 \end{equation}
 The Lévy-Khintchine formula \ref{Levy_Kint} becomes
 \begin{equation}\label{Levy_Kint2}
-\phi_X(u) = \mbox{exp} \left[ t \left( iub' - \frac{1}{2}\sigma^2 u^2 + \int_{\mathbb{R}} 
-	   ( e^{iux} -1 -iux ) \nu(dx) \right) \right]. 
+\phi_X(u) = \mbox{exp} \left[ t \left( i(u,b') - \frac{1}{2}(u,Au) + \int_{\R^n} 
+	   \bigl( e^{i(u,x)} -1 -i(u,x) \bigr) \nu(dx) \right) \right]. 
 \end{equation}
-Because in (\ref{Levy_Ito2}) the only non martingale term is the drift, we see that the drift term $b' = \E[X(1)]$.
+Because in (\ref{Levy_Ito2}) the only non martingale term is the drift, we see that the drift term $b' = \E[ X_{t=1} ]$.
 
 
-\section{Infinitesimal Generator and stochastic calculus}
+\section{Infinitesimal Generator and stochastic calculus}\label{Infinitesimal_generator_stoch_calc}
 
-Lévy processes belong to the big family of Markov processes, so general theorems for Markov processes apply to
+Lévy processes belong to the big family of Markov processes. Therefore, all the general properties of Markov processes apply to
 Lévy processes as well.
-In the following summary,
-We do not discuss the deep field of semigroups structures and abstract Markov processes, but rather we present some fundamental definitions and 
-theorems which are applied to Lévy and jump-diffusion processes, and are useful in the course of the thesis.\\
-The main topic of the section is the Lévy infinitesimal generator. 
-Finally, we review the sufficient conditions for existence and uniqueness of solutions of jump-diffusion SDEs. 
+In this section,
+we do not go too deep in the big field of semigroups theory, but we just present the fundamental definitions and 
+theorems necessary to define the infinitesimal generator of a Lévy process.
+
+We also present the It\={o} formula for any Lévy stochastic integral, and the sufficient conditions for the existence of solutions of the SDEs 
+considered in this chapter. 
 
 
-\subsection{Infinitesimal generator of a Markov semigroup}
+\subsection{Infinitesimal generator of a Markov process}
+
+
+Let us denote with $B_b(\R^n)$ 
+the linear space of all bounded Borel measurable function $f: \R^n \to \R$. 
+Let $C_0(\R^n)$ be the subspace of $B_b(\R^n)$ containing continuous functions such that $\lim_{|x|\to \infty} f(x) = 0$.
+They are both Banach spaces under the norm $||f|| = \sup\{ |f(x)| : x\in \R^n \}$.
+We also denote with $C_0^{n}(\R^n)$ the set of $f \in C_0(\R^n)$ such that $f$ is $n$ time differentiable and 
+the partial derivatives of $f$ with order $\leq n$ belong to $C_0(\R^n)$.  \\
+Let us also recall some definitions of operators in a Banach space $B$.
+A linear operator $\LL$ is a mapping from a linear subspace $D_{\LL}$ of $B$ into $B$ such that 
+$$ \LL ( af + bg ) = a \LL f + b \LL g  \quad f,g \in D_{\LL} \quad a,b \in \R. $$
+The set $D_{\LL}$ is the domain of $\LL$. A linear operator is called bounded if $D_{\LL} = B$ and $||\LL|| := \sup_{||f||\leq 1} ||\LL f||$ is finite.
+If the previous conditions are not satisfied, the operator is called unbounded.
 
 \begin{Definition}
  Let $\{X_t\}_{t \ge 0}$  be an adapted process on the probability space $(\Omega,\mathcal{F},\PP)$ equipped with a filtration $\mathcal{F}_t$.
- We say that $\{X_t\}_{t \ge 0}$ is a \textbf{Markov process} if for all $f\in B_b(\R)$\footnote{$B_b(\R)$ 
- is the set of all bounded function $f$ taking values in $\R$. It is a Banach space with respect to the norm 
- $ ||f|| = \sup\{ |f(x)| : x\in \R \}. $} 
+ We say that $\{X_t\}_{t \ge 0}$ is a \textbf{Markov process} if for all $f\in B_b(\R^n)$
  and $0\leq s \leq t < \infty$
  \begin{equation} \label{Markov_prop}
-  \E(f(X_t)|\mathcal{F}_s) = \E(f(X_t)|X_s).
+  \E \bigl[ f(X_t) \big| \mathcal{F}_s \bigr] = \E \bigl[ f(X_t) \big| X_s \bigr].
  \end{equation}
 \end{Definition}
 The property (\ref{Markov_prop}) is called \textbf{Markov property}.
@@ -358,8 +397,8 @@ We can define the \textbf{stochastic evolution} of a Markov process as
 \begin{equation}\label{stoch_evolution}
  (T_{s,t}f)(x) = \E[f(X_t) |X_s = x],
 \end{equation}
-for every $f \in B_b(\R)$ and $0\leq s \leq t < \infty$.
-The family of operators $T_{s,t} : B_b(\R) \to B_b(\R)$ satisfies  
+for every $f \in B_b(\R^n)$ and $0\leq s \leq t < \infty$.
+The family of operators $T_{s,t} : B_b(\R^n) \to B_b(\R^n)$ satisfies  
 \begin{enumerate}
  \item $T_{s,t}$ is linear for each $0\leq s \leq t < \infty$.
  \item $ T_{s,s} = I $ for each $s \geq 0$.
@@ -368,9 +407,10 @@ The family of operators $T_{s,t} : B_b(\R) \to B_b(\R)$ satisfies
  \item $T_{s,t}$ is a contraction, i.e. $||T_{s,t}||<1$ for each $0\leq s \leq t < \infty$.
  \item $T_{s,t} (1) = 1$.
 \end{enumerate}
-See Theorem 3.1.2 in \cite{Applebaum}.
+See Theorem 3.1.2 in \cite{Applebaum}. An immediate consequence of condition 5 is that $T_{s,t}$ is a bounded operator.
+
 \begin{Definition}\label{trans_prob}
-We can define the \textbf{transition probability} as the mapping $p_{s,t}(x,B) : \R \times \mathcal{B}(\R) \to [0,1]$, 
+We can define the \textbf{transition probability} as the mapping $p_{s,t}(x,B) : \R^n \times \mathcal{B}(\R^n) \to [0,1]$, 
 with $0\leq s \leq t < \infty$ as: 
 \begin{equation}
  p_{s,t}(x,B) := T_{s,t} \mathbbm{1}_B(x) = P(X_t \in B | X_s=x).
@@ -378,16 +418,16 @@ with $0\leq s \leq t < \infty$ as:
 \end{Definition}
 It is related with the semigroup operator as follows:
 \begin{equation}\label{evolution}
- (T_{s,t}f)(x) = \int_{\R^d} f(y) p_{s,t}(x,dy). 
+ (T_{s,t}f)(x) = \int_{\R^n} f(y) p_{s,t}(x,dy). 
 \end{equation}
 The transition probabilities satisfy the properties
  \begin{enumerate}
-  \item The maps $x \to p_{s,t}(x,A)$ are measurable for each $A\in \mathcal{B}(\R)$.
-  \item $p_{s,t}(x,\cdot)$ is a probability measure on $\mathcal{B}(\R)$ for each $x \in \R$.
+  \item The maps $x \to p_{s,t}(x,A)$ are measurable for each $A\in \mathcal{B}(\R^n)$.
+  \item $p_{s,t}(x,\cdot)$ is a probability measure on $\mathcal{B}(\R^n)$ for each $x \in \R^n$.
   \item $p_{s,s}(x,B) = \delta_x(B)$ for $s \geq 0$. 
   \item For $0\leq r \leq s \leq t$ it satisfies the \textbf{Chapman-Kolmogorov} equation
   \begin{equation}
-   p_{r,t}(x,B) = \int_{\R} p_{r,s}(x,dy) p_{s,t}(y,B). 
+   p_{r,t}(x,B) = \int_{\R^n} p_{r,s}(x,dy) p_{s,t}(y,B). 
   \end{equation}  
  \end{enumerate}
 
@@ -408,176 +448,224 @@ where $B-x = \{y-x : y\in B \}$.
 \begin{Theorem}
 Every Lévy process is a time homogeneous and translation invariant Markov process.
 \end{Theorem}
-See Theorems (10.4) and (10.5) in \cite{Sato}.
+See Theorems (10.4) and (10.5) in \cite{Sato}.\\
 
-A Markov process is said to be time homogeneous if $T_{s,t} = T_{0,t-s}$ 
-(following the time homogeneous definition for the transition probabilities
-(\ref{time-homogeneous}) and (\ref{evolution})). We will indicate time homogeneous Markov processes $T_{0,t}$ as $T_t$.
-
-Let $C_0(\R)$ be the Banach space of all real-valued continuous functions such that $\lim_{|x|\to \infty} = 0$, equipped with the norm $||f|| = \sup_x |f(x)|$.
-
-$T_t$ is called \textbf{Feller semigroup} if:
-\begin{itemize}
- \item $T_t : C_0(\R) \to C_0(\R) $ 
- \item The map $t \to T_t $ with $t \in \R^+$ is strongly continuous at 0, i.e. $$\lim_{t \downarrow 0} ||T_t f - f|| = 0.$$ 
-\end{itemize}
+\noindent
+A Markov process is said to be time homogeneous if the associated stochastic evolution operator satisfies $T_{s,t} = T_{0,t-s}$ for all $0 \leq s \leq t < \infty$.
+This is analogous to require that the transition probabilities are time homogeneous 
+(can be verified by using (\ref{time-homogeneous}) and (\ref{evolution})). 
+We indicate the operator $T_{0,t}$ as $T_t$. For a time homogeneous Markov process, the condition 3 for the stochastic evolution operators (\ref{stoch_evolution}) becomes:
+\begin{equation}\label{semigroup}
+ T_{s+t} = T_s T_t  \quad \forall s,t \geq 0. 
+\end{equation}
+Any family of linear operators on a Banach space that satisfies (\ref{semigroup}) is called \textbf{semigroup}.
 
 \begin{Definition}
-We are now interested to define an infinitesimal variation rate of the Feller semigroup $T_t$.
-Let 
-\begin{equation}
- D_{\LL} = \left\{ f\in C_0(\R) : \exists \LL f \in C_0(\R) \mbox{ such that } \lim_{t \downarrow 0} 
- \biggr|\biggr|\frac{T_t f - f}{t} -\LL f \biggr|\biggr| = 0\right\},
-\end{equation}
-We call $\LL$ the \textbf{infinitesimal generator} of the semigroup $T_t$. \\
+The operator $T_t$ associated with a time homogeneous Markov process, is called \textbf{Feller semigroup} if:
+\begin{enumerate}
+ \item $T_t : C_0(\R^n) \to C_0(\R^n) $ for all $t \geq 0$,
+ \item The map $t \to T_t $ with $t \geq 0$ is strongly continuous at 0, i.e. $$\lim_{t \downarrow 0} ||T_t f - f|| = 0.$$ 
+\end{enumerate} 
 \end{Definition}
+The homogeneous Markov process associated with the Feller semigroup is called \textbf{Feller process}.
+
+In the definition of Feller semigroup, we used the space $C_0(\R^n)$ in place of $C_b(\R^n)$. 
+The space $C_0(\R^n)$ has nicer analytical properties than $C_b(\R^n)$ and allows the proof of important probabilistic theorems.
+In particular, when replacing $C_0(\R^n)$ by $C_b(\R^n)$, the condition 2 above may fail.
+
+\begin{Definition}
+The \textbf{infinitesimal generator} $\LL$ of the Feller semigroup $T_t$ is defined by
+\begin{equation}
+ \LL f =  \lim_{t \downarrow 0} \frac{T_t f - f}{t}.  
+\end{equation}
+The domain $D_{\LL}$ of $\LL$ is the subspace of $C_0(\R^n)$ such that the limit above exists. 
+\end{Definition}
+In general $\LL$ is a linear (possibly unbounded) operator.
+Among the many properties of the infinitesimal generator, it is possible to prove (see Hille-Yosida, Theorem 31.3 in \cite{Sato}) 
+that $\LL$ is closed and that $D_{\LL}$ is dense in $C_0(\R^n)$.   
+For more information we refer to Chapter 1 of \cite{EthierKurtz}.
 
 The following theorem gives an explicit form for the infinitesimal generator 
 of a general Lévy process.
-Let us consider the space $C_c^{\infty}$ of infinite derivable functions with compact support.
-\begin{Theorem}
- Let $\{X_t\}_{t \ge 0}$ be a Lévy process with Lévy triplet $(b,\sigma^2,\nu)$. Let $T_t$ be the associated Feller-semigroup
- with generator $\LL$. For each $f\in C_c^{\infty}$, $t\geq0$, $x\in \R$, 
+
+\begin{Theorem}\label{Inf_gen_theorem}
+ Let $\{X_t\}_{t \ge 0}$ be a Lévy process with Lévy triplet $(b,A,\nu)$. Let $T_t$ be the associated Feller-semigroup
+ with generator $\LL$. For each $f\in C_0^{2}(\R^n)$, $t\geq0$, $x\in \R^n$, 
   $\LL$ has the form:
  \begin{align}\label{genLevy}
-  (\LL f)(x) &=  b \frac{\partial f}{\partial x}(x) +
-  \frac{1}{2} \sigma^2 \frac{\partial^2 f}{\partial x^2}(x)\\  
-           & + \int_{\R} \left( f(x+y) - f(x) -  y \frac{\partial f}{\partial x}(x) 
+  (\LL f)(x) &=  \sum_{j=1}^n b_j \frac{\partial f}{\partial x_j}(x) +
+  \frac{1}{2} \sum_{i,j=1}^n A_{i,j} \frac{\partial^2 f}{\partial x_i \partial x_j}(x)\\  
+           & + \int_{\R^n} \left( f(x+y) - f(x) - \sum_{j=1}^n y_j \frac{\partial f}{\partial x_j}(x) 
            \mathbbm{1}_{\{ |y|<1 \}}(y) \right) \nu(dy).   \nonumber
   \end{align}
 \end{Theorem}
-See \cite{Sato} (theorem 31.5).
+A proof of this theorem can be found in \cite{Sato} (Theorem 31.5).\\
 
-If we abandon the translation invariant property, such that the coefficients of the triplet $(b(x),\sigma(x),\nu(x))$ become state dependent, 
-we obtain the so called \textbf{generalized jump-diffusion processes}. 
-The Theorem 3.5.3 in \cite{Applebaum} gives the expression the \emph{generalized jump-diffusion generator}:
-\begin{align} \label{gen_jumpdiff}
-  (\LL f)(x) &=  b(x) \frac{\partial f}{\partial x}(x) +
-  \frac{1}{2} \sigma^2 (x) \frac{\partial^2 f}{\partial x^2}(x)\\  
-           & + \int_{\R} \left( f(x+F(x,y)) - f(x) - F(x,y) \frac{\partial f}{\partial x}(x) 
-           \mathbbm{1}_{\{ |y|<1 \}}(y) \right) \nu(dy),   \nonumber
-\end{align} 
-where $F:\R^2 \to \R $ is a function that describes the sizes of the jumps.
+\noindent
+In the more general framework of section \ref{Optimal_control_framework} we will show that the integral term of 
+$\LL$ is well defined also for continuous functions that do not vanish at infinity, but have 
+polynomial growth (see definition (\ref{Cp})). 
+
+
   
-  
-\subsection{The It\={o} formula}
+\subsection{The It\={o} formula} 
 
-An $\R$ valued stochastic process $\{Y_t\}_{t \ge 0}$ is a \textbf{Lévy stochastic integral} if can be written as a superposition of
-an ordinary integral, an It\={o} integral and a Poisson and compensated Poisson integrals:
-\begin{align} \label{Levy_int}
- Y(t) &= Y(0) + \int_0^{t} G(s) ds  + \int_0^{t} F(s) dW(s)\\ \nonumber
-     &+ \int_0^{t} \int_{|x|<1} H(s,x) \tilde N (ds,dx)\\ \nonumber
-     &+ \int_0^{t} \int_{|x|\geq 1} K(s,x) N(ds,dx),
-\end{align}
-where $Y(0)$ is a $\mathcal{F}_0$-measurable random variable.
-When $Y(0)=0$, $G(s)=b$, $F(s)= \sigma$ and $H(s,x)=K(s,x) = x$ we can recognize the Lévy-It\={o} 
-decomposition (\ref{Levy_Ito}).
-
-Following the section 4.2.2 of \cite{Applebaum}, we call $\mathcal{P}_2(T,E)$ the set of all functions $f:[0,T]\times E \times \Omega \to \R$ satisfying the two conditions:
+Following the section 4.2.2 of \cite{Applebaum}, we call $\mathcal{P}_2(T,E)$ with $E \in \mathcal{B}(\R^n)$, 
+the set of all functions $f:[0,T]\times E \times \Omega \to \R$ satisfying the two conditions:
 \begin{enumerate}
- \item Predictable\footnote{Given the probability space $(\Omega,\mathcal{F},\mathcal{F}_t,\PP)$, than a stochastic process
- $X_t : [0,T] \times \Omega \to \R$ is said to be \textbf{predictable}, if it is measurable with respect to the $\sigma$-algebra generated 
- by all the left-continuous $\mathcal{F}_t$-adapted processes.}.
- \item  $\PP \biggl( \int_0^T \int_E |f(t,x)|^2 \rho(dt,dx) <\infty \biggr) =1 $.
+ \item Predictable\footnote{Given the probability space $(\Omega,\mathcal{F},\mathcal{F}_t,\PP)$ and $E \in \mathcal{B}(\R^n)$. A function $f:[0,T]\times E \times \Omega \to \R$
+ is said to be \textbf{predictable}, if for each $0 \leq t \leq T$ the mapping $(x,\omega) \to F(t,x,\omega)$ is $\mathcal{B}(E)\otimes \mathcal{F}_t$-measurable,
+ and for each $x\in E$ and $\omega \in \Omega$ the mapping $t \to f(t,x,\omega)$ is left-continuous.\\
+ If $f$ is predictable, the process $t \to f(t,x,\cdot)$ for each $x \in E$, is adapted.}.
+ \item  $\PP \biggl( \int_0^T \int_E |f(t,x)|^2 \nu(dx) dt  <\infty \biggr) = 1 $.
 \end{enumerate}
-In order for (\ref{Levy_int}) to be well defined, we must require the processes $|G(s)|^{1/2}$, $F(s)$, $H(s,x) \in \mathcal{P}_2(T,E)$ and $K(s,x)$ have to be predictable.
+
+An $\R^n$ valued stochastic process $\{Y_t\}_{t \ge 0}$ is a \textbf{Lévy stochastic integral} if can be written as a superposition of
+an ordinary integral, an It\={o} integral and a Poisson and compensated Poisson integrals.  
+\begin{align} \label{Levy_int}
+ Y^i_t &= Y^i_0 + \int_0^{t} G^i_s ds  + \int_0^{t} F^i_s dW(s)\\ \nonumber
+     &+ \int_0^{t} \int_{|x|<1} H^i(s,x) \tilde N (ds,dx)\\ \nonumber
+     &+ \int_0^{t} \int_{|x|\geq 1} K^i(s,x) N(ds,dx),
+\end{align}
+for $1 \leq i \leq n$ and $t>0$.  $Y_0$ is a $\mathcal{F}_0$-measurable random variable. 
 The expression (\ref{Levy_int}) has the differential form
 \begin{align} \label{Levy_diff}
- dY(t) &= G(t) dt  + F(t) dW(t)\\ \nonumber
+ dY_t &= G_t dt  + F_t dW_t \\ \nonumber
      &+ \int_{|x|<1} H(t,x) \tilde N (dt,dx) + \int_{|x|\geq 1} K(t,x) N(dt,dx).
 \end{align}
+where we dropped the indexes and used the convention that integrals are taken on each components.
+In order for (\ref{Levy_int}) to be well defined, for each $1 \leq i \leq n$, the processes $|G^i_s|^{1/2}$ and $F^i_s$ are in $\mathcal{P}_2 \bigl( T,\{0\} \bigr)$.
+The function $H^i(s,x) \in \mathcal{P}_2 \bigl( T, \{ |x|<1 \} \bigr)$ 
+and $K^i(s,x)$ have to be predictable.
 
 Now let us introduce the most important formula in stochastic calculus: the \textbf{It\={o}'s formula}.
 \begin{Theorem}
-If $Y(t)$ is the Lévy stochastic integral (\ref{Levy_int}), for each $f \in C^2(\R)$ we have  
+If $Y_t$ is the Lévy stochastic integral (\ref{Levy_int}), for each $f \in C^2(\R^n)$ we have  
 \begin{align} \label{Ito_form}
- df(Y(t)) &= f'(Y(t-))G(t) dt  + f'(Y(t-))F(t) dW(t) \\ \nonumber
-          &+ \frac{1}{2} f''(Y(t-))F(t)^2 dt \\ \nonumber 
-          &+ \int_{|x|\geq 1} [f(Y(t-)+ K(t,x)) - f(Y(t-)) ] N(dt,dx) \\ \nonumber
-          &+ \int_{|x|< 1} [f(Y(t-)+ H(t,x)) - f(Y(t-)) ] \tilde N(dt,dx) \\ \nonumber  
-          &+ \int_{|x|< 1} [f(Y(t-)+ H(t,x)) - f(Y(t-)) - H(t,x)f'(Y(t-))] \nu(dx)dt. \nonumber
+ df(Y_t) &=  \sum_{j=1}^n \frac{\partial f}{\partial y_j}(Y_{t^-}) G^j_t  dt  + \sum_{j=1}^n \frac{\partial f}{\partial y_j}(Y_{t^-}) F^j_t dW_t \\ \nonumber
+          &+ \frac{1}{2} \sum_{j=1}^n \frac{\partial^2 f}{\partial y_j^2}(Y_{t^-}) (F^j_t)^2 dt \\ \nonumber 
+          &+ \int_{|x|\geq 1} \bigl[ f\bigl( Y_{t^-} + K(t,x) \bigr) - f( Y_{t^-} ) \bigr] N(dt,dx) \\ \nonumber
+          &+ \int_{|x|< 1} \bigl[ f\bigl( Y_{t^-} + H(t,x) \bigr) - f(Y_{t^-}) \bigr] \tilde N(dt,dx) \\ \nonumber  
+          &+ \int_{|x|< 1} \bigl[ f\bigl( Y_{t^-} + H(t,x) \bigr) - f(Y_{t^-}) - \sum_{j=1}^n \frac{\partial f}{\partial y_j}(Y_{t^-}) H^j(t,x) \bigr] \nu(dx)dt. \nonumber
 \end{align}
 \end{Theorem}
 For a complete proof see \cite{Applebaum} Theorem 4.4.7.
 The terms in the first two lines are the same as in
 the diffusion case. The other terms are due to the discontinuous part of the process.
 
-The next theorem establishes the useful \textbf{Dynkin formula} for Lévy processes:
+Let us introduce also the \textbf{It\={o} product rule}.
 \begin{Theorem}
- Let $\{X_t\}_{t \ge 0}$ be a Lévy process, and let $f\in C^2(\R)$. Let $\tau$ be a stopping time\footnote{A stopping time is a random
+ If $Y^1_t$ and $Y^2_t$ are $\R$-valued stochastic integrals of the form (\ref{Levy_int}), then for all $t\geq0$, with probability 1 we have
+ \begin{equation}\label{Ito_product}
+  d \bigl( Y^1_t \cdot Y^2_t \bigr) = Y^1_{t^-}\,dY^2_t + Y^2_{t^-}\,dY^1_t + d\bigl[ Y^1_t,Y^2_t \bigr],
+ \end{equation}
+where the quadratic variation term is
+\begin{align*}
+ d\bigl[ Y^1_t, Y^2_t \bigr] =& \; F^1_t F^2_t dt \\
+                              &+ \int_{|x|<1} H^1(t,x) H^2(t,x) N (dt,dx) \\
+                              &+ \int_{|x|\geq 1} K^1(t,x) K^2(t,x) N(dt,dx).
+\end{align*}
+\end{Theorem}
+The proof of this theorem can be obtained by a direct application of the It\={o}'s formula (\ref{Ito_form}) to the product of $Y^1_t$ and $Y^2_t$. 
+See Theorem 4.4.13 of \cite{Applebaum}.
+
+The next theorem establishes the useful \textbf{Dynkin formula} for Lévy processes:
+\begin{Theorem}\label{Dynkin_formula}
+ Let $\{X_t\}_{t \ge 0}$ be a Lévy process, and let $f\in C_0^2(\R^n)$. Let $\tau$ be a stopping time\footnote{A stopping time is a random
  variable $\tau : \Omega \to \R_+$ such that $\{w\in\Omega : \tau(\omega) \leq t\} \in \mathcal{F}_t$.} such that
  $\E_x[\tau] < \infty$, then
- \begin{equation}\label{Dynkin_formula}
-  \E_x[f(X(\tau))] = f(x) +\E_x\left[ \int_0^{\tau} \LL f(X(s))ds \right],
+ \begin{equation}\label{Dynkin_theorem}
+  \E_x[f(X_{\tau})] = f(x) +\E_x\left[ \int_0^{\tau} \LL f(X_{s})ds \right],
  \end{equation}
  where $\LL$ is the infinitesimal generator as in eq. (\ref{genLevy}).
 \end{Theorem}
 \begin{proof}
- This result comes by applying It\={o}'s formula (\ref{Ito_form}) to $f(X(s))$, integrating in $[0,\tau]$ and taking 
- expectation conditioned by $X(0)=x$.
+ This result comes by applying It\={o}'s formula (\ref{Ito_form}) to $f(X_s)$, integrating in $[0,\tau]$ and taking 
+ expectation conditioned by $X_0=x$.
 \end{proof}
+
+
 
 \subsection{Existence and uniqueness}\label{existence_uniqueness}
 
+
 Let us consider, for simplicity, a time-homogeneous SDE like:
 \begin{align} \label{SDE}
- dY(t) &= b(Y(t-)) dt  + \sigma(Y(t-)) dW(t)\\ \nonumber
-     &+ \int_{|x|<c} F(Y(t-),x) \tilde N (dt,dx) + \int_{|x|\geq c} G(Y(t-),x) N(dt,dx),
+ dY_t &= b(Y_{t^-} ) dt  + \sigma(Y_{t^-}) dW_t\\ \nonumber
+     &+ \int_{|x|<c} F(Y_{t^-},x) \tilde N (dt,dx) + \int_{|x|\geq c} G(Y_{t^-},x) N(dt,dx),
 \end{align}
-with the maps $b:\R \to \R$, $\sigma:\R \to \R$, $F:\R^2 \to \R$ and $G:\R^2 \to \R$ 
-measurable. 
+with $\{W_t\}_{t\geq 0}$ a d-dimensional Brownian motion. 
+The functions $b:\R^n \to \R^n$, $\sigma:\R^n \to \R^{n\times d}$, $F:\R^n\times \R^n \to \R^n$ and $G:\R^n \times \R^n \to \R^n$ are measurable. 
 The constant $c \in [0,\infty]$ give us the freedom to specify the size of the big and small jumps.
 Usually, a common choice is $c=1$, as we did for the differential form of a Lévy-type stochastic integral (\ref{Levy_diff}), and 
 the Lévy-It\={o} decomposition (\ref{Levy_Ito}).
-In financial applications, we saw that assumption \textbf{M} permits to write the Lévy-It\={o} decomposition as 
-(\ref{Levy_Ito2}), so in this case $c=\infty$.
+If we want to put both large and small jumps in the same integral, we choose $c = \infty$ or $c=0$.
 
-Under the hypothesis above, it is possible to simplify the general study of Lévy SDEs by omitting the compound Poisson term 
-$\int_{|x|\geq c} G(Y(t-),x) N(dt,dx)$. The original process can be rebuilt by interlacing \footnote{An example of interlacing
-process can be found in \cite{Applebaum} Example 1.3.13.} with compound Poisson jumps.   
-Therefore we consider the modified SDE:
+Let us choose $c=\infty$ and write the SDE in the following form:
 \begin{align} \label{modSDE}
- dZ(t) &= b(Z(t-)) dt  + \sigma(Z(t-)) dW(t)\\ \nonumber
-     &+ \int_{|x|<c} F(Z(t-),x) \tilde N (dt,dx).
+ dY_t &= b(Y_{t^-}) dt  + \sigma(Y_{t^-}) dW_t\\ \nonumber
+     &+ \int_{\R^n} F(Y_{t^-},x) \tilde N (dt,dx).
 \end{align}
 Let us introduce two conditions:
 \begin{itemize}
- \item[(C1)] \textbf{Lipschitz condition} There exist $K_1 >0$, such that $\forall y_1,y_2 \in \R$,
+ \item[(C1)] \textbf{Lipschitz condition} There exist $K_1 >0$, such that $\forall y_1,y_2 \in \R^n$,
  \begin{align}\label{Lipschitz}
-  &|b(y_1) - b(y_2)| + | \sigma(y_1) - \sigma(y_2) |  \\ 
-  & + \int_{|x|<c} |F(y_1,x)-F(y_2,x)| \nu(dx) \; \leq  \; K_1 |y_1-y_2|. \nonumber % \label{Lipschitz2}
+  &|b(y_1) - b(y_2)| + || \sigma(y_1) - \sigma(y_2) ||  \\ 
+  & + \int_{\R^n} |F(y_1,x)-F(y_2,x)| \nu(dx) \; \leq  \; K_1 |y_1-y_2|. \nonumber % \label{Lipschitz2}
  \end{align}
- \item[(C2)] \textbf{Linear growth condition}. There exist $K_2>0$, such that $\forall y \in \R$,
+ \item[(C2)] \textbf{Linear growth condition}. There exist $K_2>0$, such that $\forall y \in \R^n$,
  \begin{align}\label{Growth}
-  |b(y)|^2 + |\sigma(y)|^2 
-   + \int_{|x|<c} |F(y,x)|^2 \nu(dx) \; \leq \; K_2 (1+|y|^2).    % \label{Growth2}
+  |b(y)|^2 + ||\sigma(y)||^2 
+   + \int_{\R^n} |F(y,x)|^2 \nu(dx) \; \leq \; K_2 (1+|y|^2).    % \label{Growth2}
  \end{align}
 \end{itemize}
-If $\nu$ is finite then condition \textbf{C2} is a consequence of \textbf{C1}. If $F(y,x) = H(y)\rho(x)$ where $H$ is Lipschitz and 
-$\rho$ satisfies:
+Where for every $(d\times n)$ matrix, the norm is defined as
+\begin{equation}
+ || \sigma ||^2 = \sum_{i=1}^d \sum_{j=1}^n [\sigma_{i,j}]^2 .
+\end{equation}
+
+If $\nu$ is finite, then condition \textbf{C2} is a consequence of \textbf{C1}. If it is possible to write $F(y,x) = H(y)\rho(x)$, with $H$ Lipschitz and 
+$\rho$ satisfying:
 \begin{equation}\label{rho}
- \int_{|x|<c} |\rho(x)|^2 \nu(dx) < \infty
+ \int_{\R^n} |\rho(x)|^2 \nu(dx) < \infty,
 \end{equation}
 then again the growth condition is a consequence of the Lipschitz condition.
 \begin{Theorem}
- Given the conditions \textbf{C1}, \textbf{C2}, there exist a unique strong solution $Z(t)$ to the modified SDE (\ref{modSDE}) with initial condition $Z(0)=Z_{0}$.
- The process $Z(t)$ is cádlág and $\mathcal{F}_t$-adapted.
+ Given the conditions \textbf{C1}, \textbf{C2}, there exist a unique strong solution $Y_t$ of (\ref{modSDE}) with initial condition $Y_{t=0}=Y_{0}$.
+ The process $\{Y_t\}_{t\geq 0}$ is cádlág and $\mathcal{F}_t$-adapted.
 \end{Theorem}
-A proof of existence and uniqueness based on Picard iteration, can be found in \cite{Applebaum} (see Theorem 6.2.3). 
+A proof of existence and uniqueness based on Picard iteration, can be found in \cite{Applebaum} (see Theorem 6.2.3). For more information we refer to Chapter 3.2 of
+\cite{Skorohod} where the time inhomogeneous case is considered. 
+
+
+\begin{Theorem}
+Let us consider the Feller semigroup associated with the Feller process described by the SDE (\ref{SDE}).
+For each $f\in C_0^{2}(\R^n)$, $t\geq0$, $x\in \R^n$,
+the infinitesimal generator $\LL$ has the form:
+\begin{align} \label{gen_jumpdiff}
+  (\LL f)(x) &=  \sum_{j=1}^n b_j(x) \frac{\partial f}{\partial x_j}(x) +
+  \frac{1}{2} \sum_{i,j=1}^n A_{i,j}(x) \frac{\partial^2 f}{\partial x_i \partial x_j}(x)\\  \nonumber
+           & + \int_{|y|<c} \left( f\bigl(x+F(x,y)\bigr) - f(x) - \sum_{j=1}^n F^j(x,y) \frac{\partial f}{\partial x_j}(x) \right) \nu(dy)  \\ \nonumber
+           & + \int_{|y| \geq c} \biggl( f\bigl(x+G(x,y)\bigr) - f(x) \biggr) \nu(dy).   \nonumber
+\end{align} 
+with $A(x) = \sigma(x) \sigma^T(x)$.
+\end{Theorem}
+The proof can be obtained by the application of the It\={o} lemma, see Theorem 6.7.4 of \cite{Applebaum}, where the author also show that $C_0^{2}(\R^n) \subseteq D_{\LL}$.   
 
 
 
-\section{Exponential Lévy models}
+
+\section{Exponential Lévy models}\label{Section_ELM}
 
 Finally we are able to generalize the equation (\ref{GBM}) for the process of the log-returns\footnote{
 It is also possible to generalize the differential equation (\ref{GBM_sde}). The solution of the modified SDE 
-is the \textbf{Doleans-Dade exponential} of a Lévy process. The two approaches are equivalents (see propositions 8.22 in \cite{Cont}).
+is the \textbf{Doleans-Dade exponential} of a Lévy process. The two approaches are equivalent (see propositions 8.22 in \cite{Cont}).
 In this thesis we choose to use exponential Lévy models. }.
 We write:
 \begin{equation}
  \log \left( \frac{S_t}{S_0} \right) = X_t ,
 \end{equation}
-where $X_t$ is a Lévy process with triplet $(b,\sigma^2,\nu)$.
+where $X_t$ is a one dimensional Lévy process with triplet $(b,\sigma^2,\nu)$.
 
 The name \textbf{exponential Lévy model} comes from the expression written as: 
 \begin{equation}\label{ELM}
@@ -589,47 +677,46 @@ The name \textbf{exponential Lévy model} comes from the expression written as:
 In order to obtain an SDE for the process (\ref{ELM}), we apply It\={o} formula (\ref{Ito_form}), and we consider 
 the Lévy-It\={o} decomposition (\ref{Levy_Ito}) for $X_t$, written in the differential form like (\ref{Levy_diff}).
 \begin{align*}
- d S_t \; &= S_0 e^{X_{t-}} b dt \; + \; S_0 e^{X_{t-}} \sigma dW_t \; + \; \frac{1}{2}S_0 e^{X_{t-}}\sigma^2 dt \\ \nonumber
-          &+ \int_{|x|\geq 1} (S_0 e^{X_{t-}+x} - S_0 e^{X_{t-}}) N(dt,dx) \\ \nonumber
-          &+ \int_{|x|< 1} (S_0 e^{X_{t-}+x} - S_0 e^{X_{t-}}) \tilde N(dt,dx) \\  \nonumber
-          &+ \int_{|x|< 1} (S_0 e^{X_{t-}+x} - S_0 e^{X_{t-}} - x S_0 e^{X_{t-}}) \nu(dx) dt. \nonumber
+ d S_t \; &= S_0 e^{X_{t^-}} b dt \; + \; S_0 e^{X_{t^-}} \sigma dW_t \; + \; \frac{1}{2}S_0 e^{X_{t^-}}\sigma^2 dt \\ \nonumber
+          &+ \int_{|x|\geq 1} (S_0 e^{X_{t^-}+x} - S_0 e^{X_{t^-}}) N(dt,dx) \\ \nonumber
+          &+ \int_{|x|< 1} (S_0 e^{X_{t^-}+x} - S_0 e^{X_{t^-}}) \tilde N(dt,dx) \\  \nonumber
+          &+ \int_{|x|< 1} (S_0 e^{X_{t^-}+x} - S_0 e^{X_{t^-}} - x S_0 e^{X_{t^-}}) \nu(dx) dt. \nonumber
 \end{align*}
 After some substitutions we can see that the resulting equation, as expected, is a generalization of the equation (\ref{GBM_sde}).
 \begin{align}
- \frac{d S_t}{S_{t-}}  \; &= (b + \frac{1}{2}\sigma^2 ) dt + \sigma dW_t \\ \nonumber
+ \frac{d S_t}{S_{t^-}}  \; &= (b + \frac{1}{2}\sigma^2 ) dt + \sigma dW_t \\ \nonumber
                           &+ \int_{|x|< 1} ( e^{x} - x - 1) \nu(dx) dt \\ \nonumber
                           &+ \int_{|x|\geq 1} (e^{x} - 1) N(dt,dx) + \int_{|x|< 1} (e^{x} - 1) \tilde N(dt,dx). \nonumber
 \end{align}
-Thanks to assumptions of theorem (\ref{assumptionM}) we can simplify more this equation.
+Thanks to the assumption \textbf{EM} (section \ref{AssumptionEM}) we can simplify this equation.
 First we look at the integrability conditions:
 \begin{itemize}
  \item $\int_{|x|\geq 1}  e^{x} \nu(dx) < \infty$ by \textbf{EM}.  
- %\item $\int_{|x|\geq 1}  x \nu(dx) < \infty$ by \textbf{M}.
  \item $\int_{|x|\geq 1} 1\; \nu(dx) < \infty$ by definition (\ref{Levy_measure}) of $\nu$.
 \end{itemize}
 We can add and subtract $\pm \int_{|x|\geq 1} ( e^{x} - 1) \nu(dx) dt $ and obtain the final form
 \begin{align} \label{exp_sde}
- \frac{d S_t}{S_{t-}}  \; &= \left(b + \frac{1}{2}\sigma^2 + \int_{\R} ( e^{x} - 1 -x\mathbbm{1}_{|x|<1}) \nu(dx) \right) dt  \\ \nonumber
+ \frac{d S_t}{S_{t^-}}  \; &= \left(b + \frac{1}{2}\sigma^2 + \int_{\R} ( e^{x} - 1 -x\mathbbm{1}_{|x|<1}) \nu(dx) \right) dt  \\ \nonumber
                           &+  \sigma dW_t \; + \int_{\R} (e^{x} - 1) \tilde N(dt,dx). \nonumber
 \end{align}
 If we set
 \begin{equation}\label{mu}
  \mu := b + \frac{1}{2}\sigma^2 + \int_{\R} ( e^{x} - 1 -x\mathbbm{1}_{|x|<1}) \nu(dx)
 \end{equation}
-we have an SDE of the type (\ref{SDE}) with $c=\infty$: 
+we have an SDE of type (\ref{modSDE}). 
 \begin{equation}\label{exp_sde2}
- d S_t = \; \mu S_{t-} dt +  \sigma S_{t-} dW_t \; + \int_{\R} S_{t-} (e^{x} - 1) \tilde N(dt,dx). 
+ d S_t = \; \mu S_{t^-} dt +  \sigma S_{t^-} dW_t \; + \int_{\R} S_{t^-} (e^{x} - 1) \tilde N(dt,dx). 
 \end{equation}
-The same equation can be derived quickly by considering assumption \textbf{M} and using the  
-Lévy-It\={o} decomposition (\ref{Levy_Ito2}) for $X_t$:
+The same equation can be derived quickly by considering the Lévy-It\={o} form (\ref{Levy_Ito2}) for $X_t$:
 \begin{align*}
- d S_t \; =& \; S_0 e^{X_{t-}} \biggl( b + \int_{|x|\geq 1}x \nu(dx) \biggr) dt \; + \; S_0 e^{X_{t-}} \sigma dW_t \; + \; \frac{1}{2}S_0 e^{X_{t-}}\sigma^2 dt \\ \nonumber
-          &+ \int_{\R} (S_0 e^{X_{t-}+x} - S_0 e^{X_{t-}}) \tilde N(dt,dx) + \int_{\R} (S_0 e^{X_{t-}+x} - S_0 e^{X_{t-}} - x S_0 e^{X_{t-}}) \nu(dx) dt \\ \nonumber
-          =& \; S_{t-} \biggl[ \mu dt +  \sigma dW_t \; + \int_{\R} (e^{x} - 1) \tilde N(dt,dx) \biggr].\\
+ d S_t \; =& \; S_0 e^{X_{t^-}} \biggl( b + \int_{|x|\geq 1}x \nu(dx) \biggr) dt \; + \; S_0 e^{X_{t^-}} \sigma dW_t \; + \; \frac{1}{2}S_0 e^{X_{t^-}}\sigma^2 dt \\ \nonumber
+          &+ \int_{\R} (S_0 e^{X_{t^-}+x} - S_0 e^{X_{t^-}}) \tilde N(dt,dx) + \int_{\R} (S_0 e^{X_{t^-}+x} - S_0 e^{X_{t^-}} - x S_0 e^{X_{t^-}}) \nu(dx) dt \\ \nonumber
+          =& \; S_{t^-} \biggl[ \mu dt +  \sigma dW_t \; + \int_{\R} (e^{x} - 1) \tilde N(dt,dx) \biggr].\\
 \end{align*}
 It is easy to check that the coefficients of this equation satisfy the conditions (\ref{Lipschitz})
-(\ref{Growth}) with $\rho(x) = e^x-1$.
-We just need to verify that this choice of $\rho(x)$ satisfies the integrability condition (\ref{rho}) with $c=\infty$:
+(\ref{Growth}) 
+For this purpose let us define $\rho(x) = e^x-1$
+and let us verify that it satisfies the integrability condition (\ref{rho}):
 We write $$ \int_{\R} (e^x-1)^2 \nu(dx) = \int_{|x|\geq1} (e^x-1)^2 \nu(dx) + \int_{|x| < 1} (e^x-1)^2 \nu(dx),$$
  \begin{itemize}
   \item For $|x|\geq 1$ the three integrals $\int_{|x|\geq1} e^{2x} \nu(dx)$ , $\int_{|x|\geq1} (-2e^x) \nu(dx)$ ,
@@ -644,21 +731,21 @@ Lévy process (\ref{ELM}).
 
 \subsection{The Merton Model}\label{Merton_section}
 
-The first jump-diffusion model for the log-returns is the \emph{Merton model}, presented in 
+The first jump-diffusion model for the log-prices is the \emph{Merton model}, presented in 
 \cite{Me76}. In the same paper the author also obtains a closed form solution for the price of an European vanilla option. 
-The Merton model describes the log-returns evolution as a Lévy process with a nonzero diffusion 
+The Merton model describes the log-prices evolution as a Lévy process with a nonzero diffusion 
 component and a finite activity jump process with normal distributed jumps.
 \begin{equation}\label{MertonM}
 X_t = \bar b t + \sigma W_t + \sum_{i=1}^{N_t} Y_i, 
 \end{equation}
-where $N_t$ is a Poisson process counting the jumps of $X_t$, and $Y_i \sim \mathcal{N}(\alpha, \xi^2)$ are the size of the jumps.
-Using the Poisson integral notation (Def. \ref{Poisson_int}), the process looks like:
+where $N_t$ is a Poisson random variable counting the jumps of $X_t$ in $[0,t]$, and $Y_i \sim \mathcal{N}(\alpha, \xi^2)$ represents the size of the jumps.
+Using the Poisson integral notation (Def. \ref{Poisson_int}), the process
 \begin{equation*}
  X_t = \bar b t + \sigma W_t + \int_{\R} x N(t,dx)
 \end{equation*}
-which correspond to a Lévy-It\={o} decomposition (\ref{Levy_Ito}), for the process $X_t$ with triplet $(b,\sigma,\nu)$, 
-given the assumption \textbf{M} (\ref{assumptionM}) and drift
-$\bar b = b - \int_{|x|<1} x \nu(dx)$.\\
+corresponds to the Lévy-It\={o} decomposition (\ref{Levy_Ito}),  
+where we defined the drift
+$\bar b := b - \int_{|x|<1} x \nu(dx)$.\\
 The Lévy measure of a finite activity Lévy process, can be factorized in the activity $\lambda$ of the Poisson process and 
 the pdf of the jump size:
 \begin{align*}
@@ -682,27 +769,26 @@ Using the formula for the moments (\ref{moments}) we obtain:
 \end{align} \newline
 The stock price SDE (\ref{exp_sde2}) has the following form: 
 \begin{equation}\label{Merton_sde}
- \frac{d S_t}{S_{t-}}  = \; \mu dt +  \sigma dW_t \; + \int_{\R} (e^{x} - 1) \tilde N(dt,dx).  
-\footnote{In the literature, the integral part is often indicated as $(J-1)dN$, where $J$ has a lognormal distribution
-and $dN$ is an infinitesimal variation of the Poisson process.}
+ \frac{d S_t}{S_{t-}}  = \; \bar \mu dt +  \sigma dW_t \; + \int_{\R} (e^{x} - 1) \tilde N(dt,dx).  
+\footnote{In the literature, the jump part is often indicated with the not rigorous notation $(J-1)dN_t$, where $J$ is lognormal distributed
+and $dN_t$ is the infinitesimal variation of the Poisson process.}
 \end{equation}
 with 
-$$ \mu = \bar b + \frac{1}{2}\sigma^2 + \int_{\R} (e^x - 1) \nu(dx). $$
+$$ \bar \mu := \bar b + \frac{1}{2}\sigma^2 + \int_{\R} (e^x - 1) \nu(dx). $$
 \newline
 
 
-\subsection{The Variance Gamma}\label{VG_section}
+\subsection{The Variance Gamma process}\label{VG_section}
 
 The \emph{variance gamma} process is a pure jump Lévy process with infinite activity.
-The first complete presentation of the model is due to Madan and Seneta
-in 1990 \cite{MaSe90}. The model presented in their paper is however a symmetric VG model, 
+The first presentation with applications in finance is due to \cite{MaSe90}. 
+The model presented in their paper is however a symmetric VG model, 
 where there is only an additional parameter which controls the kurtosis, while the skewness is still not considered.\\
-The non-symmetric VG process is described in the 1998 paper by Madan, Carr and
-Chang \cite{MCC98} where a closed form solution for European vanilla options is also presented.\\
+The non-symmetric VG process is described in \cite{MCC98} where a closed form solution for European vanilla options is also presented.\\
 
 The VG process is obtained by time changing a Brownian motion with drift. The new time variable is a random variable 
 $T_t$ whose increments are Gamma distributed with density $T_t \sim \Gamma(\mu t,\kappa t)$ \footnote{Usually the Gamma distribution is 
-parametrized by a shape and scale positive parameters $X \sim \Gamma(\rho,\theta)$. The process $X_t \sim \Gamma(\rho t,\theta)$ 
+parametrized by a shape and scale positive parameters $X \sim \Gamma(\rho,\theta)$. The random variable $X_t \sim \Gamma(\rho t,\theta)$ 
 has pdf 
 $f_{X_t}(x) = \frac{\theta^{-\rho t}}{\Gamma(\rho t)}x^{\rho t -1}e^{-\frac{x}{\theta}}$ and has $\E[X_t]=\rho \theta t$ 
 and $\mbox{Var}[X_t] = \rho \theta^2 t$. Here we use a parametrization as in \cite{MCC98} such that $\E[X_t]=\mu t$ and $\mbox{Var}
@@ -711,7 +797,7 @@ and $\mbox{Var}[X_t] = \rho \theta^2 t$. Here we use a parametrization as in \ci
  f_{T_t}(x)= \frac{(\frac{\mu}{\kappa})^{\frac{\mu^2 t}{\kappa}}}{\Gamma(\frac{\mu^2 t}{\kappa})}x^{\frac{\mu^2 t}{\kappa} -1}
  e^{-\frac{\mu x}{\kappa}}.
 \end{equation}
-The process $T_t$ is called \textbf{subordinator}. In general a subordinator is a one dimensional Lévy process that is 
+The process $\{T_t\}_{t\geq0}$ is called \textbf{subordinator}. In general a subordinator is a one dimensional Lévy process that is 
 non-decreasing almost surely. Therefore it is consistent to be a time variable.\\
 The characteristic function of $T_t$ is:
 \begin{equation}
@@ -743,7 +829,7 @@ processes. In this case the two increasing processes are Gamma processes:
  X_t = Y^p_t - Y^n_t,
 \end{equation}
 with $Y^p_t \sim \Gamma(\mu_p t, \kappa_p t)$ and $Y^n_t \sim \Gamma(\mu_n t, \kappa_n t)$. For the specific relation between the parameters
-$\mu_p,\kappa_p,\mu_n,\kappa_n$ and $\bar\sigma,\kappa,\theta$ look \cite{MCC98}.\\
+$\mu_p,\kappa_p,\mu_n,\kappa_n$ and $\bar\sigma,\kappa,\theta$ we refer to \cite{MCC98}.\\
 \newline
 The pdf of $X_t$ can be computed conditioning on the realization of $T_t$:
 \begin{align}\label{VG_density}
@@ -780,28 +866,28 @@ Using the formula for the moments (\ref{moments}) we obtain:
  \mbox{Kurt}[X_t] &= \frac{t (3\bar\sigma^4 \kappa + 12\bar\sigma^2 \theta^2 \kappa^2 +6\theta^4\kappa^3)}{\bigl(\mbox{Var}[X_t]\bigr)^2}.\nonumber 
 \end{align}
 \\
-The Lévy-It\={o} decomposition (\ref{Levy_Ito}) for a pure jump finite variation process, such that $\int_{|x|<1} x \nu(dx) < \infty$, 
+The Lévy-It\={o} decomposition (\ref{Levy_Ito}) for any pure jump finite variation process i.e $\int_{|x|<1} x \nu(dx) < \infty$, 
 can be written as
 \begin{equation}\label{Levy_Ito3}
-X(t) = \tilde b t + \int_{\R} x N(t,dx) 
+X_t = \tilde b t + \int_{\R} x N(t,dx) 
 \end{equation}
-with $\tilde b = b - \int_{|x|<1} x \nu(dx)$. We can apply the It\={o} formula to (\ref{ELM}) to obtain the corresponding
-stock price SDE (\ref{exp_sde2}) for a finite variation process: 
+with $\tilde b = b - \int_{|x|<1} x \nu(dx)$. We can apply the It\={o} formula to (\ref{ELM}) to obtain the
+stock price SDE for a finite variation process: 
 \begin{align}
  \frac{d S_t}{S_{t-}}  &= \; \tilde b dt \; + \int_{\R} (e^{x} - 1) N(dt,dx).  \\ \nonumber
-                       &= \; \biggl( b + \int_{\R} (e^{x} -1 -x1_{|x|<1}) \nu(dx) \biggr) dt \; + \int_{\R} (e^{x} - 1) \tilde N(dt,dx).  
+                       &= \; \biggl( b + \int_{\R} \bigl( e^{x} -1 -x \mathbbm{1}_{|x|<1}(x) \bigr) \nu(dx) \biggr) dt \; + \int_{\R} (e^{x} - 1) \tilde N(dt,dx).  
 \end{align}
 \\
 Consider the process (\ref{VG_process}). We can take its expectation 
 $$\E[X_{T_t}] = \theta \E[T_t] + \bar\sigma \E[W_{T_t}] = \theta t,$$ 
 which is equal to the expectation of (\ref{Levy_Ito3}). Using (\ref{Exp_poiss}) we obtain
 \begin{align}
- \E[X(t)] &= \tilde b t + \E \biggl[ \int_{\R} x N(t,dx)\biggr] \\ \nonumber
+ \E[X_t] &= \tilde b t + \E \biggl[ \int_{\R} x N(t,dx)\biggr] \\ \nonumber
 	  &= t \biggl( \tilde b + \int_{\R} x \, \nu(dx) \biggr), \nonumber
 \end{align}
 and therefore $ \tilde b = \theta - \int_{\R} x \nu(dx) $.\\
 We can compute the integral using the explicit formula (\ref{VG_measure}) for the Lévy measure.
-Call $$A = \frac{\theta}{\bar\sigma^2} \hspace{2em} \mbox{and} \hspace{2em} 
+Let us call $$A = \frac{\theta}{\bar\sigma^2} \hspace{2em} \mbox{and} \hspace{2em} 
 B=\frac{|\theta|}{\bar\sigma^2}\sqrt{1+\frac{2\bar\sigma^2}{\kappa \theta^2}}$$
 with $A<B$, and solve the integral:
 \begin{align*}
@@ -813,89 +899,86 @@ with $A<B$, and solve the integral:
 As expected, $\tilde b = 0$. \\
 The Lévy-It\={o} decomposition for the VG process in (\ref{VG_process}) is simply
 \begin{equation}
-X(t) = \int_{\R} x N(t,dx). 
+X_t = \int_{\R} x N(t,dx). 
 \end{equation}
 All the information is contained in the Lévy measure (\ref{VG_measure}),
 which completely describes the process. Even if the process has been created by Brownian
 subordination, it has no diffusion component.  
-The L\'evy triplet is $( \int_{|x|<1} x \nu(dx), 0, \nu)$.
+The L\'evy triplet is
+\begin{equation}\label{VG_triplet}
+ \biggl( \int_{|x|<1} x \nu(dx), 0, \nu \biggr).
+\end{equation}
 The SDE for the stock price following an \textbf{exponential VG} is 
 \begin{equation}\label{VG_sde}
  \frac{d S_t}{S_{t-}}  = \; \int_{\R} (e^{x} - 1) N(dt,dx).  
 \end{equation}
 
 
-\subsection{Infinitesimal Generator}
+\subsection{Infinitesimal Generator for exponential Lévy processes} 
 
-This section derives the form of the infinitesimal generator of the stock price in the \emph{Merton} and the \emph{Variance Gamma} model.\\
-A generalized jump-diffusion process has the infinitesimal generator given by (\ref{gen_jumpdiff}) (with $c=1$). 
+This section derives the infinitesimal generator for the stock price process under the \emph{Merton} and the \emph{Variance Gamma} models.\\
 
-When we consider the SDE for the stock price in the general form (\ref{exp_sde2}), with $c=\infty$, we have an infinitesimal generator of the form:
+The stock price SDE (\ref{exp_sde2}), has the form (\ref{SDE}) with $c=\infty$. Using (\ref{gen_jumpdiff}), the corresponding infinitesimal generator is:
 \begin{align}\label{inf_gen_exp_levy}
  \LL^S f(s) =& \; \mu s \frac{\partial f(s)}{\partial s}
 + \frac{1}{2} \sigma^2 s^2 \frac{\partial^2  f(s)}{\partial s^2}  \\ \nonumber
 &+ \int_{\R} \biggl[ f(se^x) - f(s) - s(e^x-1)\frac{\partial f(s)}{\partial s} \biggr] \nu(dx).
 \end{align}
-Then we can write the particular
-cases of Merton (\ref{Merton_sde}) and VG (\ref{VG_sde}), which can be thought as an SDE (\ref{SDE}) with the choice $c=0$. \\
-Obviously the two representations are equivalent.
+Let us derive the infinitesimal generators for 
+the Merton and VG processes described by the SDEs (\ref{Merton_sde}) and (\ref{VG_sde}): \\
 \begin{itemize}
  \item \textbf{Merton model generator}:\\
- In the case of $c=\infty$, the 1-dim generator has the form:  
+ Under the representation with $c=\infty$, the 1-dim generator $\LL^{M}$ has the form:  
  \begin{align}\label{Merton_gen}
-  (\LL f)(s)  &= \;  \mu s \frac{\partial f(s)}{\partial s} + \frac{1}{2} \sigma^2 s^2 \frac{\partial^2 f(s)}{\partial s^2} \\ \nonumber
+  (\LL^{M} f)(s)  &= \;  \bar \mu s \frac{\partial f(s)}{\partial s} + \frac{1}{2} \sigma^2 s^2 \frac{\partial^2 f(s)}{\partial s^2} \\ \nonumber
   &+ \; \int_{\R} \bigl( f(s e^x) - f(s) - s(e^x-1)\frac{\partial f(s)}{\partial s} \bigr) \nu(dx), 
  \end{align}
-with $$ \mu = \bar b + \frac{1}{2}\sigma^2 + \int_{\R} ( e^{x} - 1 ) \nu(dx). $$
-The integral in the last expression is 
-\begin{align*}
- \int_{\R} ( e^{x} - 1 ) \nu(dx) = \lambda \biggl( e^{\alpha + \frac{1}{2} \xi^2} -1 \biggr).
-\end{align*}
-In the case we choose the representation with $c=0$, the equivalent generator is:
+with $$ \bar \mu = \bar b + \frac{1}{2}\sigma^2 + m $$
+and we defined the parameter 
+\begin{equation}\label{parameter_m} 
+ m := \int_{\R} ( e^{x} - 1 ) \nu(dx) = \lambda \biggl( e^{\alpha + \frac{1}{2} \xi^2} -1 \biggr).
+\end{equation}
+Under the equivalent representation with $c=0$, the generator is:
  \begin{align}\label{Merton_gen}
-  (\LL f)(s)  &= \;  \mu's \frac{\partial f(s)}{\partial s} + \frac{1}{2} \sigma^2 s^2 \frac{\partial^2 f(s)}{\partial s^2} \\ \nonumber
-  &+ \; \int_{\R} \bigl( f(se^x) - f(s) \bigr) \nu(dx), 
+  (\LL^{M} f)(s)  &= \; \biggl( \bar b + \frac{1}{2}\sigma^2 \biggr)s \frac{\partial f(s)}{\partial s} 
+                  + \frac{1}{2} \sigma^2 s^2 \frac{\partial^2 f(s)}{\partial s^2} \\ \nonumber
+  &+ \; \int_{\R} \bigl( f(se^x) - f(s) \bigr) \nu(dx). 
  \end{align}
-with $$ \mu' = \bar b + \frac{1}{2}\sigma^2. $$
  \item \textbf{Variance Gamma generator}:\\
- In the case with $c = 0$, the generator is:
+ Using the representation with $c = 0$, the generator $\LL^{VG}$ is:
  \begin{equation}\label{VG_gen}
-  (\LL f)(s) = \int_{\R} \bigl( f(se^x) - f(s) \bigr) \nu(dx).
+  (\LL^{VG} f)(s) = \int_{\R} \bigl( f(se^x) - f(s) \bigr) \nu(dx).
  \end{equation}
  \newline
- For $c = \infty$ 
- \begin{equation*}
-  (\LL f)(s) = \mu' \frac{\partial f(s)}{\partial s} 
-  + \int_{\R} \biggl( f(s e^x) - f(s) - s(e^x-1)\frac{\partial f(s)}{\partial s} \biggr) \nu(dx).
- \end{equation*}
- with $\mu' = \int_{\R} s(e^x-1)\nu(dx)$.
+ Under $c = \infty$ we obtain the equivalent form: 
+ \begin{equation}
+  (\LL^{VG} f)(s) = w s \frac{\partial f(s)}{\partial s} 
+  + \int_{\R} \biggl( f(s e^x) - f(s) - s(e^x-1)\frac{\partial f(s)}{\partial s} \biggr) \nu(dx),
+ \end{equation}
 \end{itemize}
-In general the SDE representation with $c = \infty$ is preferable. 
-
-Now let us compute the coefficient $\mu'$ in the VG generator. Let us consider the integral
-$$ \int_{\R} (e^x-1) \nu(dx). $$
-We use the relation between the Lévy measure and the transition probability (see Definition \ref{trans_prob}) of the process:
+where we introduced the new parameter
+\begin{equation}\label{parameter_w}
+ w := \int_{\R} (e^x-1) \nu(dx) = - \frac{1}{\kappa} \log \left( 1-\theta \kappa -\frac{1}{2}\bar\sigma^2 \kappa \right).
+\end{equation}
+In order to calculate the integral, we use the following relation between the Lévy measure and the transition probability (\ref{trans_prob}) of the process:
 \begin{equation}
- \nu(dx) = \lim_{t\to 0} \frac{1}{t} p_{0,t}(0,dx) .
+ \nu(dx) = \lim_{t\to 0} \frac{1}{t} p_{0,t}(0,dx).
 \end{equation}
 This relation is presented by \cite{Cont} in Chapter 3.6, and a proof can be found in Corollary 8.9 of \cite{Sato}. \\
 Let us compute first the expected value of the exponential VG process
 \begin{align*}
-\E[ e^{X_t}] &= \phi_{X_t}(-i) = \exp \bigl( -\frac{t}{\kappa} \log(1-\theta \kappa -\frac{1}{2}\bar\sigma^2 \kappa ) \bigr)\\
+\E[ e^{X_t}] &= \phi_{X_t}(-i) = \exp \biggl( -\frac{t}{\kappa} \log(1-\theta \kappa -\frac{1}{2}\bar\sigma^2 \kappa ) \biggr)\\
  &= e^{w t}
 \end{align*}
-where we define the new parameter 
-\begin{equation}
- w = - \frac{1}{\kappa} \log(1-\theta \kappa -\frac{1}{2}\bar\sigma^2 \kappa).
-\end{equation}
+where we called $w = - \frac{1}{\kappa} \log(1-\theta \kappa -\frac{1}{2}\bar\sigma^2 \kappa)$.
 The integral becomes
 \begin{align*}
  \int_{\R} (e^x-1) \nu(dx) &= \int_{\R} (e^x-1) \lim_{t\to 0} \frac{1}{t} p_{0,t}(0,dx) \\ 
          &= \lim_{t\to 0} \frac{1}{t} \E[ e^{X_t} - 1 ] \\
          &= w.
 \end{align*}
-Remember that since the VG has finite variation, the integral is finite because the integrand is $e^x-1 = x + O(x^2)$,
-so we can take the limit outside the integral.\\
+Remember that since the VG has finite variation, the integral is finite because the integrand is $e^x-1 = x + \mathcal{O}(x^2)$,
+so we can always take the limit outside the integral.
 
 
 
@@ -912,7 +995,7 @@ H_{X_t}(u) &= \log(\phi_{X_t}(u)) \\ \nonumber
            &= t \eta(u) \\ \nonumber
            &= \sum_{n=1}^{\infty} c_n \frac{(iu)^n}{n!}
 \end{align}
-The \emph{cumulants} of a Lévy process are thus defined by
+The \textbf{cumulants} of a Lévy process are thus defined by
 \begin{equation}\label{cumulants}
  c_n = \frac{t}{i^n} \frac{\partial^n \eta(u) }{\partial u^{n}} \biggr|_{u=0} .
 \end{equation}
@@ -921,7 +1004,7 @@ The cumulants are closely related to the central moments $\mu_n$:
  \mu_0 = 1,\hspace{1em} \mu_1=0, \hspace{1em} \mu_n=\sum_{k=1}^n \binom{n-1}{k-1}  c_k \mu_{n-k} \hspace{1em} \mbox{for } n>1.  
 \end{equation}
 For a Poisson process with finite first $n$ moments, all the information about the cumulants is contained inside the Lévy measure.
-Expand in Taylor series the exponential 
+Let us expand in Taylor series the exponential 
 $$ e^{iux} \approx 1 +iux - \frac{u^2x^2}{2} -\frac{iu^3x^3}{3!} +\frac{u^4x^4}{4!} + \dots $$ 
 The Lévy symbol corresponding to the representation (\ref{Levy_Ito3}), for a process
 with finite variation with $\tilde b = b - \int_{|x|<1} x \nu(dx)$
@@ -934,6 +1017,29 @@ becomes
 \end{align}
 with $c_1= t \bigl( b+\int_{|x|\geq 1} x \nu(dx) \bigr)$.
 
+
+
+\section{Chapter conclusions}
+
+In this chapter we present the main theoretical features of Lévy processes in a quite general setting. 
+In this thesis we model the log-price dynamics by using stochastic differential equations involving Lévy processes. 
+For this purpose it is important to present a complete framework containing all the tools needed in the next chapters.
+Starting with the basic definition of a Lévy process and the form of its characteristic function, we then introduce the concept of \emph{random measures}
+which is a method to describe the jumps of the process, and the important \emph{Lévy-It\=o decomposition} that permits to decompose any Lévy processes into 
+the superposition of a Brownian motion with drift and two jump process.
+We then introduce the assumption of finite exponential second moment, called assumption \textbf{EM}, which is recurrent throughout the thesis.\\
+The two concepts of \emph{infinitesimal generator} and \emph{It\=o formula} are presented in a general form in section \ref{Infinitesimal_generator_stoch_calc}, where we 
+also discussed the hypothesis for the existence of a unique solution of the Lévy-type SDE. 
+All these concepts are applied in section (\ref{Section_ELM}) to the specific case of exponential Lévy processes. 
+We derive the exponential Lévy SDE and the form of the infinitesimal generator associated to the process.   
+These formulas are fundamental in the thesis and will be used several times in chapter \ref{Chapter2} 
+for the derivation of the pricing PIDE, and in chapter \ref{Chapter5} for the derivation of the 
+dynamic programming equation associated with the main problem of the thesis.\\
+In the end of the chapter we introduce two of the most popular Lévy processes used in finance, i.e. the \emph{Merton model} and the \emph{Variance Gamma model}.
+They are used throughout the thesis as practical examples in the numerical calculations.
+In chapter \ref{Chapter2} we present the numerical solution of the Merton and VG pricing PIDEs and 
+in chapter \ref{Chapter6} we solve numerically the pricing problem under transaction costs considering these two processes.
+Furthermore, the whole \ref{Chapter3} is dedicated to the application of the multinomial method to the pricing problem under VG process. 
 
 
 

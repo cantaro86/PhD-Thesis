@@ -8,21 +8,20 @@
 
 
  
-In this chapter we make a digression about the application of a multinomial approximation for the Variance Gamma (VG) process.
-The chapter collects the main results presented in the paper \cite{Canta2}. In Chapter \ref{Chapter6} this method is applied to solve the option pricing problem with 
-transaction costs.\\
  
-The VG process has nice analytical properties and 
-reproduce quite well the statistical features of the financial data (see for instance \cite{Ait12} and \cite{Cont}).
-In Figure \ref{FigPDF} we present as examples the histograms of the
-daily log-returns for four of the major indices:  
-the S\&P 500 Stock Index, 
-the KOSPI (Korea Composite Stock Price Index), 
-XAO (All Ordinaries Australian Index)  
-and TAIEX (Taiwan Capitalization weighted Stock Index).
-In the pictures we show the Normal and Variance Gamma (VG) densities fitted with the market data. 
-It is straightforward to check that the 
-VG density reproduces much better the high peaks near the origin, and the heavy tails feature.
+In this thesis we decided to work with the Variance Gamma (VG) process because it has nice analytical properties and 
+it reproduces quite well the statistical features of the stock dynamics (see for instance \cite{Cont} and \cite{Ait12}).
+
+To support this statement, 
+we present in Figure \ref{FigPDF} some examples of histograms of
+daily log-returns of the four indices:  
+the \textbf{S\&P 500} Stock Index, 
+the \textbf{KOSPI} (Korea Composite Stock Price Index), 
+\textbf{XAO} (All Ordinaries Australian Index)  
+and \textbf{TAIEX} (Taiwan Capitalization weighted Stock Index).
+In the pictures we show the fit of the Normal and Variance Gamma (VG) densities, using the market data. 
+It is clear that the 
+VG density reproduces much better the high peaks near the origin and the heavy tails of the empirical distribution.
 
 \begin{figure}[t!]
  \centering
@@ -34,18 +33,20 @@ VG density reproduces much better the high peaks near the origin, and the heavy 
  ~
  \includegraphics[width=0.47\textwidth]{xao.png}
  % VG4_pdf.png: 0x0 pixel, 0dpi, 0.00x0.00 cm, bb=
- \caption{Histograms of daily log-returns for S\&P500, KOSPI, XAO and TAIEX. The dashed line corresponds to the VG density (\ref{VG_density}). 
- The continuous line is the normal density. The parameters for both densities are obtained by the \emph{method of moments} (details in \cite{Se04}).}
+ \caption{Histograms of daily log-returns for S\&P500, KOSPI, XAO and TAIEX, from 1 January 1988 to 9 December 2016. Source: Yahoo Finance.
+ The dashed line corresponds to the VG density (\ref{VG_density}). 
+ The continuous line is the normal density. 
+ The parameters are obtained by the \emph{method of moments}. For more details on the parameter estimation for the VG density we refer to \cite{Se04}.}
  \label{FigPDF}
 \end{figure} 
 
 The VG process was first presented in the context of option pricing 
 in \cite{MaMi91}, where it has been used for pricing European options.
 European vanilla options can be easily priced by the analytical formula presented in \cite{MCC98} and exotics
-can be priced numerically by several techniques:
+can be priced numerically by several common techniques.
 Monte Carlo methods for VG are presented in \cite{Fu00}. 
 A finite difference scheme for the VG Partial Integro-Differential Equation (PIDE) 
-is described in \cite{CoVo05b}. In \cite{CaMa98}, the authors show how to price options by using a Fourier transform approach.
+is described in \cite{CoVo05b}. In \cite{CaMa98}, the authors show how to price options by a Fourier transform approach.
 The problem for American options is considered in \cite{Al05}, \cite{Oo05} and \cite{HiMa01}, where the authors present different finite difference 
 schemes to solve the American VG PIDE.
 
@@ -65,7 +66,7 @@ In the present work we consider a multinomial discretization based on the cumula
 In Section \ref{sec3_ch3} we review the construction of the multinomial tree, following the method of
 moment matching proposed in \cite{YaPr01}. We prove that the multinomial tree converges to the continuous time jump process that we have
 introduced to approximate the VG process.
-In Section \ref{sec4_ch3}, which is the most important of the paper, we describe the algorithm for pricing options with the 
+In Section \ref{sec4_ch3}, we describe the algorithm for pricing options with the 
 multinomial method and show the numerical results for European and American options.
 
 
@@ -73,11 +74,11 @@ multinomial method and show the numerical results for European and American opti
 
 \section{The multinomial method} \label{sec3_ch3}
 In this section we introduce the multinomial method proposed in \cite{YaPr06}. 
-The stock price is considered as a Markov chain with $L$ possible future states at each time. 
+The stock price is represented by a Markov chain with $L$ possible future states at each time. 
 In this setting, the time $t \in [t_0,T]$ is discretized as $t_n = t_0 + n\Delta t$ for $n=0, ... ,N$ and 
-$\Delta t = (T-t_0)/N$. We denote the stock price at time $t_n$ as $S(t_n) = S_n$.
+$\Delta t = (T-t_0)/N$. We denote the stock price at time $t_n$ as $S_{t_n} = S_n$.
 
-Consider the up/down factors $u>d>0$ and write the discrete evolution of the stock price $S_n$ as:
+Let us consider the up/down factors $u>d>0$, and write the discrete evolution of the stock price $S_n$ as:
 \begin{equation}\label{Discr_S}
   S_{n+1} = u^{L-l}d^{l-1} S_n  \hspace{3em} l=1, ... , L  
 \end{equation}
@@ -86,21 +87,21 @@ The value of the stock at time $t_n$ can assume $j \in [1,...,n(L-1)+1]$ possibl
 \begin{equation}\label{Discr_S2}
   S_{n}^{(j)} = u^{n(L-l)+1-j}d^{j-1} S_0.  
 \end{equation}
-The multinomial tree is recombining if for a constant $c>1$, $u/d = c$.
-Regarding the present work, we only consider five branches, $L=5$. As explained in \cite{YaPr06}, this number of branches is 
+The multinomial tree is recombining if $u/d = c$, for $c>1$.
+In the present work we only consider five branches, $L=5$. As we will see in the next sections this number of branches is 
 enough to model the features of a stochastic process up to its fourth moment.
 
 
 \subsection{Moment matching}
 
 To determine the parameters of the Markov chain we require that its local moments are equal to that of the continuous process.
-First, we rewrite the continuous process (\ref{VG_sde}) using the log-variable $Y_t = \log(S_t)$ (as explained in Section \ref{VG_section2}) 
-obtaining:
+Let us consider a VG process with drift $(r-w)$, where $w$ is the martingale correction defined in (\ref{parameter_w}): 
+%and derive the continuous process for the log-variable $Y_t = \log(S_t)$: 
 \begin{align}\label{log_martingale}
- Y_{t+\Delta t}-Y_t &= (r+\omega)\Delta t + \int_{\R} x N(\Delta t,dx) \\ \nonumber
-		    &= (r+\omega + \theta)\Delta t + \int_{\R} x \tilde N(\Delta t,dx)
+ Y_{t+\Delta t}-Y_t &= (r-w)\Delta t + \int_{\R} x N(\Delta t,dx) \\ \nonumber
+		    &= (r-w + \theta)\Delta t + \int_{\R} x \tilde N(\Delta t,dx)
 \end{align}
-where $\theta = \int_{\R} x \nu(dx) = \E \bigl[ \int_{\R} x N(1,dx) \bigr]$ is the expected value of the VG process in (\ref{VG_process}), 
+The parameter $\theta = \int_{\R} x \nu(dx) = \E \bigl[ \int_{\R} x N(1,dx) \bigr]$ is the expected value of the VG process in (\ref{VG_process}), 
 when $\Delta t=1$. 
 The integral with respect to the compensated Poisson measure $\tilde N(\Delta t,dx)$ is a martingale as discussed in Section \ref{random_measures}.
 
@@ -110,16 +111,16 @@ random variable with $L$ possible outcomes:
  \Delta Y = Y_{n+1} - Y_n &= (L-l) \log(u) + (l-1) \log(d) \\ \nonumber
   &= \bar b\, \Delta t + (L-2l+1) \alpha(\Delta t).
 \end{align}
-The term $\bar b\, \Delta t$ is the drift term, while $l$ is a random variable that assumes values in $\{1,2,...,L\}$ with probability $p_l$. 
+The term $\bar b\, \Delta t$ is the drift term, while the term $l$ is a random variable that takes values in $\{1,2,...,L\}$ with probability $p_l$. 
 It has to satisfy the martingale condition:
 $$ \E \bigl[(L-2l+1) \alpha(\Delta t) \bigr] = \alpha(\Delta t) \sum_{l=1}^L p_l (L-2l+1) = 0, $$
-with $\alpha(\Delta t)$ a function of $\Delta t$.
+and $\alpha(\Delta t)$ is a function of $\Delta t$.
 
 The corresponding up/down factors have the following representation:
 \begin{equation}\label{updown}
  u = \exp\biggl( \frac{b}{L-1} + \alpha(\Delta t) \biggr) \hspace{2em}  d = \exp\biggl( \frac{b}{L-1} - \alpha(\Delta t) \biggr),
 \end{equation}
-and we can readily see that if $u/d$ is constant the tree recombines.
+and we can readily see that if $u/d$ is a constant, then the tree recombines.
 
 Given the mean $c_1 = \E[\Delta Y] = \bar b \Delta t$, the $k$-central moment is:
 \begin{equation}\label{higher_moments}
@@ -140,8 +141,8 @@ we solve the linear system of equations for the transition probabilities:
  p_4 &= \frac{1}{196 \alpha(t)^4} \biggl[ -6 c_2 + 32c_2 \alpha(t)^2 + 4c_3 \alpha(t) -2 c_4  \biggr] \\ \nonumber
  p_5 &= \frac{1}{196 \alpha(t)^4} \biggl[ \frac{3}{2} c_2^2 -2 c_2\alpha(t)^2 - 2 c_3 \alpha(t) +\frac{1}{2} c_4 \biggr].
 \end{align}
-The drift parameter corresponds to $\bar b = r+\omega + \theta$.
-The only missing parameter to determine is $\alpha(\Delta t)$. This is a function of the time increment $\Delta t$ and can be determined using the 
+The drift parameter corresponds to $\bar b = r - w + \theta$.
+The only missing term to find is $\alpha(\Delta t)$. This is a function of the time increment $\Delta t$ and can be determined using the 
 higher order terms in the moment matching condition together with the condition of positive probabilities.
 
 Recall that the well known binomial model \cite{CRR79} assumes the value $\alpha(\Delta t) = \sigma \sqrt{\Delta t}$,
@@ -166,7 +167,7 @@ This choice guarantees that the probabilities $p_i$ for $i=1...5$ are always pos
 \end{align}
 where $s = c_3 / \sqrt{c_2^3}$ is the skewness.
 \begin{Remark}
- The standard deviation of every L\'{e}vy process with finite moments follows the square root propagation rule. This means that the term $\alpha(\Delta t)$ has to be proportional
+ The standard deviation of every L\'{e}vy process with finite second moment follows the square root propagation rule. This means that the term $\alpha(\Delta t)$ has to be proportional
  to the square root of $\Delta t$. In the binomial and trinomial models, the proportionality constant is explicit, while for the pentanomial method it is implicit
  in the formula (\ref{alphat}). Expanding the formula using the expression (\ref{VG_cumulants}) for the cumulants, it is possible to check that the square root rule is
  satisfied at first order in $\sqrt{\Delta t}$.
@@ -183,13 +184,13 @@ The cumulant generating function of the increment $\Delta X^A$ has the following
 \begin{equation}\label{cum_gen_appr}
  H_{\Delta X^{A}}(u) = ic_1 u -\frac{c_2u^2}{2} -\frac{ic_3u^3}{3!} + \frac{c_4u^4}{4!} + \mathcal{O}(u^5).
 \end{equation}
-We are interested in the approximation of a VG process with drift (\ref{log_martingale}), therefore we require that $c_1 = \bar b \Delta t = (r+\omega+\theta)\Delta t$. 
+We are interested in the approximation of a VG process with drift (\ref{log_martingale}), therefore we require that $c_1 = \bar b \Delta t = (r-w+\theta)\Delta t$. 
 \begin{Theorem}
 The increments of the discrete Markov chain (\ref{Discr_Y}) and the increments of the approximated process $X^A$ have the same distribution by construction.
 \end{Theorem}
 \begin{proof}
 The idea of the proof is to show that the cumulant generating function of the discrete process (\ref{Discr_Y}) 
-coincides with that of the approximated process (\ref{cum_gen_appr}). We prove it using the moment
+coincides with that of the approximated process (\ref{cum_gen_appr}). We prove it by using the moment
 matching condition (\ref{moment_matching}).
 \begin{align}
 H_{\Delta Y}(u) &= \log \bigl( \phi_{\Delta Y}(u)  \bigr) = \log \biggl( \E \bigl[ e^{iu \Delta Y} \bigr] \biggr) \\ \nonumber
@@ -209,8 +210,8 @@ H_{\Delta Y}(u) &= iu \bar b \Delta t + \log \biggl( \sum_{k=0}^{\infty} \frac{(
 All the cumulants of $\Delta X^A$ are equal to the cumulants of the Markov chain (\ref{Discr_Y}) by construction, but only the first four are equal to the VG cumulants.
 When all the cumulants $c_i$, for $0 \leq i \leq n$, are equal to the VG cumulants, the approximated process $X^A$ converges to
 the original VG process for $n \to \infty$.
-To control $n$ cumulants, we need $n+1$ branches. Therefore, when the number of cumulants of $\Delta X^A$ equal to those of the VG process goes to infinity, 
-the number of branches have to go to infinity as well.
+In order to describe $n$ cumulants, we need $n+1$ branches. Therefore, when the number of cumulants of $\Delta X^A$ that are equal to those of the VG goes to infinity, 
+the number of branches has to go to infinity as well.
 We assume that five branches ($L=5$) are enough to describe the features of the underlying process and, at the same time, keep the numerical
 problem simple. 
 \end{Remark}
@@ -237,7 +238,7 @@ We suggest the following algorithm for pricing with the multinomial method:
  \item Compute the transition probabilities vector (\ref{probabilities2}). 
  \item Compute the up/down factors $u$ and $d$ (\ref{updown}) and the vector of prices $S_N$ at terminal time $N$ as in Eq. (\ref{Discr_S2}).
  \item Evaluate the payoff of the option $V^N(S_N)$ at terminal time $N$.
- \item Given the option's values at time $t_{n+1}$ compute the values at time $t_n$. The value is the conditional expectation:
+ \item Given the option values at time $t_{n+1}$ compute the values at time $t_n$. The value is the conditional expectation:
  \begin{equation}
  V^n(s^{(k)}_n) = e^{-r\Delta t} \E^{\Q} \biggl[ V^{n+1}(S_{n+1}) \bigg| S^{(k)}_n = s^{(k)}_n \biggr]. 
 \end{equation}
@@ -248,11 +249,9 @@ We suggest the following algorithm for pricing with the multinomial method:
 \end{equation}	
  \item Iterate the algorithm until the initial time $t_0$. 
 \end{enumerate}
-In the parameters calibration procedure, sometimes it is common to estimate first the historical parameters, and use them as initial guess for the
-least squares minimization that recovers the risk neutral parameters.
-In \cite{Se04} are presented several methods for historical parameters estimation of the VG density. We use the simple method of moments to estimate the 
-parameters for the data in Fig. \ref{FigPDF}.
-In all future calculations we consider the risk neutral VG parameters in Table \ref{sample-table}.
+
+In all the numerical computations of this chapter we consider the risk neutral VG parameters in Table \ref{sample-table}. These parameters correspond to the parameters used 
+in \cite{Canta2}.
 
 \begin{table}[!h]
 \centering
@@ -274,16 +273,13 @@ $r$ & $\theta$ & $\sigma$ & $\kappa$ \\
 
 
 We compare the numerical results for European call and put options obtained with the multinomial and the PIDE approaches.
-\begin{itemize}
- \item \emph{VG PIDE}: We solve the VG PIDE following the method proposed in section \ref{VG_section2}.
- We solve the PIDE (\ref{VG_JD}) using the implicit-explicit finite difference scheme, and choosing the truncator parameter $\epsilon = 1.5 \delta x$, 
- where $\delta x$ is the size of 
- the space step. It turns out that the solution of the discretized equation convergences very slowly to the option price, and therefore we required a grid with $14000$ space steps 
- and $7000$ time steps. The algorithm is written in Matlab and runs
- on an Intel i7 (7th Gen) with Linux. It takes about 30 minutes to complete. 
- \item \emph{Multinomial}: We follow the algorithm proposed in the previous section. The number of time steps for all the computations is $N=2000$. In the table \ref{Convergence} 
- we show a convergence table for the prices of European calls, puts and American puts. It is straightforward to see that the convergence is quite fast.  
-\end{itemize}
+We solve the VG PIDE following the IMEX method introduced in section \ref{VG_section2}.
+The details of the implementation are presented in section \ref{numerical_concergence_section}.
+
+Following the algorithm proposed in the previous section, we solve the option pricing problem using the multinomial method. 
+The number of time steps for all the computations presented in the following pictures is $N=2000$. 
+The table \ref{Convergence} 
+shows a convergence analysis for the prices of European calls, puts and American puts. We can see that the convergence is quite fast.  
 \begin{table}[ht]
 \centering
 {\begin{tabular}{llllll}
@@ -305,7 +301,7 @@ We compare the numerical results for European call and put options obtained with
 \caption{Convergence table for ATM European and American options with strike $K=40$ and $T=1$. The time unit is in seconds.}
 \label{Convergence}
 \end{table}
-Figures (\ref{figCall}) and (\ref{figPut}) show the prices obtained by the multinomial method compared with those obtained by PIDE.
+Figures (\ref{figCall}) and (\ref{figPut}) show the single prices obtained by the multinomial method compared with the curve obtained by solving the PIDE.
 In table \ref{Option_values} we compare directly the call/put numerical values obtained with the two methods.
 \begin{figure}[t!]
  \begin{minipage}[b]{0.5\linewidth}
@@ -325,9 +321,12 @@ In table \ref{Option_values} we compare directly the call/put numerical values o
  \end{minipage}
 \end{figure}
 
+\begin{Remark}
 Pricing vanilla call and put European options is quite simple and the best approach is to use the closed formula derived in \cite{MCC98}.
 The big advantage of the multinomial method is in the computation of American options prices, where there is no closed formula and all the other approaches, 
-such as PIDEs and Least Squares Monte Carlo, are difficult to implement and much slower.
+such as PIDEs and Least Squares Monte Carlo, are difficult to implement and much slower. 
+\end{Remark}
+
 \begin{table}[ht]
 \centering
 {\begin{tabular}{lllll} 
@@ -359,8 +358,7 @@ The PIDE (\ref{VG_JD}) is modified in order to take in account the early exercis
  - \frac{1}{2}\sigma_{\epsilon}^2 \frac{\partial^2 V(t,x)}{\partial x^2} + (\lambda_{\epsilon} + r) V(t,x) \\ \nonumber
  &- \int_{|z| \geq \epsilon} V(t,x+z) \nu(dz) \, , \, \biggl( V(t,x) - (K-e^x)^+ \biggr) \biggr\} = 0.
 \end{align}
-To solve this equation we use the same settings used for the Eq. (\ref{VG_JD}): an implicit-explicit finite difference scheme, with 14000 space steps and 7000 time steps. 
-The algorithm takes about 33 minutes to run.
+To solve this equation we use the same discretization and same settings used in sections \ref{VG_section2} and \ref{numerical_concergence_section} for the European option problem.
 
 The numerical values of the prices obtained with the multinomial and PIDE methods are collected in Tab. \ref{Option_values3}.
 The run times for the multinomial algorithm are shown in the convergence table \ref{Convergence}.
@@ -406,17 +404,35 @@ As expected, the deep OTM (out of the money) prices computed under VG are higher
 shape of the VG density function (\ref{VG_density}), which has \emph{heavier tails} than the normal distribution. This means that the probability of a deep OTM option to return in the money, 
 is higher if calculated with the VG model than BS, and therefore we get higher option prices.
 
-The Black-Scholes prices are computed using a binomial algorithm. For European options the prices converge to the BS closed formula prices. 
+The Black-Scholes prices are computed using a binomial algorithm.  
 The same values can be obtained using the multinomial algorithm for the VG process and setting $\theta = \kappa = 0$ and $\sigma = \sigma^{BS}$.
 Recall that under the Black-Scholes model, the log-returns follow a Brownian motion. 
 Looking at the definition of the VG process (\ref{VG_process}), it is evident that when $\theta$ and $\kappa$ are zero, the process becomes a Brownian motion:
 $$ X^{VG}_t \underset{\theta,\kappa \to 0}{\to} \sigma W_t. $$
-As a consequence, the price process converges to the Geometric Brownian Motion:
-$$ S_t = S_0 e^{(r+\omega)t + X_t} \underset{\theta,\kappa \to 0}{\to} S_0 e^{(r-\frac{1}{2}\sigma^2)t + \sigma W_t} $$
+It follows that the price process converges to the Geometric Brownian Motion:
+$$ S_t = S_0 e^{(r-w)t + X_t} \underset{\theta,\kappa \to 0}{\to} S_0 e^{(r-\frac{1}{2}\sigma^2)t + \sigma W_t} $$
 where:
 \begin{align*}
- \lim_{\theta,\kappa \to 0} w &= \lim_{\theta,\kappa \to 0} \frac{1}{\kappa} \log(1-\theta \kappa -\frac{1}{2}\sigma^2 \kappa) \\
+ \lim_{\theta,\kappa \to 0} w &= \lim_{\theta,\kappa \to 0} -\frac{1}{\kappa} \log(1-\theta \kappa -\frac{1}{2}\sigma^2 \kappa) \\
  &= -\frac{1}{2}\sigma^2.
 \end{align*}
 
 
+\section{Chapter conclusions}
+
+
+In this chapter we make a small digression from the main theme of the thesis by presenting the application of a multinomial approximation for option pricing 
+using the Variance Gamma model.
+The main results of this chapter are published in the paper \cite{Canta2}. 
+
+The VG process is approximated by a general jump process that has the same first four cumulants of the original VG process. 
+We show that by construction the multinomial method has the same distribution of the approximated process. 
+We obtained numerical results for European and American options and compared them with
+results from the PIDE method and with Black–Scholes prices. 
+It turns out that the
+multinomial method is easier to implement than the finite differences method. The algorithm does
+not involve any matrix multiplication, matrix inversion or decomposition, as in the case of the IMEX method
+for PIDEs. This means that the computational time is much smaller.
+
+In order to show the ease of use of this algorithm, in Chapter \ref{Chapter6} we applied it to solve the option pricing problem with 
+transaction costs, with good performance.

@@ -7,15 +7,15 @@
 \vspace{5em}
 
 
-This chapter presents the numerical methods used in the thesis for solving the option pricing problems with transaction costs presented in section (\ref{DPZ_j_sec}).
+This chapter presents the numerical methods for solving the option pricing problems with transaction costs presented in section (\ref{DPZ_j_sec}).
 The optimization problems (\ref{max_probl1}) and (\ref{minimization}) are solved by using the Markov chain approximation method. The same approach has been used 
 frequently in the literature in the case of diffusion processes, (see for instance \cite{HoNe89}, \cite{DaPaZa93}, \cite{Damgaard}, \cite{Mon04} and \cite{Pal15}). 
 We present results for the particular cases of diffusion process, Merton jump-diffusion and Variance Gamma process, although our scheme works for any Lévy process with finite variance. 
 We show that our numerical scheme, applied to the problem (\ref{minimization}), is monotone, consistent and stable, and that its solution converges to the viscosity solution of the  
 HJB eq. (\ref{HJB2}).
 Further analysis, such as numerical convergence rate and time complexity of the algorithm are presented.
-In the end of the chapter are presented numerical results obtained for the general problem (\ref{max_probl1}) where the default case is considered.
-
+In the section \ref{full_eq_section} are presented numerical results obtained for the general problem (\ref{max_probl1}) where also the default feature is considered.
+In the final section \ref{multinomial_section} we apply the multinomial method introduced in chapter \ref{Chapter3} to the problem (\ref{minimization}).
 
 
 
@@ -65,28 +65,28 @@ The portfolio dynamics (\ref{porfolio_dynamics}) has the simpler form (using $X_
 \end{cases}
 \end{equation} 
 where the SDE for the log-variable corresponds to (\ref{SDE_log_var}) with $\mu$ defined in (\ref{mu}).
-If the process has finite activity $\lambda := \int_{\R} \nu(dz)$, thanks to assumption \textbf{EM},
-we can define $m := \int_{\R} \bigl( e^z -1 \bigr) \nu(dz)$ and $\lambda \alpha := \int_{\R} z \nu(dz)$ such that the SDE of $\{X_t\}_{t \in [t_0,T]}$ can be written as 
+If the process has finite activity $\lambda := \int_{\R} \nu(dz)$, thanks to assumption \textbf{EM} (in Section \ref{AssumptionEM}),
+we can define with an abuse of notation\footnote{We have already defined $m$ in (\ref{parameter_m}) and $\alpha$ in (\ref{MertonM}) for the Merton model. 
+We extend this notation for any Lévy measure with finite activity.}
+$m := \int_{\R} \bigl( e^z -1 \bigr) \nu(dz)$ and $\lambda \alpha := \int_{\R} z \nu(dz)$ such that the SDE of $\{X_t\}_{t \in [t_0,T]}$ can be written as 
 \begin{equation}\label{log_sde_fin_act2} 
  dX_t = \biggl( \mu - \frac{1}{2}\sigma^2 -m + \lambda \alpha \biggr) \,dt + \sigma dW_t + \int_{\R} z \tilde N(dt,dz). \\
 \end{equation}
 If the process has infinite activity $\lambda = \int_{\R} \nu(dz) = \infty$, 
-we can approximate the ``small jumps'' martingale component with a Brownian motion with same variance, as in (\ref{log_sde_inf_act}), (\ref{sig_eps}).
-After fixing a truncation parameter $\epsilon >0$, we can split the integrals in (\ref{portfolio_dynamics2}) in two domains $\{|z|<\epsilon\}$ and $\{|z|\geq \epsilon\}$.
-The integrand on the domain $\{ |z|<\epsilon \}$, is approximated by Taylor expansion 
- $e^z-1-z = \frac{z^2}{2} + \mathcal{O}(z^3)$ such that:
+we can approximate the ``small jumps'' martingale component by a Brownian motion, following the arguments in section (\ref{VG_section2}), and get the equation 
 \begin{equation}\label{log_sde_inf_act2}
    dX_t = \biggl( \mu - \frac{1}{2} (\sigma^2 + \sigma_{\epsilon}^2) - \omega_{\epsilon} + \lambda_{\epsilon} \theta_{\epsilon}  \biggr) dt + \bigl( \sigma+\sigma_{\epsilon}\bigr) dW_t 
-       + \int_{|z|\geq \epsilon} z \tilde N(dt,dz). 
+       + \int_{|z|\geq \epsilon} z \tilde N(dt,dz), 
 \end{equation}
-The process $\int_{|z|\geq \epsilon} z \tilde N(dt,dz)$ is a compensated Poisson process with finite activity $\lambda_{\epsilon}$ 
-and variance $\sigma_J^2 = \int_{|z| \geq \epsilon} z^2 \nu(dz) $.
+with parameters defined in (\ref{sig_eps}).
 
 Now we can discretize the time and space to create a Markov chain approximation of the portfolio process (\ref{portfolio_dynamics2}).
 For $n = 0,1, ... N \in \N$, we define the discrete time step $ \Delta t := \frac{T - t_0}{N} $ such that
 $t_n = t_0 + n \Delta t$.
 We assume that the controls $\bigl(L_u,M_u\bigr)$ are constant for $u \in [t_n,t_{n+1})$, and allow for a possible variation at $t_n$ for each $n$.
-From now on, we indicate $X_n := X(t_n)$ and the process $Y_n := Y(t^-_n)$ immediately before the possible transaction. % we set $t_0 = 0$ and
+
+From now on, we indicate with $X_n$ the value of $X_{t}$ at $t_n$ and with $Y_n$ the value of $Y_{t}$ at the time $t^-_n$ 
+immediately before the possible transaction. % we set $t_0 = 0$ and
 
 Let us define the set $\Sigma_x := \{-K_1 h_x , ... , -h_x,0,h_x, ... , +K_2 h_x \}$,  
 where $h_x>0$ is the discrete log-return step. The values $K_1,K_2 \in \N$ can be 
@@ -191,20 +191,21 @@ such that $l\in \{0,...,K_4-j\}$ and $m\in \{0,...,K_3+j\}$ for each fixed $j$.
 %\end{remark}
 
 \noindent
-The computational complexity of the algorithm (\ref{algo}) is $\mathcal{O}\biggl( (N+1)\bigl[\frac{N(\bar L-1)}{2}+1 \bigr] \times \bar M \times \bar M \biggr)$.
+The computational complexity of the algorithm (\ref{algo}) is 
+$$\mathcal{O}\biggl( (N+1)\bigl[\frac{N(\bar L-1)}{2}+1 \bigr] \times \bar M \times \bar M \biggr).$$
 The first factor comes from the loop over all the nodes of the tree i.e. $\sum_{n=0}^N n(\bar L-1)+1$. The second factor, $\bar M$, comes from the loop over all the values $y_j$, 
 and the third factor, $\bar M$, comes from the minimum search. 
 
 For a simple diffusion process the number of branches is fixed to $\bar L = 3$, but for processes with jumps it is proportional to $\sqrt N$.
-The standard deviation of every Lévy process satisfying the assumption \textbf{M} grows as the square root of time.
+The standard deviation of every Lévy process satisfying the finite second moment assumption grows as the square root of time.
 Therefore the size of a space step $h_x \propto \sqrt{\E[\Delta X^2]} \propto \sqrt{\Delta t} \propto \frac{1}{\sqrt{N}}$.
 Let us consider for instance the integral term in Eq. (\ref{log_sde_fin_act2}) or (\ref{log_sde_inf_act2}).
 For computational reasons we have to reduce the region of integration to the bounded domain $[-B_1,B_2]$, with $B_1,B_2>0$ (see Section \ref{Markov_Chain2}). 
 The number of branches to cover this
 region is $\bar L = \frac{B_1+B_2}{h_x} \propto \sqrt{N}$. 
 
-The value of $\bar M$ can be kept fixed if the purpose is to reduce the computational complexity of the algorithm.
-But in order to have a more accurate result, it is better to choose $h_y \propto h_x$ and $\bar M \propto N$.   
+In order to have a more accurate result, it is better to choose $h_y \propto h_x$ and consequently $\bar M \propto N$. 
+In this way, the number of shares to buy or sell is more sensitive to the variation of the log-price.
 If we set $\bar L = \sqrt{N}$ and $\bar M = N$ we have total computational complexity $\mathcal{O}(N^{4.5})$. 
 For a fixed $\bar L$, the total complexity is reduced to $\mathcal{O}(N^{4})$. 
 
@@ -279,7 +280,7 @@ The integral terms in (\ref{HJB2}) are truncated and restricted to the domain
 $ \bigl[-B_1,B_2\bigr] = \bigl[ ( -K_1-1/2 )h_x , ( K_2+1/2 )h_x \bigr] $\footnote{If the integral has a truncation parameter as in (\ref{VG_inf_gen}), 
 we choose $\epsilon = 1.5h_x$ and the 
 restricted domain becomes $ \bigl[-B_1,-\epsilon \bigr]\bigcup \bigl[\epsilon,B_2 \bigr] = \bigl[ ( -K_1-1/2 )h_x , -3/2 h_x \bigr] \bigcup \bigl[ 3/2 h_x, ( K_2+1/2 )h_x \bigr] $. }.
-The discretization is obtained by trapezoidal quadrature (see \cite{CoVo05b}):
+The discretization is obtained by approximating with Riemann sums (see \cite{CoVo05b}):
 \begin{equation}\label{trap_quad}
   \int_{-B_1}^{B_2}  Q(t_{n+1},y_j,x_i +z) \nu(dz) \approx \sum_{k = -K_1}^{K_2} \nu_k Q^{n+1}_{i+k}, 
 \end{equation}
@@ -519,7 +520,7 @@ parameters in table \ref{tab:parameters}.
   \multicolumn{2}{c}{\textbf{Diffusion price}} &  \multicolumn{2}{c}{\textbf{Merton price}} &  \multicolumn{2}{c}{\textbf{VG price}} \\
 \midrule
 Closed formula & PDE & Closed formula & PIDE & Closed formula & PIDE\\
-2.2463 & 2.2463 & 3.4776 & 3.4749 & 1.9870 & 1.9823\\
+2.2463 & 2.2463 & 3.4776 & 3.4775 & 1.9870 & 1.9871\\
 \bottomrule
 \end{tabular}
 \caption{At the money prices with $S_0=K=15$ with parameters in tables \ref{tab:parameters}.}
@@ -549,12 +550,12 @@ Closed formula & PDE & Closed formula & PIDE & Closed formula & PIDE\\
  \end{minipage}
 \end{figure}
 We compute the option prices using the standard 
-\emph{martingale pricing theory} (see Chapter \ref{Chapter2}). In the table \ref{tab:ATM_price} we show the \emph{at the money} values obtained with the closed formula 
-and by solving the respective PIDE. 
-The closed formula for the diffusion process is the well known \cite{BS73} formula. To compute the Merton price we use the series approximation formula derived in \cite{Me76},
-and for the VG price we used the semi-closed formula derived in \cite{MCC98}. The PIDE prices are obtained by solving the equations (\ref{BS_PDE}), (\ref{Merton_PIDE}) and (\ref{VG_PIDE}).
-Of course, the parameter $\mu$ has not been used to compute the prices in Tab. \ref{tab:ATM_price}. In Section (\ref{properties_model}), we prove with a numerical experiment that
-even though the portfolio process (\ref{portfolio_dynamics2}) has a drift parameter $\mu$, it does not play an important role for the option price.
+\emph{martingale pricing theory} presented in Chapter \ref{Chapter2}. In the table \ref{tab:ATM_price} we show the \emph{at the money} values obtained with the closed formula 
+and by solving the respective PIDE (see table \ref{tab:prices_BS_M_VG}). 
+The PIDE prices are obtained by solving the equations (\ref{BS_PDE}), (\ref{Merton_PIDE}) and (\ref{VG_PIDE}).
+Of course, the parameter $\mu$ has not been used to compute the prices in Tab. \ref{tab:ATM_price}. 
+In Section (\ref{properties_model}), we prove with a numerical experiment that
+even in the model with transaction costs, the drift $\mu$ does not play an important role for the option price.
 In the following analysis, we consider the PIDE prices as our benchmarks for comparisons.   
 In all the computations we use equal transaction costs for buying and selling, $\theta_b = \theta_s$.
 
@@ -564,10 +565,12 @@ In all the computations we use equal transaction costs for buying and selling, $
 In Fig. \ref{Fig1} we show that model prices replicate the PIDE prices for zero transaction costs and small values of $\gamma$. 
 The values of $\gamma$ in the table \ref{tab:parameters},
 are chosen very small\footnote{ In chapter 5 of \cite{GK99} are presented some common values for the risk aversion coefficient: $\gamma=0.3$, $\gamma=0.2$ and $\gamma=0.1$ 
-for high, medium and low level of risk aversion respectively.} on purpose. 
+for high, medium and low level of risk aversion respectively.} for this purpose. 
 An intuitive argument to justify this choice is that for $\gamma \to 0$, the utility function 
 can be approximated by a linear utility $\mathcal{U}(w) = 1 - e^{-\gamma w} \approx \gamma w$ and the investor can be considered risk neutral. 
-For more details we refer to \cite{Carmona} and references therein. 
+A rigorous argument can be found in \cite{BaSo98}, where the authors use asymptotic analysis for small values of $\theta_b$, $\theta_s$ and $\gamma$ to derive 
+a nonlinear PDE for the option price. For zero transaction costs this equation corresponds to the Black-Scholes PDE. 
+Their argument can be extended also to PIDEs.
 \begin{figure}[t!]
  \begin{minipage}[b]{0.5\linewidth}
    \centering
@@ -615,7 +618,7 @@ In fact, the writer and buyer prices are respectively increasing and decreasing 
 The prices figures \ref{Fig2}, are calculated with $N=1500$ time steps and $\bar M = N$. 
 In the Table \ref{tab:convergence} we show ATM option prices for different values of $N$, with $\theta_s = \theta_b = 0$ and different risk aversion coefficients.
 For $\gamma=0.0001$ and $N=3500$ the price is identical, up to the fourth decimal digit, to the original Black-Scholes price in table \ref{tab:ATM_price}. 
-Using the values in the table \ref{tab:convergence} it is possible to estimate the \emph{rate of convergence}.
+Using the values in the table \ref{tab:convergence} it is possible to perform a \emph{numerical convergence analysis} (see section \ref{num_conv_analysis}).
 We also present the execution times, from which we can estimate the asymptotic \emph{time complexity} of the algorithm. 
 In Section (\ref{algorithm_Sect}) we estimated a complexity of $\mathcal{O}(N^{4})$. From the table \ref{tab:convergence}, 
 we obtain the exponent $\frac{\log(1291.3/910.8)}{\log(3500/3200)} = 3.9$, which is very close to the predicted value.  
@@ -641,14 +644,18 @@ The algorithm is written in Matlab using vectorized operations, and runs on an I
 In the Figure \ref{Fig3} we show the writer and buyer prices for the Merton process, with parameters in Tab. \ref{tab:parameters}.
 An interesting feature of the multinomial tree construction for jump-diffusion processes is that $\bar L \propto \sqrt{N}$.
 The integral domain is restricted to the bounded domain $[-B_1,B_2]$ with length $B_1+B_2 = \bar L \, h_x$. 
-We choose the size of a space step as $h_x = \sqrt{\E[\Delta X^2]} = \sigma_X \sqrt{\Delta t}$ and $\sigma_X^2 = \sigma^2 + \int_{-B_1}^{B_2} z^2 \nu(dz)$.
+We choose the size of a space step $h_x = \sqrt{\E[\Delta X^2]} = \sigma_X \sqrt{\Delta t}$ and $\sigma_X^2 = \sigma^2 + \tilde \sigma_J^2$ 
+with $ \tilde \sigma_J^2 = \int_{-B_1}^{B_2} z^2 \nu(dz)$.
 However, the size of the Poisson jumps does not scale with $\Delta t$. So the number $\bar L$ has to be chosen big enough in order 
 to have $L\, h_x \geq B_1+B_2$. 
 
 In general, for a fixed $h_x$, the interval $[-B_1,B_2]$ should be chosen as big as possible. In practice, the choice of the truncation depends on the shape of the L\'evy measure.  
-The figures \ref{Fig13}, \ref{Fig14} show two examples where we choose $[-B_1,B_2] = [\xi,\xi]$ and $[-B_1,B_2] = [-3\xi,3\xi]$ respectively. These choices correspond to 
-$\bar L = 19$ and $\bar L = 59$.
-For the Merton L\'evy measure (a scaled Normal distribution), a good choice is $[-B_1,B_2] = [-3\xi,3\xi]$, with length $\bar L \, h_x = 6\xi$. 
+The figures \ref{Fig13}, \ref{Fig14} show two examples with $[-B_1,B_2] = [\sqrt{\lambda} \xi,\sqrt{\lambda} \xi]$ and $[-B_1,B_2] = [-3\sqrt{\lambda} \xi,3\sqrt{\lambda} \xi]$ 
+respectively. These choices correspond to 
+$\bar L = 17$ and $\bar L = 52$.
+For the Merton L\'evy measure (a scaled Normal distribution), a good choice is $[-B_1,B_2] = [-3\sigma_J,3\sigma_J]$, where  
+$\sigma_J^2 = \int_{\R} z^2 \nu(dz) = \lambda(\alpha^2 + \xi^2)$ is the variance of the jump component of the Merton process.
+The length of the interval is $\bar L \, h_x = 6\sigma_J$. 
 It is well known that the integral over this region is about the $99.74\%$ of the total area.      
 Using this interval and the parameters in Tab. \ref{tab:parameters} we obtain the relation $\bar L \geq 5.86 \sqrt{N}$.
 In the calculation of the Merton prices in Fig. \ref{Fig3}, we used a discretization with $N=\bar M =100$, and $\bar L = 81$, 
@@ -676,17 +683,17 @@ Looking at the table from left to right, for each fixed $N$ it is possible to no
 \begin{figure}[t!]
  \begin{minipage}[b]{0.5\linewidth}
    \centering
-   \includegraphics[width=\linewidth]{Mert61_3.png}
-   \caption{Merton L\'evy measure computed using parameters in Tab. \ref{tab:parameters}, $N=100$ and $\bar L=19$. 
-   The domain $[-B_1,B_2] = [-\xi,\xi]$ has length $\bar L h_x \approx 2 \xi$.}
+   \includegraphics[width=\linewidth]{Mert61_31.png}
+   \caption{Merton L\'evy measure computed using parameters in Tab. \ref{tab:parameters}, $N=100$ and $\bar L=17$. 
+   The domain $[-B_1,B_2] = [-\sqrt{\lambda} \xi,\sqrt{\lambda} \xi]$ has length $\bar L h_x \approx 2 \sqrt{\lambda} \xi$.}
    \label{Fig13} 
  \end{minipage}
  \ \hspace{2mm} \hspace{3mm} \
  \begin{minipage}[b]{0.5\linewidth}
   \centering
-   \includegraphics[width=\linewidth]{Mert101_3.png}
-   \caption{Merton L\'evy measure computed using parameters in Tab. \ref{tab:parameters}, $N=100$ and $\bar L=59$. 
-   The domain $[-B_1,B_2] = [-3\xi,3\xi]$ has length $\bar L h_x \approx 6 \xi$.}
+   \includegraphics[width=\linewidth]{Mert101_31.png}
+   \caption{Merton L\'evy measure computed using parameters in Tab. \ref{tab:parameters}, $N=100$ and $\bar L=52$. 
+   The domain $[-B_1,B_2] = [-3\sqrt{\lambda}\xi,3\sqrt{\lambda}\xi]$ has length $\bar L h_x \approx 6 \sqrt{\lambda} \xi$.}
    \label{Fig14}
  \end{minipage}
 \end{figure}
@@ -781,14 +788,12 @@ Within our discretization ($N=150$), we have $\sigma_{\epsilon} = 0.0654$, $\lam
 With those parameters we obtain an ATM price for zero transaction costs of 1.9821, which is very close the the PIDE price in Tab. \ref{tab:ATM_price}. 
 We expect to have convergence to the PIDE price for $N\to \infty$ and $\gamma\to0$.
 When $N \to \infty$ and $\epsilon \to 0$, the parameters $\sigma_{\epsilon} \to 0$ and $\lambda_{\epsilon}\to \infty$.
-The main problems are the high dependence of the price on the parameter $\epsilon$ and therefore on the discretization step $h_x$, together with the high complexity of the algorithm.
+The main problems are the high dependence of the price on the parameter $\epsilon$ and therefore on the discretization step $h_x$, together with the nonlinearity of the algorithm.
 For instance, with $N=\bar M=1000$ and $\bar L = 43$ the program takes more than two hours to run. 
 The convergence of the approximated process (\ref{log_sde_inf_act}) to the original VG process is very slow, and this is reflected in the convergence 
 of the VG PIDE (\ref{VG_PIDE}).
-In order to solve it (using the IMEX scheme proposed by \cite{CoVo05b}) we constructed
-a grid with 13000 space steps of size $\delta x = 0.0004$ and 7000 time steps, and obtained the price in Tab \ref{tab:ATM_price}, 
-with the approximated activity $\lambda_{\epsilon} = 75$.
-Consequently, we expect to have good convergence results in our algorithm when $N\sim 10^4$.
+
+According to the convergence analysis in section \ref{numerical_concergence_section}, we expect to have good convergence results in our algorithm when $N\sim 10^4$.
 All the presented prices (Figures \ref{Fig8}) have thus a truncation error, which is adjusted by an accurate choice of the value of $\gamma$. 
 We refer to \cite{CoVo05b} for a detailed error analysis.
 \begin{figure}[t!]
@@ -811,6 +816,60 @@ We refer to \cite{CoVo05b} for a detailed error analysis.
 
 From Tab. \ref{tab:convergence4} we can estimate the time complexity of this algorithm. The exponent is $\frac{\log(1236.0/654.2)}{\log(350/300)} = 4.12$, 
 indeed very close to the theoretical $\mathcal{O}(N^4)$. 
+
+
+\subsection{Numerical convergence analysis}\label{num_conv_analysis}
+
+In this section we want to analyze the convergence properties of the algorithm \ref{algo} considering the prices presented in 
+tables \ref{tab:convergence}, \ref{tab:convergence3} and \ref{tab:convergence4}. 
+
+\begin{figure}[t!]
+ \begin{minipage}[b]{0.5\linewidth}
+   \centering
+   \includegraphics[width=\linewidth]{diff_1.png}
+   \caption{Prices in table \ref{tab:convergence} as function of $n=\log_2(N/50)$.}
+   \label{Fig_err1} 
+ \end{minipage}
+  \
+  \begin{minipage}[b]{0.5\linewidth}
+  \centering
+   \includegraphics[width=\linewidth]{diff_3.png}
+   \caption{Plot of the log-errors as function of $n=\log_2(N/50)$.}
+   \label{Fig_err3}
+ \end{minipage}
+ \
+  \begin{minipage}[b]{0.5\linewidth}
+   \centering
+   \includegraphics[width=\linewidth]{Mert_1.png}
+   \caption{Plot of the log-errors as function of $n=\log_2(N/50)$, for Merton prices in \ref{tab:convergence3}}
+   \label{Fig_err4} 
+ \end{minipage}
+ \
+ \begin{minipage}[b]{0.5\linewidth}
+  %\centering
+   \includegraphics[width=\linewidth]{VG_1.png}
+   \caption{Plot of the log-errors as function of $n=\log_2(N/50)$, for VG prices in \ref{tab:convergence4}}
+   \label{Fig_err5}
+ \end{minipage}
+\end{figure} 
+
+Let us first consider the prices in table \ref{tab:convergence}, which are plotted in figure \ref{Fig_err1}. 
+We can see that for higher values of $\gamma$, not only the price increases, but the oscillations of the log-error increases as well.
+Let us assume the limit price $V^*$ is represented by the price at $N=3500$. 
+For computational reasons, i.e. the very high computational time, it was not possible to consider higher values. 
+Following the arguments in section \ref{numerical_concergence_section}, let us define the log-error $\log_2 (\varepsilon_N)$ with $\varepsilon_N = |V^N - V^*|$. 
+Then we consider $n = 0,1,...,6$ such that $N = 50\cdot2^n$.
+In figure \ref{Fig_err3} we plot the log-error for each value of $n$.
+For $\gamma=0.0001$ and $\gamma=0.001$, even if the line is not straight, it is possible to recognize a linear behavior.  
+In these cases it is possible to estimate the rate of convergence (the slope of the line is about $-1$ i.e. linear convergence).  
+For $\gamma=0.01$, given the irregular shape, it is hard to understand the functional behavior. 
+The value at $n=0$ can be excluded because it is probably an outlier originated by the rough grid resolution.
+In general, given the nonlinear nature of the optimization problem, we expect a nonlinear behavior of the convergence functional form.
+
+This is confirmed by the pictures \ref{Fig_err4} and \ref{Fig_err5}, 
+containing the prices obtained for the jump-diffusion Merton process in table \ref{tab:convergence3}, and the VG process in table \ref{tab:convergence4}.
+The shape is more regular (here the number of steps $N$ is much smaller), but it is not a linear function. 
+The algorithm converges faster for higher values of $N$.
 
 
 
@@ -872,7 +931,7 @@ do not depend on the drift $\mu$.
 
 
 
-\section{Solution of the 4-dimensional problem}
+\section{Solution of the 4-dimensional problem}\label{full_eq_section}
 
 This section focuses on the original HJB equation \ref{HJB1}, were no variables reduction is considered. 
 A few authors have already presented some results for the diffusion case, using different approaches.
@@ -904,18 +963,20 @@ We obtain the discrete DPE:
 \end{align}
 where all the expectations are conditioned on the current state $(B_n,Y_n,X_n)$.  We use the notation $V(t_n, b_h, y_j, x_i) = V^n_{h,j,i}$
 
-The algorithm \ref{algo2} is very computationally expensive. Since it has one degree of freedom more than the algorithm in Section \ref{algorithm_Sect}, the computational complexity is 
-$$\mathcal{O}\biggl( (N+1)\bigl[\frac{N(\bar L-1)}{2}+1 \bigr] \times \bar M \times \bar B \times \sum_{n,h,j,i} \bigl( \# \varPi(t_n,b_h,y_j,x_i) \bigr)  \biggr).$$
-The term $\sum_{n,h,j,i} \bigl( \# \varPi(t_n,b_h,y_j,x_i) \bigr)$ is the computational complexity of the minimum search in the entire algorithm. 
-The minimum search algorithm is performed for each $(t_n, b_h,y_j,x_i)$ on the set $\varPi(t_n,b_h,y_j,x_i)$ of all $l,m \in \N$ such that:
+Following the arguments in section \ref{algorithm_Sect}, the computational complexity is 
+$$\mathcal{O}\biggl( (N+1)\bigl[\frac{N(\bar L-1)}{2}+1 \bigr] \times \bar M \times \bar B \times \min\{\bar M, \bar B\} \biggr).$$
+The term $\min\{\bar M, \bar B\}$ is the computational complexity of the minimum search. 
+% $\sum_{n,h,j,i} \bigl( \# \varPi(t_n,b_h,y_j,x_i) \bigr)$
+It is performed for each $(t_n, b_h,y_j,x_i)$ such that of all $l,m \in \N$:
 $$ y_j+l h_y \in \Sigma_y \bigcap (b_h - e^{x_i}(1+\sigma_b)l h_y) \geq -K_5 h_b $$ 
 and 
 $$y_j-m h_y \in \Sigma_y \bigcap (b_h + e^{x_i}(1-\sigma_s)m h_y) \leq K_6 h_b .$$ 
+If we set $\bar L = \sqrt{N}$ and $\bar B = \bar M = N$ we have total computational complexity $\mathcal{O}(N^{5.5})$. 
 
 In the following analysis of the problem (\ref{max_probl1}), we assume that $\mathcal{U}(w) = -C$ for $w < -C$ and $\beta = r$. 
-In figure (\ref{Fig21}) it is possible to see the shape of the value function at terminal time for different values of gamma.
-In the points $(b,y,x)$ such that $\mathcal{W}(b,y,x) = -C$ the function is not differentiable, and this may create some instabilities in the numerical computations. However this 
-assumption will be useful in order to speed up the algorithm.
+In figure (\ref{Fig21}) it is possible to see the shape of the value function at terminal time for different values of $\gamma$.
+In the points $(b,y,x)$ such that $\mathcal{W}(b,y,x) = -C$ the function is not differentiable, and this may create some instabilities in the numerical computations. 
+%However this assumption will be useful in order to speed up the algorithm.
 
 \begin{figure}[t!]
    \centering
@@ -1004,30 +1065,30 @@ of the function and in the final result.
  \end{minipage}
 \end{figure}  
 
-We conclude this section by testing the model properties as we did on Section \ref{properties_model}. 
+We conclude this section by testing the model properties as we did in Section \ref{properties_model}. 
 In figures \ref{Fig26} and \ref{Fig25} we present several values of option prices as function of the risk aversion and transaction costs respectively.  
 We can see that the value of $B_0$ does not affect the shape of the curve, but only its height. 
 As we saw in figures \ref{Fig10} and \ref{Fig11}, the option price is an increasing function of the risk aversion and of the transaction costs.
 
 
-\section{Multinomial method applied to the reduced problem}
+\section{Multinomial method applied to the reduced problem}\label{multinomial_section}
 
 In section \ref{MC_section} we have seen that a possible technique to construct the Markov chain approximation is to discretize the infinitesimal generator of the continuous process
 by an explicit finite difference scheme.
-For Lévy processes with infinite activity, however, this technique cannot be used directly, and requires to consider the infinitesimal generator of the approximated 
+For Lévy processes with infinite activity, however, this technique cannot be used directly, and we need to consider the infinitesimal generator of the approximated 
 jump-diffusion process.
-In the numerical results section \ref{num_sec_VG}, we have seen that the algorithm converges very slowly.
+In section \ref{numerical_concergence_section}, we have seen that with this approximation the convergence is very slowly.
 
-In this section we use the multinomial approximation method presented in chapter \ref{Chapter3}, in place of the discretization obtained by the infinitesimal generator of this chapter.
+In this section we use the multinomial approximation method presented in chapter \ref{Chapter3}, in place of the discretization proposed in this chapter.
 With this method the total computational complexity is reduced because the number of branches is kept fixed.
 Although the method still relies on an approximation (the VG process is approximated by a general jump process with only the first four moments equal),
 the number of branches is fixed to $\bar L = 5$, and therefore the computational complexity is reduced by a factor $\sqrt{N}$.
-Recall that the complexity for the general reduced variable algorithm is 
+Recall that the complexity algorithm \ref{algo} is 
 $$\mathcal{O}\biggl( (N+1)\bigl[\frac{N(\bar L-1)}{2}+1 \bigr] \times \bar M \times \bar M \biggr).$$
-Assuming $\bar M = N$ and $\bar L = 5$, the computation time is reduced to $\mathcal{O}(N^4)$. 
+Assuming $\bar M = N$ and $\bar L = 5$, the computational time is reduced to $\mathcal{O}(N^4)$. 
 \begin{table}[t!]
-\begin{center}
-\begin{minipage}{0.8\linewidth}
+%\begin{center}
+\begin{minipage}{0.5\linewidth}
 \centering
  \begin{tabular}{||c|c||}
  \hline
@@ -1054,10 +1115,19 @@ Assuming $\bar M = N$ and $\bar L = 5$, the computation time is reduced to $\mat
   \caption{Convergence table for ATM VG prices with parameters in Tab \ref{tab:VG}, calculated with the multinomial method.}
   \label{tab:convergence31}
 \end{minipage}
- \end{center}
+ \
+ \begin{minipage}{0.5\linewidth}
+  %\centering
+   \includegraphics[width=\linewidth]{Multinom_1.png}
+   \caption{Multinomial VG writer and buyer prices for different transaction costs.}
+   \label{Fig37}
+ \end{minipage}
+% \end{center}
 \end{table}
 We use the values in table \ref{tab:VG} and follow the discretization scheme proposed in chapter \ref{Chapter3}. 
-In table \ref{tab:convergence31} we reported a convergence analysis.
+In table \ref{tab:convergence31} we reported prices for different values of $N$.
+In figure \ref{Fig37} we plot the log-error as a function of the logarithm of $N$. We can see that there is a linear relation 
+$\log_2(\varepsilon) \sim p \log_2(N)$ between them with a rate of convergence $p \approx 1.6$. 
 In the figures \ref{Fig32} and \ref{Fig33} we show how good are the prices computed with the multinomial method. 
 \begin{figure}[t!]
  \begin{minipage}[b]{0.5\linewidth}
@@ -1075,3 +1145,60 @@ In the figures \ref{Fig32} and \ref{Fig33} we show how good are the prices compu
  \end{minipage}
 \end{figure}  
 
+
+
+
+
+
+\section{Final conclusions}
+
+
+
+The main objective of the thesis is to develop a new model for pricing options in presence of proportional transaction costs.
+The main difference between this work and the previous works in the literature is that we considered a stock
+dynamics that follows a generic exponential Lévy process. 
+
+In chapter \ref{Chapter5} we derived the general HJB equation of the model, eq. (\ref{HJB1}), which is 
+a complicated equation with three state variables and a time variable. 
+Therefore we opted to simplify the problem by reducing the number of variables, obtaining the simpler HJB Eq. (\ref{HJB2}).
+In the end of chapter \ref{Chapter6} we developed the algorithm [\ref{algo2}] to solve the maximization problem (\ref{max_probl1}) associated to the HJB eq. (\ref{HJB1})
+and presented numerical results. 
+
+However, more emphasis has been given to the reduced problem (\ref{minimization}), which is also the main topic of the paper \cite{Canta}.
+We proposed a monotone, stable and consistent numerical scheme and proved that its solution converges to the viscosity solution of the
+HJB equation (\ref{HJB2}).
+Numerical results of the equation (\ref{HJB2}) are obtained for the particular cases of diffusion, Merton jump-diffusion and Variance Gamma process, 
+although any Lévy process satisfying the conditions \textbf{EM} can be used. 
+The transition probabilities in the Markov chain approximation are obtained by explicit finite difference discretization of the 
+infinitesimal generator of the process. 
+The Brownian motion and the Merton process can be discretized directly, 
+while the VG process needs to be approximated to remove the infinite activity jump component.
+Due to this approximation, the algorithm [\ref{algo}] has slower convergence when applied to the VG dynamics.
+Using numerical experiments, we confirmed some features of the model such as the dependency degree of the price on the transaction costs, the risk aversion and the drift. 
+In the end of chapter \ref{Chapter6} we also computed the option prices by using the multinomial method, i.e. we derived the transition probabilities 
+from the approximation introduced in chapter \ref{Chapter3}. 
+
+To conclude, we want to mention some possible future improvements in this area of research. 
+An interesting direction can be the development of a more efficient numerical method for the HJB equations (\ref{HJB2}) and in particular (\ref{HJB1}), which has a hige time complexity.
+There are several approaches in the literature to solve variational inequalities, such as the policy iteration method of \cite{FoHu12a}, or the penalty method of 
+\cite{FoHu12b}, \cite{Song14}.
+We argue that an implicit/explicit (IMEX), with the possible help of the Fast-Fourier-Transform for evaluating the integral term, (as in \cite{AnAn00} for instance) 
+can increase the efficiency of the numerical method.
+Also, using a non-uniform grid as in \cite{Haentjens13}, can help to improve the efficiency 
+and reduce the computational cost for both the differential and the integral part.
+
+
+
+\section*{Acknowledgements}
+
+First of all, I want to thank my PhD supervisors Prof. João Guerra and Prof. Manuel Guerra for the
+patience they had with me, for the useful discussions and the many emails we have exchanged in recent years.
+I would like to express my thanks to Prof. Maria do Rosário Grossinho, who gave me the opportunity to start
+this doctoral program together with the European network STRIKE \url{http://www.itn-strike.eu/} and who has always 
+given me positive energy.
+Last, but not least, I want to thank my family and my friends Pedro Polvora, Yaser Faghan Kord, Radoslav Vulkov, 
+Daniele Polencic and Alessandro Scalia for their never-ending support.
+
+This research was supported by the European Union in the FP7-PEOPLE-2012-ITN project STRIKE - 
+Novel Methods in Computational Finance (304617), and by CEMAPRE
+MULTI/00491, financed by FCT/MEC through Portuguese national funds.

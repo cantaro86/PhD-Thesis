@@ -30,8 +30,8 @@ log-returns, and considers them just as rare events. In the real market instead,
 log-returns manifest frequently high peaks, that come more and more evident
 when looking at short time scales. The log-returns peaks correspond to sudden
 large changes in the price, which are called \emph{jumps}. 
-There is a huge literature of option pricing models that consider an underlying process with a discontinuous path.
-Most of these models consider the log-prices dynamics following a \emph{Lévy process}. 
+There is a huge literature of option pricing models considering an underlying process with discontinuous paths.
+Most of these models assume the log-price dynamics to be a \emph{Lévy process}. 
  
 
 A second issue of the Black-Scholes model is that it does not consider the presence of market frictions i.e.
@@ -42,7 +42,7 @@ Moreover, the replicating portfolio cannot be perfectly implemented,
 since the delta-hedging strategy involves continuous time trading. 
 This is impractical because the presence of transaction costs makes it infinitely costly.
 Another kind of market friction that needs to be considered are the budget constraints. 
-A bound in the budget or a restriction in the possibility of 
+A limit in the budget or a restriction in the possibility of 
 selling short, clearly restricts the set of possible trading strategies.
 
 Many authors attempted to include the presence of proportional transaction costs in option pricing models.
@@ -75,13 +75,15 @@ In \cite{WhWi97} and \cite{BaSo98} the problem is simplified by using asymptotic
 transaction costs. The authors, starting from the general HJB variational inequality, derive a simpler non-linear PDE for the option price. 
 Further developments are presented in the thesis work of \cite{Damgaard}, where the author 
 studies the robustness of the model from a theoretical and numerical point of view. 
-He found that under particular conditions the model is quite robust with respect to the choice of the utility function. 
+He found that under certain conditions the model is quite robust with respect to the choice of the utility function. 
 
-In this thesis the main goal is to develop and analyze a model for pricing options when the market is incomplete due to the presence of jumps and transaction costs. 
+In this thesis the main goal is to develop and analyze a model for pricing options when the market is incomplete due to the presence of jumps in the stock dynamics 
+and transaction costs. 
 The topics of the thesis are based on the two papers 
-\cite{Canta2}, \cite{Canta} and the contributed chapter \emph{Indifference pricing in a market with transaction costs and jumps} by N. Cantarutti, J. Guerra, M. Guerra and 
+\cite{Canta2}, \cite{Canta} \todo{If the paper is accepted I have to update the reference}
+and the contributed chapter \emph{Indifference pricing in a market with transaction costs and jumps} by N. Cantarutti, J. Guerra, M. Guerra and 
 M.R. Grossinho, published in the book of \cite{Matthias}.\\
-Portfolio models with transaction costs and Lévy processes have already been introduced in the financial literature, see for instance \cite{OkSu01}, \cite{BKR01} and \cite{Kab16} 
+Portfolio selection models with transaction costs and Lévy processes have already been introduced in the financial literature, see for instance \cite{OkSu01}, \cite{BKR01} and \cite{Kab16} 
 but these models have never been used to price options.  
 We present and analyze the theoretical properties of the model, and prove the existence of a viscosity solution 
 of the nonlinear
@@ -90,18 +92,19 @@ default event and not.
 We present new numerical results and compare them with numerical values obtained from existing reference models. We also prove that 
 the proposed numerical scheme is monotone, stable and consistent, and its solution converges to the viscosity solution of the continuous problem.
 
-In Chapter \ref{Chapter1}, we introduce the general theory for Lévy processes, with a deeper focus on the particular Lévy processes used in this thesis for financial modeling:  
+In Chapter \ref{Chapter1}, we introduce the general theory for Lévy processes, with a deeper focus on the specific Lévy processes used in this thesis i.e.  
 the \emph{Merton} and \emph{Variance Gamma} processes.   
 In Chapter \ref{Chapter2} we make a small summary of the main assumptions and theorems of the \emph{No arbitrage theory} for derivative pricing. After that we present 
 the most common numerical finite differences methods used to solve the option pricing PIDEs. 
 The Chapter \ref{Chapter3} is a digression based on the paper \cite{Canta2} on the application of the multinomial method to solve option pricing problems under the Variance Gamma process. 
 In Chapter \ref{Chapter4} we present the optimal control theory for regular and singular controls, and the definition of viscosity solutions. 
 In Chapter \ref{Chapter5}, we will develop the model for option pricing in presence of proportional transaction costs. This model is a singular stochastic
-control problem, which is a generalization of the \cite{DaPaZa93} model. We derive the general HJB equation and prove that the value function of the optimization problem 
+control problem, which is a generalization of the model proposed in \cite{DaPaZa93}. We derive the general HJB equation and prove that the value function of the optimization problem 
 can be interpreted as the viscosity solution of the HJB equation.  
-In Chapter \ref{Chapter6} we solve the problem numerically. 
+In Chapter \ref{Chapter6} we present the numerical method used to solve the optimization problem and several numerical results. 
 First, we consider the simplified problem where the number of variables is reduced by one thanks to the assumption of no default and the property of the exponential utility. 
-The numerical results are also presented in \cite{Canta} and \cite{Matthias}.\\
+The same results are also presented in \cite{Canta} and \cite{Matthias}.\\
 Then we solve the general problem with four variables, considering the possibility of default. Last, we also show that the moment matching method developed for 
-the Variance Gamma process, can be used to solve these kind of problems with good performance. 
+the Variance Gamma process, can be used to solve these kind of problems with good performance. \\
+At the end of each chapters there is a conclusive section containing a summary of the main concepts and their relevance for the thesis. 
 
