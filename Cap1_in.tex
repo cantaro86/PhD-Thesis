@@ -63,7 +63,7 @@ Among the most popular Lévy processes applied to finance, it is worth to mentio
  \item[-] the Kou jump-diffusion model \cite{Kou02}
  \item[-] the $\alpha$-stable \cite{Ma63}, \cite{BoPoCo97}, \cite{alpha09}
  \item[-] the Variance-Gamma (VG) \cite{MaSe90}, \cite{MCC98}
- \item[-] the Normal-Inverse-Gaussian (NIG) \cite{BN98}
+ \item[-] the Normal-Inverse-Gaussian (NIG) \cite{BN97}
  \item[-] hyperbolic Lévy processes \cite{EbKe95}
  \item[-] Carr-Geman-Madan-Yor (CGMY) model \cite{CGMY02}
 \end{itemize}
@@ -75,7 +75,7 @@ the \emph{Merton model} and the \emph{Variance Gamma model}.
 
 \subsection{Basic definitions}
 
-Let $\{X_t\}_{t \ge 0}$ be a stochastic process defined on a probability space $(\Omega,\mathcal{F},(\mathcal{F}_{t \ge 0}),\PP)$, 
+Let $\{X_t\}_{t \ge 0}$ be a stochastic process defined on a probability space $(\Omega,\mathcal{F},\{\mathcal{F}_t\}_{t \ge 0},\PP)$, 
 where $\mathcal{F}_t$ is the natural filtration\footnote{The natural filtration is defined as $\mathcal{F}_{t}^X = \sigma\{X(s) :
 0\leq s \leq t\} $.} to which the process $\{X_t\}_{t \ge 0}$ is adapted.\\ 
 \begin{Definition}\label{LevyDef}
@@ -88,7 +88,7 @@ We say that $\{X_t\}_{t \ge 0}$ is a \textbf{Lévy Process} if:
  \item[(\textbf{L3})] $\{X_t\}_{t \ge 0}$ is stochastically continuous: $\forall \epsilon > 0 $ and $\forall t \ge 0$  $$\lim_{h\to 0} \PP(|X_{t+h}-X_t| > \epsilon)=0. $$ 
 \end{itemize}
 \end{Definition}
-It is well known (see \cite{Protter} Theorem 30) that a Lévy process has a modification with ``cádlág''
+It is well known (see \cite{Protter} Chapter 1, Theorem 30) that a Lévy process has a modification with ``cádlág''
 paths, i.e. paths which are right-continuous and have left limits. \\
 Lévy processes are intrinsically connected with infinitely divisible distributions. In particular the Lévy-Khintchine formula 
 for infinitely divisible random variables, is an essential tool for the classification of the Lévy processes by the form of their
@@ -105,7 +105,7 @@ The \textbf{Characteristic function} $\phi_X:\R^n \to \C$  of $X$, is defined by
             &= \int_{\Omega} e^{i(u,X)} \PP(d\omega) \nonumber \\
             &= \int_{\R^n} e^{i(u,x)} f_X(dx).
 \end{align}
-for each $u \in \R^d$. We indicated with $f_X$ the \textbf{probability density function} (pdf) of $X$.
+for each $u \in \R^n$. We indicated with $f_X$ the \textbf{probability density function} (pdf) of $X$.
 \end{Definition}
 For each $1 \leq j \leq n$ and $p \in \N$ , if $\E\bigl[ |(X^j)^{p}| \bigr] < \infty$, then 
 \begin{equation}\label{moments}
@@ -200,11 +200,11 @@ Consider a set $A \in \mathcal{B}(\R^n \backslash \{ 0 \})$.
 We define the \textbf{random measure} of the jumps of the process $\{X_t\}_{t \ge 0}$ by
 \begin{align}
  N^X(t,A)(\omega) &= \# \{ s \in [0,t] \, : \; \Delta X_s(\omega) \in A  \} \\
-		   &= \sum_{s\leq t} \mathbbm{1}_A(\Delta X_s(\omega)) . \nonumber
+		   &= \sum_{0 \leq s \leq t} \mathbbm{1}_A(\Delta X_s(\omega)) . \nonumber
 \end{align} 
 \end{Definition}
 For each $\omega \in \Omega$ and for each $0 \leq t < \infty$, the map 
-$$ A \to (N^X(t,A)(w) $$ 
+$$ A \to N^X(t,A)(w) $$ 
 is a counting measure on $\mathcal{B}(\R^n \backslash \{ 0 \})$. %We indicate with $N^X(dt,dx)(w)$ the differential form.
 
 We say that $A\in \mathcal{B}(\R^n \backslash \{ 0 \})$ is \emph{bounded below} if $0 \not \in \bar A$ (zero does not belong to the closure of $A$). 
@@ -218,14 +218,15 @@ We say that $A\in \mathcal{B}(\R^n \backslash \{ 0 \})$ is \emph{bounded below} 
  the random variables $N(t_1,A_1), ..., N(t_m,A_m)$ are independent.
 \end{itemize}
 (see \cite{Applebaum} Theorem 2.3.5). \\
-A random measure satisfying the properties above is called \textbf{Poisson random measure}.
+A random measure satisfying the properties above is called \textbf{Poisson random measure}.\\
+If $A$ is not bounded below, it is possible to have $\mu(A) = \infty$. 
 
 We can also define the \textbf{Compensated Poisson random measure}. For each $t \geq 0$ and $A$ bounded below, let us define: 
 \begin{equation}
  \tilde{N}(t,A) = N(t,A) - t\mu(A). 
 \end{equation}
 This is a martingale-valued measure, i.e. for each $A$ the process $\bigl \{ \tilde{N}(t,A) \bigr \}_{t\geq 0} $ is a martingale.  
-If $A$ is not bounded below, it is possible to have $\mu(A) = \infty$. \\
+
 
 \noindent
 Now we can define the integration with respect to a random measure:
@@ -236,10 +237,9 @@ Now we can define the integration with respect to a random measure:
   \int_A f(x) N(t,dx)(\omega) = \sum_{x\in A} f(x) N(t,\{x\})(\omega). 
  \end{equation}
 \end{Definition}
-Since $N(t,\{x\}) \neq 0 \Leftrightarrow \Delta X_s=x$ for at least one $s\in [0,t]$\footnote{These are the arrival 
-times of the Poisson process.}, we have  
+Since $N(t,\{x\}) \neq 0 \Leftrightarrow \Delta X_s=x$ for at least one $s\in [0,t]$, we have  
  \begin{equation}
-  \int_A f(x) N(t,dx)(\omega) = \sum_{x\in A} f(\Delta X_s) \mathbbm{1}_A(\Delta X_s). 
+  \int_A f(x) N(t,dx)(\omega) = \sum_{0 \leq s \leq t} f(\Delta X_s) \mathbbm{1}_A(\Delta X_s). 
  \end{equation}
 The Poisson integral has the following important properties: 
 \begin{Theorem}
@@ -280,14 +280,14 @@ The process $\{\int_A f(x) \tilde N(t,dx)\}_{t \ge 0}$ is a martingale. For $f \
  
 We can further define:
 \begin{equation}
-\int_{|x|<1} f(x) \tilde N(t,dx) = \lim_{\epsilon \to 0} \int_{\epsilon < |x| < 1} f(x) \tilde N(t,dx), 
+\int_{|x|<1} f(x) \tilde N(t,dx) := \lim_{\epsilon \to 0} \int_{\epsilon < |x| < 1} f(x) \tilde N(t,dx), 
 \end{equation}
 that represents the compensated sum of small jumps.
 
  
 \subsection{Lévy-It\={o} decomposition}
 
-The following is a fundamental theorem which decompose a general Lévy process as a superposition 
+The following is a fundamental theorem which decomposes a general Lévy process in the superposition 
 of independent processes: a drift term, a Brownian motion, a Poisson process with ``big jumps'' and a compensated Poisson process with ``small jumps''.
 
 \begin{Theorem}

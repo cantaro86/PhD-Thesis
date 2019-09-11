@@ -205,7 +205,7 @@ The number of branches to cover this
 region is $\bar L = \frac{B_1+B_2}{h_x} \propto \sqrt{N}$. 
 
 In order to have a more accurate result, it is better to choose $h_y \propto h_x$ and consequently $\bar M \propto N$. 
-In this way, the number of shares to buy or sell is more sensitive to the variation of the log-price.
+In this way, the number $h_y$ of shares to buy or sell is more sensitive to the resolution $h_x$ in the log-price tree.
 If we set $\bar L = \sqrt{N}$ and $\bar M = N$ we have total computational complexity $\mathcal{O}(N^{4.5})$. 
 For a fixed $\bar L$, the total complexity is reduced to $\mathcal{O}(N^{4})$. 
 
@@ -755,9 +755,11 @@ For $\bar L = 43$, we can see that in both cases it is possible to cover a very 
 measure, we do not need a big truncation interval.
 Given the space step $h_X = \sigma_X\sqrt{\Delta t}$, with  
 $ \sigma_X^2 = \hat \sigma_{J}^2 + \sigma_{\epsilon}^2 $ and $\hat \sigma_J^2 = \int_{[-B_1,-\epsilon]\bigcup [\epsilon,B_2]} z^2 \nu(dz)$, 
-it is enough to consider a region at least as big as the standard deviation of the jump process: 
-$h_X \bar L \geq \hat \sigma_J$.
-Putting all together, the relation becomes $\bar L\geq \frac{\hat \sigma_J}{\sigma_X} \sqrt{N}$, and replacing the values $\sigma_X = 0.2024$ and $\hat \sigma_J=0.1916$ 
+it is enough to consider a region at least as big as the standard deviation  
+of the unrestricted jump process\footnote{For small values of $\epsilon$ the value of $\sigma_{\epsilon}^2$ is negligible. In this case it is possible to use the expression for the 
+variance of the VG process and write $\sigma_X^2 = \bar \sigma^2 + \theta^2 \kappa$.}
+i.e. $h_X \bar L \geq \sigma_J$, where $\sigma_J^2 = \int_{[-\infty,-\epsilon]\bigcup [\epsilon,\infty]} z^2 \nu(dz)$. 
+Putting all together, the relation becomes $\bar L\geq \frac{\sigma_J}{\sigma_X} \sqrt{N}$, and replacing the values $\sigma_X = 0.2024$ and $\sigma_J=0.1916$ 
 we get $\bar L \geq 0.94 \sqrt{N}$.
 \begin{table}[ht]
 \centering
@@ -785,17 +787,15 @@ In the case of the VG process it is more difficult to analyze the convergence re
 This is due to the approximation (\ref{log_sde_inf_act2}) introduced to replace the infinite activity jump component with a Brownian motion. All the parameters
 in (\ref{sig_eps}) depend on $\epsilon$, and consequently on $N$.
 Within our discretization ($N=150$), we have $\sigma_{\epsilon} = 0.0654$, $\lambda_{\epsilon} = 10.01$. 
-With those parameters we obtain an ATM price for zero transaction costs of 1.9821, which is very close the the PIDE price in Tab. \ref{tab:ATM_price}. 
-We expect to have convergence to the PIDE price for $N\to \infty$ and $\gamma\to0$.
-When $N \to \infty$ and $\epsilon \to 0$, the parameters $\sigma_{\epsilon} \to 0$ and $\lambda_{\epsilon}\to \infty$.
-The main problems are the high dependence of the price on the parameter $\epsilon$ and therefore on the discretization step $h_x$, together with the nonlinearity of the algorithm.
-For instance, with $N=\bar M=1000$ and $\bar L = 43$ the program takes more than two hours to run. 
-The convergence of the approximated process (\ref{log_sde_inf_act}) to the original VG process is very slow, and this is reflected in the convergence 
-of the VG PIDE (\ref{VG_PIDE}).
+With the parameters under consideration, we obtain an ATM price for zero transaction costs of 1.9821, which is very close the the PIDE price in Tab. \ref{tab:ATM_price}. 
 
-According to the convergence analysis in section \ref{numerical_concergence_section}, we expect to have good convergence results in our algorithm when $N\sim 10^4$.
+The convergence rate of the VG PIDE is quite low and this is reflected in our algorithm. We refer to \cite{CoVo05b} for a detailed error analysis.
+In order to solve the PIDE (using an implicit-explicit scheme) we constructed
+a grid with 13000 space steps of size $\delta x = 0.0004$ and 7000 time steps, and obtained the price in Tab \ref{tab:ATM_price}, 
+with an approximated activity $\lambda_{\epsilon} = 75$.
+Consequently, we expect to have good convergence results in our algorithm when $N\sim 10^4$.
 All the presented prices (Figures \ref{Fig8}) have thus a truncation error, which is adjusted by an accurate choice of the value of $\gamma$. 
-We refer to \cite{CoVo05b} for a detailed error analysis.
+
 \begin{figure}[t!]
  \begin{minipage}[b]{0.5\linewidth}
    \centering
