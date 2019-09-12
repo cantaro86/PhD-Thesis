@@ -123,7 +123,7 @@ For $\phi \in C^{1,2}([0,T] \times \R^n) $ consider the operator:\footnote{Insid
 we intend only the $k$-column (for $1\leq k \leq l$) of the $n\times l$ matrix $\gamma(t,x,a,z)$. As explained at the beginning of the section, 
 we suppressed the indexes to simplify the notation. }
 \begin{equation}\label{integral_1}
- \mathcal{I}^{1,\delta,a}(t,x,\phi) = \int_{|z|<\delta}
+ \mathcal{I}^{1,\delta,a}(t,x,\phi) = \int_{|z| \leq \delta}
 \biggl[ \phi(t,x + \gamma(t,x,a,z)) - \phi(t,x) - D_x \phi(t,x) \cdot \gamma(t,x,a,z) \biggr] \nu(dz)
 \end{equation}
 where $D_x \phi$ corresponds to the gradient of $\phi$.\\
@@ -134,10 +134,10 @@ For $\phi \in \mathcal{C}_2([0,T] \times \R^n) $ (see definition (\ref{Cp})) and
 \end{equation}
 We can check that the integral operators $\mathcal{I}^{1,\delta,a}$ and $\mathcal{I}^{2,\delta,a}$ are well defined.
 
-In the integral (\ref{integral_1}), for $|z| < \delta$, we know that $|\gamma(t,x,a,z)| \leq |\rho(z)| (1+|x|)$ and 
-from the definitions of Lévy measure (\ref{Levy_m}) and $\rho(z)$ (\ref{rho}), it follows that $\lim_{z\to0} \frac{\rho(z)}{z}$ is finite.
-We can use a first order Taylor approximation on $\phi(t,x + \gamma(t,x,a,z))$. 
-For $y \in [x, \gamma(t,x,a,z)]$, we can write:
+In the integral (\ref{integral_1}), for $|z| \leq \delta$, we know that $|\gamma(t,x,a,z)|$ is bounded 
+by $ \bar \gamma = \sup_{|z| \leq \delta} \gamma(t,x,a,z)$, for fixed $t$, $x$, uniformly in $a$. 
+We can use a first order Taylor approximation on $\phi(t,x + \gamma(t,x,a,z))$ and consider the Lagrange remainder. 
+For $y \in \bigl(x, \gamma(t,x,a,z)\bigr)$, we can write:
 \begin{align*}
  & \bigg|\phi(t,x + \gamma(t,x,a,z)) - \phi(t,x) - D_x \phi(t,x) \cdot \gamma(t,x,a,z) \bigg| \\ 
  & = \bigg| \frac{1}{2} \gamma(t,x,a,z)^T \cdot  D_{xx} \phi(t,y) \cdot \gamma(t,x,a,z) \bigg| \\   % \sup_{y \in B(x,\rho(z)(1+|x|) )} 
@@ -145,11 +145,11 @@ For $y \in [x, \gamma(t,x,a,z)]$, we can write:
  & \leq \frac{1}{2} \; \bigg|\bigg| D_{xx} \phi(t,y) \bigg|\bigg| \; \big| \rho(z) (1+|x|)  \big|^2 \\
  & \leq \frac{1}{2} M \; \big| \rho(z) (1+|x|)  \big|^2.
 \end{align*}
-where $M = \sup_{y \in [x, \bar \gamma]} || D_{xx} \phi(t,y) ||$ and $ \bar \gamma = \sup_{z \in [0,\delta]} \gamma(t,x,a,z)$, for each $t$, $x$, $a$.
+where we used the Schwarz inequality and $M = \sup_{y \in [x, \bar \gamma]} || D_{xx} \phi(t,y) ||$. 
 Thanks to (\ref{rho}) we can see that the integral is well defined.
 
 Let us consider the integral (\ref{integral_2}) on $|z|\geq \delta$. By definition $\phi \in \mathcal{C}_2([0,T] \times \R^n) $ has quadratic growth.
-Thanks to (\ref{assumptionM}) and (\ref{Growth_control2}) each term inside the integral is well defined.
+Thanks to Theorem (\ref{assumptionM}) and (\ref{Growth_control2}) each term inside the integral is well defined.
 
 Finally, for $\phi \in C^{1,2}([0,T] \times \R^n) \bigcap \mathcal{C}_2([0,T] \times \R^n)$ we can define the 
 \textbf{Integral operator}:
