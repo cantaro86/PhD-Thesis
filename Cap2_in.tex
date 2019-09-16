@@ -185,8 +185,9 @@ However, the majority of the models used in finance are not.
 
 In this thesis we analyze a market model that is not complete. The introduction of proportional transaction costs prevents to trade continuously in time  
 as suggested by the replicating portfolio strategy, because the cost of trading would be infinity.
-On the other hand, if we consider exponential Lévy models, we again obtain an incomplete market.
-The reason is that the unpredictable jumps of a Lévy process are a source of risk that cannot be hedged by the replicating strategy.
+On the other hand, if we consider exponential Lévy models, we again obtain an incomplete market in general,
+except for some particular cases i.e. when the driving noise is a Brownian motion or a pure Poisson process.
+%The reason is that the unpredictable jumps of a Lévy process are a source of risk that cannot be hedged by the replicating strategy.
 
 In a complete market there is only one arbitrage-free way to price a financial derivative, and the price is defined as the cost to replicate the derivative's payoff.
 In an incomplete market, instead, the notion of perfect replication does not exist. 
@@ -305,7 +306,7 @@ where $\LL^S$ is the infinitesimal generator in (\ref{RN_inf_gen}).
  In the last step we also introduced the explicit expression of the discount factor (\ref{discount_factor}) with constant $r$.
  
  By definition, the terms inside the integral are all continuous and are all dominated by some quadratic functions that do not depend on $\tau$.
- We can divide both sides by $(\tau-t)$ and take the limit for $\tau \to t$. Using the mean value theorem, for some $u \in [t,\tau]$ we get 
+ We can divide both sides by $(\tau-t)$ and take the limit for $\tau \to t$. Using the mean value theorem, there exists $u \in [t,\tau]$ such that 
  $$ \lim_{u \to t} \E^{\Q} \biggl[ e^{-r(u-t)} \biggl( \frac{\partial V(u,S_u)}{\partial u} + \LL^{S} V(u,S_u) -r V(u,S_u) \biggr) \bigg| S_t=s \biggr] = 0. $$
  When $\tau\to t$ also $u\to t$. Thanks to the dominated convergence theorem we can take the limit inside the expectation and conclude the proof.
 \end{proof}
