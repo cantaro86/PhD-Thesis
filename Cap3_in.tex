@@ -42,7 +42,7 @@ VG density reproduces much better the high peaks near the origin and the heavy t
 
 The VG process was first presented in the context of option pricing 
 in \cite{MaMi91}, where it has been used for pricing European options.
-European vanilla options can be easily priced by the analytical formula presented in \cite{MCC98} and exotics
+European vanilla options can be easily priced by the analytical formula presented in \cite{MCC98} and exotic options
 can be priced numerically by several common techniques.
 Monte Carlo methods for VG are presented in \cite{Fu00}. 
 A finite difference scheme for the VG Partial Integro-Differential Equation (PIDE) 
@@ -94,7 +94,7 @@ enough to model the features of a stochastic process up to its fourth moment.
 
 \subsection{Moment matching}
 
-To determine the parameters of the Markov chain we require that its local moments are equal to that of the continuous process.
+In order to determine the parameters of the Markov chain we require that its local moments are equal to that of the continuous process.
 Let us consider a VG process with drift $(r-w)$, where $w$ is the martingale correction defined in (\ref{parameter_w}): 
 %and derive the continuous process for the log-variable $Y_t = \log(S_t)$: 
 \begin{align}\label{log_martingale}
@@ -147,7 +147,7 @@ higher order terms in the moment matching condition together with the condition 
 
 Recall that the well known binomial model \cite{CRR79} assumes the value $\alpha(\Delta t) = \sigma \sqrt{\Delta t}$,
 that represents the volatility of the increments in the time interval $\Delta t$.
-In the trinomial model, the parameter $\alpha(\Delta t)$ assumes value $\alpha(\Delta t) = \frac{1}{2} \sigma \sqrt{3\Delta t}$, see for instance \cite{YaPr01}.
+In the trinomial model, the parameter $\alpha(\Delta t)$ assumes the value $\alpha(\Delta t) = \frac{1}{2} \sigma \sqrt{3\Delta t}$, see for instance \cite{YaPr01}.
 For the multinomial method a good representation for $\alpha(\Delta t)$ is:
 \begin{equation}\label{alphat}
  \alpha(\Delta t) = \sqrt{c_2} \sqrt{\frac{3+\bar \kappa}{12}},
@@ -212,7 +212,7 @@ When all the cumulants $c_i$, for $0 \leq i \leq n$, are equal to the VG cumulan
 the original VG process for $n \to \infty$.
 In order to describe $n$ cumulants, we need $n+1$ branches. Therefore, when the number of cumulants of $\Delta X^A$ that are equal to those of the VG goes to infinity, 
 the number of branches has to go to infinity as well.
-We assume that five branches ($L=5$) are enough to describe the features of the underlying process and, at the same time, keep the numerical
+We assume that five branches ($L=5$) are enough to describe the main features of the underlying process and, at the same time, keep the numerical
 problem simple. 
 \end{Remark}
 
@@ -267,18 +267,29 @@ $r$ & $\theta$ & $\sigma$ & $\kappa$ \\
 \label{sample-table}
 \end{table}
 
+\begin{Remark}
+In practice, the risk neutral parameters of the VG model should be calibrated from market prices of European vanilla options, using the closed pricing formula of \cite{MCC98}.
+Then, this risk neutral VG model can be used to price exotic derivatives for which there are no closed formulas.
+The multinomial method is particularly suitable for American-style options, since Monte Carlo and PIDEs methods are in general more difficult to implement. 
+For this reason, tree methods are quite popular among practitioners. 
+\end{Remark}
+
+
+
+
+
 
 
 \subsection{European options}
 
 
 We compare the numerical results for European call and put options obtained with the multinomial and the PIDE approaches.
-We solve the VG PIDE following the IMEX method introduced in section \ref{VG_section2}.
-The details of the implementation are presented in section \ref{numerical_concergence_section}.
+We solve the VG PIDE following the IMEX method introduced in Section \ref{VG_section2}.
+The details of the implementation are presented in Section \ref{numerical_concergence_section}. 
 
 Following the algorithm proposed in the previous section, we solve the option pricing problem using the multinomial method. 
 The number of time steps for all the computations presented in the following pictures is $N=2000$. 
-The table \ref{Convergence} 
+The Table \ref{Convergence} 
 shows a convergence analysis for the prices of European calls, puts and American puts. We can see that the convergence is quite fast.  
 \begin{table}[ht]
 \centering
@@ -301,8 +312,8 @@ shows a convergence analysis for the prices of European calls, puts and American
 \caption{Convergence table for ATM European and American options with strike $K=40$ and $T=1$. The time unit is in seconds.}
 \label{Convergence}
 \end{table}
-Figures (\ref{figCall}) and (\ref{figPut}) show the single prices obtained by the multinomial method compared with the curve obtained by solving the PIDE.
-In table \ref{Option_values} we compare directly the call/put numerical values obtained with the two methods.
+Figures \ref{figCall} and \ref{figPut} show the single prices obtained by the multinomial method compared with the curve obtained by solving the PIDE.
+In Table \ref{Option_values} we compare directly the call/put numerical values obtained with the two methods.
 \begin{figure}[t!]
  \begin{minipage}[b]{0.5\linewidth}
    \centering
@@ -320,12 +331,6 @@ In table \ref{Option_values} we compare directly the call/put numerical values o
  \label{figPut}
  \end{minipage}
 \end{figure}
-
-\begin{Remark}
-Pricing vanilla call and put European options is quite simple and the best approach is to use the closed formula derived in \cite{MCC98}.
-The big advantage of the multinomial method is in the computation of American options prices, where there is no closed formula and all the other approaches, 
-such as PIDEs and Least Squares Monte Carlo, are difficult to implement and much slower. 
-\end{Remark}
 
 \begin{table}[ht]
 \centering
@@ -351,17 +356,17 @@ $S_0$ & PIDE Call & Multi Call & PIDE Put & Multi Put \\
 \subsection{American options}
 
 In this section we present the numerical results obtained with the multinomial method algorithm for American put options, and compare them with the PIDE method (see fig. \ref{AmVG}).
-The PIDE (\ref{VG_JD}) is modified in order to take in account the early exercise feature:
+The PIDE (\ref{VG_JD}) is modified in order to take into account the early exercise feature:
 \begin{align}\label{VG_Am_JD}
 &  \min \biggl\{ - \frac{\partial V(t,x)}{\partial t} -
  \bigl( r-\frac{1}{2}\sigma_{\epsilon}^2 - w_{\epsilon} \bigr) \frac{\partial V(t,x)}{\partial x} 
  - \frac{1}{2}\sigma_{\epsilon}^2 \frac{\partial^2 V(t,x)}{\partial x^2} + (\lambda_{\epsilon} + r) V(t,x) \\ \nonumber
  &- \int_{|z| \geq \epsilon} V(t,x+z) \nu(dz) \, , \, \biggl( V(t,x) - (K-e^x)^+ \biggr) \biggr\} = 0.
 \end{align}
-To solve this equation we use the same discretization and same settings used in sections \ref{VG_section2} and \ref{numerical_concergence_section} for the European option problem.
+To solve this equation we use the same discretization and same settings used in Sections \ref{VG_section2} and \ref{numerical_concergence_section} for the European option problem.
 
-The numerical values of the prices obtained with the multinomial and PIDE methods are collected in Tab. \ref{Option_values3}.
-The run times for the multinomial algorithm are shown in the convergence table \ref{Convergence}.
+The numerical values obtained by multinomial and PIDE methods are collected in Tab. \ref{Option_values3}.
+The run times for the multinomial algorithm are shown in the convergence Table \ref{Convergence}.
 \begin{figure}[ht!]
  \centering
  \includegraphics[scale=0.4]{American_VG.png}
@@ -392,16 +397,19 @@ $S_0$ & BS Eu. Put & VG Eu. Put & BS Am. Put & VG Am. Put & VG Am. PIDE Put \\
   60 & 0.0386 & 0.0880 & 0.0404 & 0.0942 & 0.0913 \\ 
  \bottomrule
  \end{tabular}}
-  \label{Option_values3}
-  \caption{Values for European and American put options using Black-Scholes and Variance Gamma model. Strike $K=40$ and $T=1$. The BS volatility have same value of the VG volatility:  
-  $ \sigma^{BS} = (\sigma^2 + \theta^2 \kappa) = 0.2049$. }
+  \caption{Values for European and American put options using Black-Scholes (binomial) and Variance Gamma (multinomial) methods. 
+  Strike $K=40$ and $T=1$. The BS volatility have same value of the VG volatility  
+  $ \sigma^{BS} = (\sigma^2 + \theta^2 \kappa) = 0.2049$. 
+  The last column presents values of American options computed with the PIDE method using a grid with $M=16000$ and $N=12000$ steps. }
+ \label{Option_values3}
 \end{table}
 
 In Table \ref{Option_values3}, we consider also European and American put option prices 
 calculated with the Black-Scholes (BS) models.
 The BS volatility is chosen equal to the VG volatility $ \sigma^{BS} = (\sigma^2 + \theta^2 \kappa)$.
 As expected, the deep OTM (out of the money) prices computed under VG are higher than the corresponding prices computed under BS. This is a consequence of the
-shape of the VG density function (\ref{VG_density}), which has \emph{heavier tails} than the normal distribution. This means that the probability of a deep OTM option to return in the money, 
+shape of the VG density function (\ref{VG_density}), which has \emph{heavier tails} than the normal distribution. 
+This means that the probability of a deep OTM option to return in the money, 
 is higher if calculated with the VG model than BS, and therefore we get higher option prices.
 
 The Black-Scholes prices are computed using a binomial algorithm.  
@@ -418,6 +426,8 @@ where:
 \end{align*}
 
 
+
+
 \section{Chapter conclusions}
 
 
@@ -427,12 +437,16 @@ The main results of this chapter are published in the paper \cite{Canta2}.
 
 The VG process is approximated by a general jump process that has the same first four cumulants of the original VG process. 
 We show that by construction the multinomial method has the same distribution of the approximated process. 
-We obtained numerical results for European and American options and compared them with
-results from the PIDE method and with Black–Scholes prices. 
+We provide numerical results for European and American options and compare them with
+results obtained by PIDE methods, and with Black–Scholes prices.
+
+Pricing vanilla call and put European options under the VG model is quite simple, and the best approach is to use the closed formula derived in \cite{MCC98}.
+The advantage of the multinomial method is in the computation of American options prices, where there is no closed formula and all the other approaches, 
+such as PIDEs and Least Squares Monte Carlo (proposed in \cite{LoSc01} for diffusion processes), are difficult to implement. \\
 It turns out that the
-multinomial method is easier to implement than the finite differences method. The algorithm does
-not involve any matrix multiplication, matrix inversion or decomposition, as in the case of the IMEX method
-for PIDEs. This means that the computational time is much smaller.
+multinomial method is straightforward to implement. The algorithm does
+not involve any matrix multiplications, matrix inversions or decompositions as for PIDEs. Moreover, the IMEX scheme requires also the computation of an integral such as 
+(\ref{trap_quad}), which in general can be computationally expensive. 
 
 In order to show the ease of use of this algorithm, in Chapter \ref{Chapter6} we applied it to solve the option pricing problem with 
-transaction costs, with good performance.
+transaction costs, with good performances.

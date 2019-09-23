@@ -6,17 +6,18 @@
 
 \vspace{5em}
 
-\section{Transaction costs models for the portfolio selection problem}
+\section{Portfolio selection problems}
 In the mathematical finance literature, the first application of stochastic optimal control theory to finance appears in the seminal paper \cite{Me69}.
-This is the classical \emph{Merton optimal portfolio problem}, and is formulated as follows. An investor has a portfolio consisting of two assets, one ``risk free" $B$,
-and the other ``risky" $S$. The assets in the portfolio have dynamics
+This is the classical \emph{Merton optimal portfolio problem}, and is formulated as follows. An investor has a portfolio consisting of two assets, one ``risk free" asset $B$,
+and one ``risky" asset $S$. The assets in the portfolio have dynamics
 \begin{equation}\label{Merton_problem1}
  \begin{cases}
  dB_t &=  rB_t dt \\
  dS_t &=  S_t \left( \mu dt + \sigma dW_t \right),
 \end{cases}
 \end{equation} 
-with $\mu>r$ and $\sigma>0$. If we denote with $\mathcal{W}_t = B_t + S_t$  the wealth at time $t$, and with $\pi_t$ the fraction of wealth invested in the risky asset, such that
+with $\mu>r$ and $\sigma>0$. We denote by $\mathcal{W}_t = B_t + S_t$  the wealth at time $t$, and by $\pi_t$ the fraction of wealth invested in the risky asset. 
+In this way, it is possible to write
 $S_t = \pi_t \mathcal{W}_t$ and $B_t = (1-\pi_t) \mathcal{W}_t$. The model also considers the investor consumption $\{c_t\}_{0 \leq t \leq T}$. 
 The optimization problem can be formulated considering the utility function of the consumption and the terminal condition. It consists in maximizing the objective function
 \begin{equation}
@@ -65,18 +66,19 @@ All the cited works are portfolio optimization models formulated as infinite hor
 
 Further assumptions are needed when the portfolio process is introduced for the purpose of pricing a derivative contract.
 The main contributions on option pricing with transaction costs, using the \emph{indifference pricing} approach are
-\cite{HoNe89} and \cite{DaPaZa93} (DPZ). The problem is formalized as a finite horizon singular stochastic control problem.
-In this section we present the DPZ model, which is the building block of this thesis, and then extend it following the framework introduced by \cite{Kab16}, 
+\cite{HoNe89} and \cite{DaPaZa93}. The problem is formalized as a finite horizon singular stochastic control problem.
+In this section we present the Davis-Panas-Zariphopoulou (DPZ) model, 
+which is the building block of this thesis, and then extend it following the framework introduced by \cite{Kab16}, 
 that consider the stock dynamics described by Lévy processes.
 
 
 
-\subsection{Davis - Panas - Zariphopoulou (DPZ)}\label{DPZ_sec}
+\subsection{Davis-Panas-Zariphopoulou model}\label{DPZ_sec}
 
 This is the market model with proportional transaction costs presented in \cite{DaPaZa93}. 
 The authors consider a portfolio composed by one risk-free asset $B$ (bank account) paying a fixed interest rate $r > 0$ and a stock $S$. 
 The symbol $Y$ denotes the number of shares of the stock $S$ that the investor holds. 
-The state of the portfolio at time $t\in [t_0,T]$ is $(B^{\pi}_t,Y^{\pi}_t,S_t)$, and is the solution of the following the SDE:
+The state of the portfolio at time $t\in [t_0,T]$ is $(B^{\pi}_t,Y^{\pi}_t,S_t)$, and is the solution of the following SDE:
 \begin{equation}\label{DPZ_porfolio_dynamics}
  \begin{cases}
  dB^{\pi}_t &=  rB^{\pi}_t dt - (1+\theta_b)S_t dL_t + (1-\theta_s) S_t dM_t \\
@@ -184,7 +186,7 @@ In the case the option is exercised, $S_T(1+ \theta_b ) > K$, the buyer pays to 
 and the writer delivers one share to the buyer.
 In a market with transaction costs the real value (in cash) of a share incorporates the transaction costs. 
 Therefore the buyer does not exercise when $S_T > K$, but when $S_T(1+ \theta_b ) > K$. 
-In figure \ref{fig:payoff_comparison} there is a comparison between the payoff in a market with zero costs (such as in the Black-Scholes model) and a market with 
+In Figure \ref{fig:payoff_comparison} there is a comparison between the payoff in a market with zero costs (such as in the Black-Scholes model) and a market with 
 transaction costs.
 
 The objective of the investor is to maximize the expected utility of the wealth at terminal time $T$ over all the admissible
@@ -381,7 +383,7 @@ The definitions of cash value (\ref{cost_function}), of total wealth (\ref{wealt
 
 Since the underlying stock follows a process with jumps, it is not guaranteed that the portfolio stays
 solvent for all $t \in [t_0,T]$. When holding short positions, it is possible that a sudden increase in the stock price 
-cause the total wealth to jump out of the solvency region. 
+causes the total wealth to jump out of the solvency region. 
 The same can happen with a downward jump when the investor is long in stocks and negative in cash. 
 The immediate decrease of the stock's price makes him unable to pay the debts.
 If the investor goes bankrupt, there are no trading strategies to save him.
@@ -533,7 +535,7 @@ For $j=0,w,b$, the HJB Eq. (\ref{HJB1}) becomes:
 
 
 
-\section{Existence of viscosity solution}
+\section{Existence of viscosity solution}\label{Existence_viscosity}
 
 The general fact that value functions of control problems can be characterized as
 viscosity solutions of certain partial differential equations is a direct consequence of the dynamic
@@ -545,7 +547,7 @@ This problem can be circumvented by relying on the
 existence of the optimal control, as done in \cite{DaPaZa93}. However, in our proof we will not assume the existence of the optimal control, which  
 in this framework does not exist.
 We will assume that the \textbf{DPP} for the singular control problem (\ref{porfolio_dynamics}), (\ref{max_probl1}) holds, and that the value function  
-is continuous. We refer to sections 4 and 9 of \cite{Kab16} for the proofs of these statements. 
+is continuous. We refer to Sections 4 and 9 of \cite{Kab16} for the proofs of these statements. 
 
 In this section we prove that the value function (\ref{max_probl1}), can be interpreted 
 as the viscosity solution of the HJB equation (\ref{HJB1}).
@@ -724,13 +726,13 @@ c_0 \Delta L_{\bar t} = \epsilon = 2 \tilde \epsilon / \kappa.
 Using the DPP between the two states $x_0$ and $x_1$, the equation (\ref{first_inequality}) becomes: 
 \begin{align*}
  0 \; \leq & \; \phi(\bar t, x_1) - \phi(\bar t, x_0) + \tilde \epsilon \\
-         = & \; \frac{\phi \bigl( \bar t,\; \bar b - (1+\theta_b) \bar s\, c_0 \Delta L_{\bar t},\; \bar y + c_0 \Delta L_{\bar t}, \; \bar s \bigr) - 
+ 0 \; \leq & \; \frac{\phi \bigl( \bar t,\; \bar b - (1+\theta_b) \bar s\, c_0 \Delta L_{\bar t},\; \bar y + c_0 \Delta L_{\bar t}, \; \bar s \bigr) - 
          \phi(\bar t, \bar x)}{c_0 \Delta L_{\bar t}}  
             + \frac{\tilde \epsilon}{c_0 \Delta L_{\bar t}} \\
-         \underset{\epsilon \to 0}{=} & \; \frac{\phi \bigl( \bar t,\; \bar b - (1+\theta_b) \bar s\, \epsilon, \; \bar y + \epsilon,\; \bar s \bigr) - 
+         = & \; \frac{\phi \bigl( \bar t,\; \bar b - (1+\theta_b) \bar s\, \epsilon, \; \bar y + \epsilon,\; \bar s \bigr) - 
          \phi(\bar t, \bar x)}{\epsilon}  
             + \frac{\kappa}{2} \\   
-         = & \left(\frac{\partial \phi}{\partial y}(\bar t, \bar x) -(1+\theta_b) \bar s \frac{\partial \phi}{\partial b}(\bar t, \bar x)\right) 
+         \underset{\epsilon \to 0}{=} & \left(\frac{\partial \phi}{\partial y}(\bar t, \bar x) -(1+\theta_b) \bar s \frac{\partial \phi}{\partial b}(\bar t, \bar x)\right) 
                                    + \frac{\kappa}{2}  \\
 	                    < & -\kappa + \frac{\kappa}{2}
 \end{align*}
@@ -842,7 +844,7 @@ We conclude this chapter with the following main theorem:
 \begin{Theorem}
  The value function of the maximization problem (\ref{max_probl1}), is a viscosity solution of the Eq. (\ref{qvi_min}).
 \end{Theorem}
-The proof is a direct consequence of theorems \ref{subsolution_th} and \ref{supersolution_th}. Since the value function is both a viscosity 
+The proof is a direct consequence of Theorems \ref{subsolution_th} and \ref{supersolution_th}. Since the value function is both a viscosity 
 subsolution and a supersolution, it is a viscosity solution.
 
 
@@ -853,8 +855,8 @@ subsolution and a supersolution, it is a viscosity solution.
 This chapter contains the main topic of the thesis i.e. a model for pricing options under proportional transaction costs and when the 
 stock price follows an exponential Lévy process.
 
-This model is an extension of the celebrated model of \cite{DaPaZa93}, that we recall in section \ref{DPZ_sec}.
-This model can be identified in the category of singular stochastic problems presented in chapter \ref{Chapter4}. 
+This model is an extension of the celebrated model of \cite{DaPaZa93}, that we recall in Section \ref{DPZ_sec}.
+This model can be identified in the category of singular stochastic problems presented in Chapter \ref{Chapter4}. 
 
 Following the framework of \cite{Kab16},
 we extend the DPZ model  

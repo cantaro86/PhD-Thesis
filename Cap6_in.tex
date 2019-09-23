@@ -7,22 +7,22 @@
 \vspace{5em}
 
 
-This chapter presents the numerical methods for solving the option pricing problems with transaction costs presented in section (\ref{DPZ_j_sec}).
+This chapter presents the numerical methods for solving the option pricing problems with transaction costs presented in Section \ref{DPZ_j_sec}.
 The optimization problems (\ref{max_probl1}) and (\ref{minimization}) are solved by using the Markov chain approximation method. The same approach has been used 
 frequently in the literature in the case of diffusion processes, (see for instance \cite{HoNe89}, \cite{DaPaZa93}, \cite{Damgaard}, \cite{Mon04} and \cite{Pal15}). 
 We present results for the particular cases of diffusion process, Merton jump-diffusion and Variance Gamma process, although our scheme works for any Lévy process with finite variance. 
 We show that our numerical scheme, applied to the problem (\ref{minimization}), is monotone, consistent and stable, and that its solution converges to the viscosity solution of the  
 HJB eq. (\ref{HJB2}).
 Further analysis, such as numerical convergence rate and time complexity of the algorithm are presented.
-In the section \ref{full_eq_section} are presented numerical results obtained for the general problem (\ref{max_probl1}) where also the default feature is considered.
-In the final section \ref{multinomial_section} we apply the multinomial method introduced in chapter \ref{Chapter3} to the problem (\ref{minimization}).
+In the Section \ref{full_eq_section} are presented numerical results obtained for the general problem (\ref{max_probl1}) where also the default feature is considered.
+In the final Section \ref{multinomial_section} we apply the multinomial method introduced in Chapter \ref{Chapter3} to the problem (\ref{minimization}).
 
 
 
 
 \section{Markov chain approximation} \label{MC_section}
 
-To solve the problems (\ref{max_probl1}) and (\ref{minimization}) we use the Markov chain approximation method developed by \cite{Kushner}.
+In order to solve the problems (\ref{max_probl1}) and (\ref{minimization}) we use the Markov chain approximation method developed by \cite{Kushner}.
 The numerical technique for singular controls has been originally developed in the article of \cite{MaKu91}.
 The portfolio dynamics (\ref{porfolio_dynamics}) is approximated by a discrete state controlled Markov chain in discrete time. 
 The method consists in creating a backward recursive 
@@ -73,7 +73,7 @@ $m := \int_{\R} \bigl( e^z -1 \bigr) \nu(dz)$ and $\lambda \alpha := \int_{\R} z
  dX_t = \biggl( \mu - \frac{1}{2}\sigma^2 -m + \lambda \alpha \biggr) \,dt + \sigma dW_t + \int_{\R} z \tilde N(dt,dz). \\
 \end{equation}
 If the process has infinite activity $\lambda = \int_{\R} \nu(dz) = \infty$, 
-we can approximate the ``small jumps'' martingale component by a Brownian motion, following the arguments in section (\ref{VG_section2}), and get the equation 
+we can approximate the ``small jumps'' martingale component by a Brownian motion, following the arguments in Section \ref{VG_section2}, and get the equation 
 \begin{equation}\label{log_sde_inf_act2}
    dX_t = \biggl( \mu - \frac{1}{2} (\sigma^2 + \sigma_{\epsilon}^2) - \omega_{\epsilon} + \lambda_{\epsilon} \theta_{\epsilon}  \biggr) dt + \bigl( \sigma+\sigma_{\epsilon}\bigr) dW_t 
        + \int_{|z|\geq \epsilon} z \tilde N(dt,dz), 
@@ -488,7 +488,7 @@ $$ F\bigl(\bar \xx, \phi(\bar \xx), D\phi(\bar \xx), D^2\phi(\bar \xx), I(\bar \
 
 In this section we implement the algorithm [\ref{algo}] described in Section \ref{algorithm_Sect} and calculate the prices of European call options for the writer and the buyer.
 The prices are computed under the assumption that the stock log-price follows three different L\'evy processes: a Brownian motion, a Merton jump-diffusion and a Variance Gamma, with
-parameters in table \ref{tab:parameters}.
+parameters in Table \ref{tab:parameters}.
 \begin{table}[ht]
 \centering
  \begin{tabular}[t]{*{11}l}
@@ -523,7 +523,7 @@ Closed formula & PDE & Closed formula & PIDE & Closed formula & PIDE\\
 2.2463 & 2.2463 & 3.4776 & 3.4775 & 1.9870 & 1.9871\\
 \bottomrule
 \end{tabular}
-\caption{At the money prices with $S_0=K=15$ with parameters in tables \ref{tab:parameters}.}
+\caption{At the money prices with $S_0=K=15$ with parameters in Tab. \ref{tab:parameters}.}
 \label{tab:ATM_price}
 \end{table}%
 
@@ -545,13 +545,13 @@ Closed formula & PDE & Closed formula & PIDE & Closed formula & PIDE\\
   \begin{minipage}[b]{\linewidth}
   \centering
    \includegraphics[width=0.51\linewidth]{No_costs_VG.png}
-   \caption{Writer prices with zero transaction costs for diffusion (top-left), Merton (top-right) and VG (bottom) process. Parameters are in the table \ref{tab:parameters}.}
+   \caption{Writer prices with zero transaction costs for diffusion (top-left), Merton (top-right) and VG (bottom) process. Parameters are in the Table \ref{tab:parameters}.}
    \label{Fig1}
  \end{minipage}
 \end{figure}
 We compute the option prices using the standard 
-\emph{martingale pricing theory} presented in Chapter \ref{Chapter2}. In the table \ref{tab:ATM_price} we show the \emph{at the money} values obtained with the closed formula 
-and by solving the respective PIDE (see table \ref{tab:prices_BS_M_VG}). 
+\emph{martingale pricing theory} presented in Chapter \ref{Chapter2}. In the Table \ref{tab:ATM_price} we show the \emph{at the money} values obtained with the closed formula 
+and by solving the respective PIDE (see Table \ref{tab:prices_BS_M_VG}). 
 The PIDE prices are obtained by solving the equations (\ref{BS_PDE}), (\ref{Merton_PIDE}) and (\ref{VG_PIDE}).
 Of course, the parameter $\mu$ has not been used to compute the prices in Tab. \ref{tab:ATM_price}. 
 In Section (\ref{properties_model}), we prove with a numerical experiment that
@@ -563,26 +563,33 @@ In all the computations we use equal transaction costs for buying and selling, $
 
 
 In Fig. \ref{Fig1} we show that model prices replicate the PIDE prices for zero transaction costs and small values of $\gamma$. 
-The values of $\gamma$ in the table \ref{tab:parameters},
-are chosen very small\footnote{ In chapter 5 of \cite{GK99} are presented some common values for the risk aversion coefficient: $\gamma=0.3$, $\gamma=0.2$ and $\gamma=0.1$ 
+The values of $\gamma$ in the Table \ref{tab:parameters},
+are chosen very small\footnote{ In Chapter 5 of \cite{GK99} are presented some common values for the risk aversion coefficient: $\gamma=0.3$, $\gamma=0.2$ and $\gamma=0.1$ 
 for high, medium and low level of risk aversion respectively.} for this purpose. 
 An intuitive argument to justify this choice is that for $\gamma \to 0$, the utility function 
 can be approximated by a linear utility $\mathcal{U}(w) = 1 - e^{-\gamma w} \approx \gamma w$ and the investor can be considered risk neutral. 
 A rigorous argument can be found in \cite{BaSo98}, where the authors use asymptotic analysis for small values of $\theta_b$, $\theta_s$ and $\gamma$ to derive 
 a nonlinear PDE for the option price. For zero transaction costs this equation corresponds to the Black-Scholes PDE. 
 Their argument can be extended also to PIDEs.
+% \begin{figure}[t!]
+%  \begin{minipage}[b]{0.5\linewidth}
+%    \centering
+%    \includegraphics[width=\linewidth]{Trinomial_writer.png}
+% %   \caption{Writer prices for different transaction costs. The continuous line is the solution of the Black-Scholes PDE.}
+% %   \label{Fig4} 
+%  \end{minipage}
+%  \ \hspace{2mm} \hspace{3mm} \
+%  \begin{minipage}[b]{0.5\linewidth}
+%   \centering
+%    \includegraphics[width=\linewidth]{Trinomial_buyer.png}
+%  \end{minipage}
+%     \caption{Writer and buyer prices for different levels of transaction costs. The continuous line is the solution of the Black-Scholes PDE.}
+%    \label{Fig2}
+% \end{figure}
 \begin{figure}[t!]
- \begin{minipage}[b]{0.5\linewidth}
    \centering
-   \includegraphics[width=\linewidth]{Trinomial_writer.png}
-%   \caption{Writer prices for different transaction costs. The continuous line is the solution of the Black-Scholes PDE.}
-%   \label{Fig4} 
- \end{minipage}
- \ \hspace{2mm} \hspace{3mm} \
- \begin{minipage}[b]{0.5\linewidth}
-  \centering
-   \includegraphics[width=\linewidth]{Trinomial_buyer.png}
- \end{minipage}
+   \includegraphics[scale=0.5]{Trinomial_writer.png}
+   \includegraphics[scale=0.5]{Trinomial_buyer.png}
     \caption{Writer and buyer prices for different levels of transaction costs. The continuous line is the solution of the Black-Scholes PDE.}
    \label{Fig2}
 \end{figure}
@@ -611,34 +618,26 @@ Their argument can be extended also to PIDEs.
 
 \subsection{Diffusion results}
 
-In the figure \ref{Fig2} we show the diffusion writer and buyer prices with different
+In the Figure \ref{Fig2} we show the diffusion writer and buyer prices with different
 transaction costs.  
 We can see that a higher transaction cost corresponds to a higher writer price, while a lower transaction cost corresponds to a lower buyer price.
 In fact, the writer and buyer prices are respectively increasing and decreasing functions of the transaction cost, as already verified in \cite{ClHo97}.
-The prices figures \ref{Fig2}, are calculated with $N=1500$ time steps and $\bar M = N$. 
+The prices Figures \ref{Fig2}, are calculated with $N=1500$ time steps and $\bar M = N$. 
 In the Table \ref{tab:convergence} we show ATM option prices for different values of $N$, with $\theta_s = \theta_b = 0$ and different risk aversion coefficients.
-For $\gamma=0.0001$ and $N=3500$ the price is identical, up to the fourth decimal digit, to the original Black-Scholes price in table \ref{tab:ATM_price}. 
-Using the values in the table \ref{tab:convergence} it is possible to perform a \emph{numerical convergence analysis} (see section \ref{num_conv_analysis}).
+For $\gamma=0.0001$ and $N=3500$ the price is identical, up to the fourth decimal digit, to the original Black-Scholes price in Table \ref{tab:ATM_price}. 
+Using the values in the Table \ref{tab:convergence} it is possible to perform a \emph{numerical convergence analysis} (see Section \ref{num_conv_analysis}).
 We also present the execution times, from which we can estimate the asymptotic \emph{time complexity} of the algorithm. 
-In Section (\ref{algorithm_Sect}) we estimated a complexity of $\mathcal{O}(N^{4})$. From the table \ref{tab:convergence}, 
+In Section (\ref{algorithm_Sect}) we estimated a complexity of $\mathcal{O}(N^{4})$. From the Table \ref{tab:convergence}, 
 we obtain the exponent $\frac{\log(1291.3/910.8)}{\log(3500/3200)} = 3.9$, which is very close to the predicted value.  
 The algorithm is written in Matlab using vectorized operations, and runs on an Intel i7 (7th Gen) with Linux.
 
 \subsection{Merton results}
 
 \begin{figure}[t!]
- \begin{minipage}[b]{0.5\linewidth}
    \centering
-   \includegraphics[width=\linewidth]{writer_cost.png}
- %  \caption{Writer prices for different transaction costs. The continuous line is the solution of the Merton PIDE.}
- %  \label{Fig6} 
- \end{minipage}
- \ \hspace{2mm} \hspace{3mm} \
- \begin{minipage}[b]{0.5\linewidth}
-  \centering
-   \includegraphics[width=\linewidth]{Price_buyer.png}
- \end{minipage}
- \caption{Writer and buyer prices for different transaction costs. The continuous line is the solution of the Merton PIDE.}
+   \includegraphics[scale=0.5]{writer_cost.png}
+   \includegraphics[scale=0.5]{Price_buyer.png}
+   \caption{Writer and buyer prices for different transaction costs. The continuous line is the solution of the Merton PIDE.}
    \label{Fig3}
 \end{figure}
 In the Figure \ref{Fig3} we show the writer and buyer prices for the Merton process, with parameters in Tab. \ref{tab:parameters}.
@@ -650,7 +649,7 @@ However, the size of the Poisson jumps does not scale with $\Delta t$. So the nu
 to have $L\, h_x \geq B_1+B_2$. 
 
 In general, for a fixed $h_x$, the interval $[-B_1,B_2]$ should be chosen as big as possible. In practice, the choice of the truncation depends on the shape of the L\'evy measure.  
-The figures \ref{Fig13}, \ref{Fig14} show two examples with $[-B_1,B_2] = [\sqrt{\lambda} \xi,\sqrt{\lambda} \xi]$ and $[-B_1,B_2] = [-3\sqrt{\lambda} \xi,3\sqrt{\lambda} \xi]$ 
+The Figures \ref{Fig13}, \ref{Fig14} show two examples with $[-B_1,B_2] = [\sqrt{\lambda} \xi,\sqrt{\lambda} \xi]$ and $[-B_1,B_2] = [-3\sqrt{\lambda} \xi,3\sqrt{\lambda} \xi]$ 
 respectively. These choices correspond to 
 $\bar L = 17$ and $\bar L = 52$.
 For the Merton L\'evy measure (a scaled Normal distribution), a good choice is $[-B_1,B_2] = [-3\sigma_J,3\sigma_J]$, where  
@@ -660,6 +659,23 @@ It is well known that the integral over this region is about the $99.74\%$ of th
 Using this interval and the parameters in Tab. \ref{tab:parameters} we obtain the relation $\bar L \geq 5.86 \sqrt{N}$.
 In the calculation of the Merton prices in Fig. \ref{Fig3}, we used a discretization with $N=\bar M =100$, and $\bar L = 81$, 
 with a good balance between small computational time and small price error. 
+\begin{figure}[t!]
+   \centering
+   \includegraphics[scale=0.6]{Mert61_31.png}
+   \caption{Merton L\'evy measure computed using parameters in Tab. \ref{tab:parameters}, $N=100$ and $\bar L=17$. 
+   The domain $[-B_1,B_2] = [-\sqrt{\lambda} \xi,\sqrt{\lambda} \xi]$ has length $\bar L h_x \approx 2 \sqrt{\lambda} \xi$.}
+   \label{Fig13} 
+\end{figure}
+\begin{figure}[t!]
+   \centering
+   \includegraphics[scale=0.6]{Mert101_31.png}
+   \caption{Merton L\'evy measure computed using parameters in Tab. \ref{tab:parameters}, $N=100$ and $\bar L=52$. 
+   The domain $[-B_1,B_2] = [-3\sqrt{\lambda}\xi,3\sqrt{\lambda}\xi]$ has length $\bar L h_x \approx 6 \sqrt{\lambda} \xi$.}
+   \label{Fig14}
+\end{figure}
+
+The convergence Tab. \ref{tab:convergence2} shows different Merton prices for different values of $N$ and $\bar L$.
+Looking at the table from left to right, for each fixed $N$ it is possible to note how the truncation error decreases when $\bar L$ increases.
 \begin{table}[ht]
 \centering
  \begin{tabular}{*{6}l}
@@ -678,25 +694,6 @@ with a good balance between small computational time and small price error.
   \label{tab:convergence2}
 \end{table}
 
-The convergence Tab. \ref{tab:convergence2} shows different Merton prices for different values of $N$ and $\bar L$.
-Looking at the table from left to right, for each fixed $N$ it is possible to note how the truncation error decreases when $\bar L$ increases.
-\begin{figure}[t!]
- \begin{minipage}[b]{0.5\linewidth}
-   \centering
-   \includegraphics[width=\linewidth]{Mert61_31.png}
-   \caption{Merton L\'evy measure computed using parameters in Tab. \ref{tab:parameters}, $N=100$ and $\bar L=17$. 
-   The domain $[-B_1,B_2] = [-\sqrt{\lambda} \xi,\sqrt{\lambda} \xi]$ has length $\bar L h_x \approx 2 \sqrt{\lambda} \xi$.}
-   \label{Fig13} 
- \end{minipage}
- \ \hspace{2mm} \hspace{3mm} \
- \begin{minipage}[b]{0.5\linewidth}
-  \centering
-   \includegraphics[width=\linewidth]{Mert101_31.png}
-   \caption{Merton L\'evy measure computed using parameters in Tab. \ref{tab:parameters}, $N=100$ and $\bar L=52$. 
-   The domain $[-B_1,B_2] = [-3\sqrt{\lambda}\xi,3\sqrt{\lambda}\xi]$ has length $\bar L h_x \approx 6 \sqrt{\lambda} \xi$.}
-   \label{Fig14}
- \end{minipage}
-\end{figure}
 \begin{table}[ht]
 \centering
  \begin{tabular}{llll}
@@ -723,23 +720,15 @@ In Table \ref{tab:convergence3} we show several prices with increasing values of
 Given the high computational complexity of the algorithm, 
 it is difficult to present prices with bigger values of $N$,$\bar L$. For larger values of $N$ and smaller $\gamma$, we expect a convergence to the Merton price in Tab. 
 \ref{tab:ATM_price}. 
-The computational complexity in this case is expected to be $\mathcal{O}(N^{4.5})$. From the table \ref{tab:convergence3} we get 
+The computational complexity in this case is expected to be $\mathcal{O}(N^{4.5})$. From the Table \ref{tab:convergence3} we get 
 the exponent equal to $\frac{\log(1106.0/585.7)}{\log(200/175)} = 4.76$. Considering the errors, the results is not so different from the predicted value.
 
 \subsection{VG results}\label{num_sec_VG}
 
 \begin{figure}[t!]
- \begin{minipage}[b]{0.5\linewidth}
    \centering
-   \includegraphics[width=\linewidth]{VG_Writer.png}
-   %\caption{Writer prices for different transaction costs. The continuous line is the solution of the VG PIDE.}
-   %\label{Fig8} 
- \end{minipage}
- \ \hspace{2mm} \hspace{3mm} \
- \begin{minipage}[b]{0.5\linewidth}
-  %\centering
-   \includegraphics[width=\linewidth]{VG_Buyer.png}
- \end{minipage}
+   \includegraphics[scale=0.5]{VG_Writer.png}
+   \includegraphics[scale=0.5]{VG_Buyer.png}
  \caption{Writer and buyer prices for different transaction costs. The continuous line is the solution of the VG PIDE.}
  \label{Fig8}
 \end{figure}  
@@ -748,7 +737,7 @@ In the Figure \ref{Fig8} we show how the writer and buyer prices for the VG proc
 In these computations we used $N=\bar M = 150$ and $\bar L = 43$, such that the program can run in a reasonable computational time. 
 The integration region in \ref{VG_inf_gen} is restricted to $[-B_1,-\epsilon]\bigcup [\epsilon,B_2]$ with $\epsilon=1.5h_x$. The choice of $B_1$ and $B_2$ depends on the shape of the 
 L\'evy measure. 
-In Fig. \ref{Fig15} and \ref{Fig16} we show two examples for the VG L\'evy measure (using parameters in table \ref{tab:parameters}) with $N=150$, $h_x=0.0165$ and $N=1000$, $h_x=0.0064$. 
+In Fig. \ref{Fig15} and \ref{Fig16} we show two examples for the VG L\'evy measure (using parameters in Table \ref{tab:parameters}) with $N=150$, $h_x=0.0165$ and $N=1000$, $h_x=0.0064$. 
 The two L\'evy measures are normalized, such that the integral on the region $[-\infty,-\epsilon]\bigcup [\epsilon,+\infty]$ is equal to one. The 
 area underlying the functions on $[-B_1,-\epsilon]\bigcup [\epsilon,B_2]$ is highlighted for clarity.
 For $\bar L = 43$, we can see that in both cases it is possible to cover a very high percentage of the initial unrestricted region. We can conclude that, unlike the Merton
@@ -761,6 +750,34 @@ variance of the VG process and write $\sigma_X^2 = \bar \sigma^2 + \theta^2 \kap
 i.e. $h_X \bar L \geq \sigma_J$, where $\sigma_J^2 = \int_{[-\infty,-\epsilon]\bigcup [\epsilon,\infty]} z^2 \nu(dz)$. 
 Putting all together, the relation becomes $\bar L\geq \frac{\sigma_J}{\sigma_X} \sqrt{N}$, and replacing the values $\sigma_X = 0.2024$ and $\sigma_J=0.1916$ 
 we get $\bar L \geq 0.94 \sqrt{N}$.
+\begin{figure}[t!]
+   \centering
+   \includegraphics[scale=0.6]{VG43.png}
+   \caption{VG L\'evy measure computed using parameters in Tab. \ref{tab:parameters}, $N=150$ and $\bar L=43$. 
+   The domain $[-B_1,-\epsilon]\bigcup [\epsilon,B_2]$ has length $(\bar L-3) h_x$. The highlighted area is $99.9\%$ of the total area.}
+   \label{Fig15} 
+\end{figure}
+\begin{figure}[t!]
+  \centering
+   \includegraphics[scale=0.6]{VG1000.png}
+   \caption{VG L\'evy measure computed using parameters in Tab. \ref{tab:parameters}, $N=1000$ and $\bar L=43$. 
+   The domain $[-B_1,-\epsilon]\bigcup [\epsilon,B_2]$ has length $(\bar L-3) h_x$. The highlighted area is $98.9\%$ of the total area.}
+   \label{Fig16}
+\end{figure}
+
+In the Table \ref{tab:convergence4} we present several option prices computed with different values of $N$, but with fixed $\bar L$.
+In the case of the VG process it is more difficult to analyze the convergence results.
+This is due to the approximation (\ref{log_sde_inf_act2}) introduced to replace the infinite activity jump component with a Brownian motion. All the parameters
+in (\ref{sig_eps}) depend on $\epsilon$, and consequently on $N$.
+Within our discretization ($N=150$), we have $\sigma_{\epsilon} = 0.0654$, $\lambda_{\epsilon} = 10.01$. 
+With the parameters under consideration, we obtain an ATM price for zero transaction costs of 1.9821, which is very close the the PIDE price in Tab. \ref{tab:ATM_price}. 
+
+The convergence rate of the VG PIDE is quite low and this is reflected in our algorithm. We refer to \cite{CoVo05b} for a detailed error analysis.
+In order to solve the PIDE (using an implicit-explicit scheme) we constructed
+a grid with 13000 space steps of size $\delta x = 0.0004$ and 7000 time steps, and obtained the price in Tab \ref{tab:ATM_price}, 
+with an approximated activity $\lambda_{\epsilon} = 75$.
+Consequently, we expect to have good convergence results in our algorithm when $N\sim 10^4$.
+All the presented prices (Figures \ref{Fig8}) have thus a truncation error, which is adjusted by an accurate choice of the value of $\gamma$. 
 \begin{table}[ht]
 \centering
  \begin{tabular}{llll}
@@ -782,46 +799,14 @@ we get $\bar L \geq 0.94 \sqrt{N}$.
   \label{tab:convergence4}
 \end{table}
 
-In the Table \ref{tab:convergence4} we present several option prices computed with different values of $N$, but with fixed $\bar L$.
-In the case of the VG process it is more difficult to analyze the convergence results.
-This is due to the approximation (\ref{log_sde_inf_act2}) introduced to replace the infinite activity jump component with a Brownian motion. All the parameters
-in (\ref{sig_eps}) depend on $\epsilon$, and consequently on $N$.
-Within our discretization ($N=150$), we have $\sigma_{\epsilon} = 0.0654$, $\lambda_{\epsilon} = 10.01$. 
-With the parameters under consideration, we obtain an ATM price for zero transaction costs of 1.9821, which is very close the the PIDE price in Tab. \ref{tab:ATM_price}. 
-
-The convergence rate of the VG PIDE is quite low and this is reflected in our algorithm. We refer to \cite{CoVo05b} for a detailed error analysis.
-In order to solve the PIDE (using an implicit-explicit scheme) we constructed
-a grid with 13000 space steps of size $\delta x = 0.0004$ and 7000 time steps, and obtained the price in Tab \ref{tab:ATM_price}, 
-with an approximated activity $\lambda_{\epsilon} = 75$.
-Consequently, we expect to have good convergence results in our algorithm when $N\sim 10^4$.
-All the presented prices (Figures \ref{Fig8}) have thus a truncation error, which is adjusted by an accurate choice of the value of $\gamma$. 
-
-\begin{figure}[t!]
- \begin{minipage}[b]{0.5\linewidth}
-   \centering
-   \includegraphics[width=\linewidth]{VG43.png}
-   \caption{VG L\'evy measure computed using parameters in Tab. \ref{tab:parameters}, $N=150$ and $\bar L=43$. 
-   The domain $[-B_1,-\epsilon]\bigcup [\epsilon,B_2]$ has length $(\bar L-3) h_x$. The highlighted area is $99.9\%$ of the total area.}
-   \label{Fig15} 
- \end{minipage}
- \ \hspace{2mm} \hspace{3mm} \
- \begin{minipage}[b]{0.5\linewidth}
-  \centering
-   \includegraphics[width=\linewidth]{VG1000.png}
-   \caption{VG L\'evy measure computed using parameters in Tab. \ref{tab:parameters}, $N=1000$ and $\bar L=43$. 
-   The domain $[-B_1,-\epsilon]\bigcup [\epsilon,B_2]$ has length $(\bar L-3) h_x$. The highlighted area is $98.9\%$ of the total area.}
-   \label{Fig16}
- \end{minipage}
-\end{figure}
-
 From Tab. \ref{tab:convergence4} we can estimate the time complexity of this algorithm. The exponent is $\frac{\log(1236.0/654.2)}{\log(350/300)} = 4.12$, 
 indeed very close to the theoretical $\mathcal{O}(N^4)$. 
 
 
 \subsection{Numerical convergence analysis}\label{num_conv_analysis}
 
-In this section we want to analyze the convergence properties of the algorithm \ref{algo} considering the prices presented in 
-tables \ref{tab:convergence}, \ref{tab:convergence3} and \ref{tab:convergence4}. 
+In this section we want to analyze the convergence properties of the algorithm [\ref{algo}] considering the prices presented in 
+Tables \ref{tab:convergence}, \ref{tab:convergence3} and \ref{tab:convergence4}. 
 
 \begin{figure}[t!]
  \begin{minipage}[b]{0.5\linewidth}
@@ -853,21 +838,21 @@ tables \ref{tab:convergence}, \ref{tab:convergence3} and \ref{tab:convergence4}.
  \end{minipage}
 \end{figure} 
 
-Let us first consider the prices in table \ref{tab:convergence}, which are plotted in figure \ref{Fig_err1}. 
+Let us first consider the prices in Table \ref{tab:convergence}, which are plotted in Figure \ref{Fig_err1}. 
 We can see that for higher values of $\gamma$, not only the price increases, but the oscillations of the log-error increases as well.
 Let us assume the limit price $V^*$ is represented by the price at $N=3500$. 
 For computational reasons, i.e. the very high computational time, it was not possible to consider higher values. 
-Following the arguments in section \ref{numerical_concergence_section}, let us define the log-error $\log_2 (\varepsilon_N)$ with $\varepsilon_N = |V^N - V^*|$. 
+Following the arguments in Section \ref{numerical_concergence_section}, let us define the log-error $\log_2 (\varepsilon_N)$ with $\varepsilon_N = |V^N - V^*|$. 
 Then we consider $n = 0,1,...,6$ such that $N = 50\cdot2^n$.
-In figure \ref{Fig_err3} we plot the log-error for each value of $n$.
+In Figure \ref{Fig_err3} we plot the log-error for each value of $n$.
 For $\gamma=0.0001$ and $\gamma=0.001$, even if the line is not straight, it is possible to recognize a linear behavior.  
 In these cases it is possible to estimate the rate of convergence (the slope of the line is about $-1$ i.e. linear convergence).  
 For $\gamma=0.01$, given the irregular shape, it is hard to understand the functional behavior. 
 The value at $n=0$ can be excluded because it is probably an outlier originated by the rough grid resolution.
 In general, given the nonlinear nature of the optimization problem, we expect a nonlinear behavior of the convergence functional form.
 
-This is confirmed by the pictures \ref{Fig_err4} and \ref{Fig_err5}, 
-containing the prices obtained for the jump-diffusion Merton process in table \ref{tab:convergence3}, and the VG process in table \ref{tab:convergence4}.
+This is confirmed by the Pictures \ref{Fig_err4} and \ref{Fig_err5}, 
+containing the prices obtained for the jump-diffusion Merton process in Table \ref{tab:convergence3}, and the VG process in Table \ref{tab:convergence4}.
 The shape is more regular (here the number of steps $N$ is much smaller), but it is not a linear function. 
 The algorithm converges faster for higher values of $N$.
 
@@ -938,9 +923,9 @@ A few authors have already presented some results for the diffusion case, using 
 In \cite{Pal15} the authors propose a method to improve the performances of the Markov chain approximation method for the diffusion case. In \cite{Song14} the author propose
 a penalty method for the diffusion case of the 4 dimensional HJB equation, but the numerical results they present are not very clear.
 
-If we want to solve the problem (\ref{max_probl1}), we have to deal with a three dimensional state. In the variable reduction section \ref{variable_reduction}
+If we want to solve the problem (\ref{max_probl1}), we have to deal with a three dimensional state. In the variable reduction Section \ref{variable_reduction}
 we assumed a high value of credit availability $C$, such that the default probability can be ignored. 
-Here we do not ignore the default case, and compute option prices for investor with low credit availability.
+Here we do not ignore the default case, and compute option prices for an investor with low credit availability.
 We work with the original problem (\ref{max_probl1}) and derive a discrete time dynamic programming equation as done for (\ref{HJB3}).
 
 Let us indicate with $B_n := B(t^-_n)$ the value of cash immediately before the possible transaction.
@@ -963,7 +948,7 @@ We obtain the discrete DPE:
 \end{align}
 where all the expectations are conditioned on the current state $(B_n,Y_n,X_n)$.  We use the notation $V(t_n, b_h, y_j, x_i) = V^n_{h,j,i}$
 
-Following the arguments in section \ref{algorithm_Sect}, the computational complexity is 
+Following the arguments in Section \ref{algorithm_Sect}, the computational complexity is 
 $$\mathcal{O}\biggl( (N+1)\bigl[\frac{N(\bar L-1)}{2}+1 \bigr] \times \bar M \times \bar B \times \min\{\bar M, \bar B\} \biggr).$$
 The term $\min\{\bar M, \bar B\}$ is the computational complexity of the minimum search. 
 % $\sum_{n,h,j,i} \bigl( \# \varPi(t_n,b_h,y_j,x_i) \bigr)$
@@ -974,7 +959,7 @@ $$y_j-m h_y \in \Sigma_y \bigcap (b_h + e^{x_i}(1-\sigma_s)m h_y) \leq K_6 h_b .
 If we set $\bar L = \sqrt{N}$ and $\bar B = \bar M = N$ we have total computational complexity $\mathcal{O}(N^{5.5})$. 
 
 In the following analysis of the problem (\ref{max_probl1}), we assume that $\mathcal{U}(w) = -C$ for $w < -C$ and $\beta = r$. 
-In figure (\ref{Fig21}) it is possible to see the shape of the value function at terminal time for different values of $\gamma$.
+In Figure (\ref{Fig21}) it is possible to see the shape of the value function at terminal time for different values of $\gamma$.
 In the points $(b,y,x)$ such that $\mathcal{W}(b,y,x) = -C$ the function is not differentiable, and this may create some instabilities in the numerical computations. 
 %However this assumption will be useful in order to speed up the algorithm.
 
@@ -983,6 +968,14 @@ In the points $(b,y,x)$ such that $\mathcal{W}(b,y,x) = -C$ the function is not 
    \includegraphics[width=0.7\linewidth]{terminal_utility.png}
    \caption{Terminal time value functions with $\mathcal{U}(w) = -C$ for $w < -C$.}
    \label{Fig21} 
+\end{figure}
+\begin{figure}[t!]
+   \centering
+   \includegraphics[width=0.6\linewidth]{value_f_C5000.png}
+   \caption{Value function for the writer and value function with no option at time $t_0$ with $Y_0=0$ and $S_0=15$. Parameters in Tab. \ref{tab:parameters} and 
+   $\theta_b = \theta_s = 0$. 
+   The option price at $B_0=0$ is $p^w=3.48303858$.}
+   \label{Fig22} 
 \end{figure}
 
 \begin{algorithm}[H] 
@@ -1006,28 +999,27 @@ In the points $(b,y,x)$ such that $\mathcal{W}(b,y,x) = -C$ the function is not 
   \end{algorithmic}
 \end{algorithm} 
 
-We present numerical solution for a Merton process with values in table \ref{tab:Mert}. 
-The cash vector is is chosen such that $-20 \leq B_0 \leq 20$, and consider values of $N = \bar M = \bar B = 25$ and $\bar L = 11$, 
+We present numerical solutions for a Merton process with values in Table \ref{tab:parameters}. 
+The cash vector is chosen such that $-20 \leq B_0 \leq 20$, and consider values of $N = \bar M = \bar B = 25$ and $\bar L = 11$, 
 but even with these small values, the algorithm takes about 2 hours to run. 
-The algorithm is written in Python and run on a Linux machine with a i7 processor. In order to increase the speed of the program
-it is necessary to write the program in a low level language such as C of Fortran.
-\begin{figure}[t!]
-   \centering
-   \includegraphics[width=0.6\linewidth]{value_f_C5000.png}
-   \caption{Value function for the writer and value function with no option at time $t_0$ with $Y_0=0$ and $S_0=15$. The option price at $B_0=0$ is $p^w=3.48303858$.}
-   \label{Fig22} 
-\end{figure}
+The algorithm is written in Python and runs on a Linux machine with a i7 processor. 
+%In order to increase the speed of the program
+%it is necessary to write the program in a low level language such as C or Fortran.
 
-In the figure \ref{Fig22} we computed the value functions and the option prices for $C= 5000$.
+
+In the Figure \ref{Fig22} we computed the value functions and the option prices for $C= 5000$.
 The value functions are smooth and, as expected, the option price (defined in (\ref{writer}) ) corresponding to the horizontal distance between the value functions,
 is not affected too much by the initial wealth. 
 The high value of the credit availability $C$ 
-has to be intended as a low default probability. Therefore the problem leads back to the problem with 3 variables. And the numerical results confirm it.
+has to be intended as a low default probability. 
+Under this setting, this problem corresponds to the reduced problem with 3 variables (where the probability of default is ignored). 
+As expected, also the numerical results reproduce the results in Section \ref{numerical}. 
+The option price at $B_0=0$ is $p^w=3.48303858$, which is very close to the corresponding value in table \ref{tab:costs}.
 
 A different story happens when we choose a small credit availability. For example $C = 10$.\\ 
-In figure \ref{Fig23} we can see that the two value functions have the same value for $B_0 < -C$, because in this region the value function corresponds to the boundary conditions
+In Figure \ref{Fig23} we can see that the two value functions have the same value for $B_0 < -C$, because in this region the value function corresponds to the boundary conditions
 (remember that we are considering $Y_0=0$). 
-For higher values of $B_0$, the influence of the boundary conditions decreases and the value functions look like those in figure \ref{Fig22}.
+For higher values of $B_0$, the influence of the boundary conditions decreases and the value functions look like those in Figure \ref{Fig22}.
 \begin{figure}[t!]
  \begin{minipage}[b]{0.5\linewidth}
    \centering
@@ -1044,10 +1036,11 @@ For higher values of $B_0$, the influence of the boundary conditions decreases a
  \end{minipage}
 \end{figure}  
 
-It is important to stress that the grid resolution we used in these example is quite rough. The numerical results are still good, but it is not possible at the moment 
-to study the convergence properties of the algorithm. 
-Furthermore, although the value function is highly non-linear, we used linear interpolation to interpolate the missing points in the grid, and this may create further errors in the shape
-of the function and in the final result.
+It is important to stress that the grid resolution we used in these examples is quite low. 
+Although we this algorithm is able to replicate quite well the results obtained in the previous sections,  
+given its high complexity is not possible to study the convergence properties. 
+Furthermore, the value function is highly non-linear. In the algorithm we used a linear interpolation to obtain the missing points in the grid, 
+and this may create further errors when the discretization steps are large.
 
 \begin{figure}[t!]
  \begin{minipage}[b]{0.5\linewidth}
@@ -1066,29 +1059,31 @@ of the function and in the final result.
 \end{figure}  
 
 We conclude this section by testing the model properties as we did in Section \ref{properties_model}. 
-In figures \ref{Fig26} and \ref{Fig25} we present several values of option prices as function of the risk aversion and transaction costs respectively.  
+In Figures \ref{Fig26} and \ref{Fig25} we present several values of option prices as function of the risk aversion and transaction costs respectively.  
 We can see that the value of $B_0$ does not affect the shape of the curve, but only its height. 
-As we saw in figures \ref{Fig10} and \ref{Fig11}, the option price is an increasing function of the risk aversion and of the transaction costs.
+As we saw in Figures \ref{Fig10} and \ref{Fig11}, the option price is an increasing function of the risk aversion and of the transaction costs.
 
 
 \section{Multinomial method applied to the reduced problem}\label{multinomial_section}
 
-In section \ref{MC_section} we have seen that a possible technique to construct the Markov chain approximation is to discretize the infinitesimal generator of the continuous process
-by an explicit finite difference scheme.
-For Lévy processes with infinite activity, however, this technique cannot be used directly, and we need to consider the infinitesimal generator of the approximated 
-jump-diffusion process.
-In section \ref{numerical_concergence_section}, we have seen that with this approximation the convergence is very slowly.
+In Section \ref{MC_section} we have seen that a possible technique to construct the Markov chain approximation is to discretize the infinitesimal generator
+using an explicit finite difference scheme.
+For Lévy processes with infinite activity, however, this technique cannot be used directly because of the singularity of the Lévy measure.
+In Section \ref{VG_section2} we explained how to approximate the original process by a jump-diffusion process. 
+The associated infinitesimal generator can be discretized using the same approach developed for jump-diffusion generators in Section \ref{Markov_Chain2}.
+%However, in Section \ref{numerical_concergence_section}, we saw that the convergence of the (approximated) VG PIDE is very slow.
 
-In this section we use the multinomial approximation method presented in chapter \ref{Chapter3}, in place of the discretization proposed in this chapter.
+In this section, instead, we use the multinomial approximation method presented in Chapter \ref{Chapter3}.%, in place of the discretization proposed in Section \ref{Markov_Chain2}.
 With this method the total computational complexity is reduced because the number of branches is kept fixed.
-Although the method still relies on an approximation (the VG process is approximated by a general jump process with only the first four moments equal),
+Although the method still relies on an approximation (the VG process is approximated by a general jump process with only the first four moments corresponding to the moments of the 
+original VG process),
 the number of branches is fixed to $\bar L = 5$, and therefore the computational complexity is reduced by a factor $\sqrt{N}$.
-Recall that the complexity algorithm \ref{algo} is 
+Recall that the complexity of the algorithm [\ref{algo}] is 
 $$\mathcal{O}\biggl( (N+1)\bigl[\frac{N(\bar L-1)}{2}+1 \bigr] \times \bar M \times \bar M \biggr).$$
 Assuming $\bar M = N$ and $\bar L = 5$, the computational time is reduced to $\mathcal{O}(N^4)$. 
 \begin{table}[t!]
 %\begin{center}
-\begin{minipage}{0.5\linewidth}
+%\begin{minipage}{0.5\linewidth}
 \centering
  \begin{tabular}{||c|c||}
  \hline
@@ -1112,37 +1107,40 @@ Assuming $\bar M = N$ and $\bar L = 5$, the computational time is reduced to $\m
   \hline
     2000 & 1.97394872091  \\  \hline
   \end{tabular}
-  \caption{Convergence table for ATM VG prices with parameters in Tab \ref{tab:VG}, calculated with the multinomial method.}
+  \caption{Convergence table for ATM VG prices with parameters in Tab. \ref{tab:parameters}, calculated with the multinomial method.}
   \label{tab:convergence31}
-\end{minipage}
- \
- \begin{minipage}{0.5\linewidth}
-  %\centering
-   \includegraphics[width=\linewidth]{Multinom_1.png}
+%\end{minipage}
+\end{table}
+
+\begin{figure}[t!]
+% \begin{minipage}{0.5\linewidth}
+  \centering
+   \includegraphics[scale=0.6]{Multinom_1.png}
    \caption{Multinomial VG writer and buyer prices for different transaction costs.}
    \label{Fig37}
- \end{minipage}
+% \end{minipage}
 % \end{center}
-\end{table}
-We use the values in table \ref{tab:VG} and follow the discretization scheme proposed in chapter \ref{Chapter3}. 
-In table \ref{tab:convergence31} we reported prices for different values of $N$.
-In figure \ref{Fig37} we plot the log-error as a function of the logarithm of $N$. We can see that there is a linear relation 
-$\log_2(\varepsilon) \sim p \log_2(N)$ between them with a rate of convergence $p \approx 1.6$. 
-In the figures \ref{Fig32} and \ref{Fig33} we show how good are the prices computed with the multinomial method. 
+\end{figure}  
+In the numerical computations we used the VG parameters in Table \ref{tab:parameters}. 
+The discretization scheme is implemented according to the method proposed in Chapter \ref{Chapter3} i.e. the space step has size given by Eq. (\ref{alphat}) and 
+the transition probabilities are obtained by (\ref{probabilities2}). 
+In Table \ref{tab:convergence31} we reported prices for different values of $N$.
+Using these prices, in Figure \ref{Fig37} we plot the log-error as a function of the logarithm of $N$. We can see that there is a linear relation 
+$\log_2(\varepsilon) \sim p \log_2(N)$ between them, with a rate of convergence $p$ which is about $p \approx 1.6$. 
+In Figures \ref{Fig32} and \ref{Fig33} we present numerical results obtained using the multinomial method for different levels of transaction costs. 
 \begin{figure}[t!]
- \begin{minipage}[b]{0.5\linewidth}
+% \begin{minipage}[b]{0.5\linewidth}
    \centering
-   \includegraphics[width=\linewidth]{Multi_VG_zerocosts.png}
-   \caption{The multinomial VG prices for zero transaction costs agree with the solution of the VG PIDE (continuous line).}
+   \includegraphics[scale=0.6]{Multi_VG_zerocosts.png}
+   \caption{Comparison of multinomial VG prices with zero transaction costs and the solution of the VG PIDE (continuous line).}
    \label{Fig32} 
- \end{minipage}
- \ \hspace{2mm} \hspace{3mm} \
- \begin{minipage}[b]{0.5\linewidth}
-  %\centering
-   \includegraphics[width=\linewidth]{Multi_VG_costs.png}
-   \caption{Multinomial VG writer and buyer prices for different transaction costs.}
+% \end{minipage}
+\end{figure}
+\begin{figure}[t!]
+  \centering
+   \includegraphics[scale=0.6]{Multi_VG_costs.png}
+   \caption{Multinomial VG writer and buyer prices for different levels of transaction costs.}
    \label{Fig33}
- \end{minipage}
 \end{figure}  
 
 
@@ -1150,18 +1148,14 @@ In the figures \ref{Fig32} and \ref{Fig33} we show how good are the prices compu
 
 
 
-\section{Final conclusions}
+\section{Chapter conclusions}
 
+\todo{Not ready!! Still work in progress}
 
-
-The main objective of the thesis is to develop a new model for pricing options in presence of proportional transaction costs.
-The main difference between this work and the previous works in the literature is that we considered a stock
-dynamics that follows a generic exponential Lévy process. 
-
-In chapter \ref{Chapter5} we derived the general HJB equation of the model, eq. (\ref{HJB1}), which is 
+In Chapter \ref{Chapter5} we derived the general HJB equation of the model, eq. (\ref{HJB1}), which is 
 a complicated equation with three state variables and a time variable. 
-Therefore we opted to simplify the problem by reducing the number of variables, obtaining the simpler HJB Eq. (\ref{HJB2}).
-In the end of chapter \ref{Chapter6} we developed the algorithm [\ref{algo2}] to solve the maximization problem (\ref{max_probl1}) associated to the HJB eq. (\ref{HJB1})
+After that, we decided to simplify the problem by reducing the number of variables, and we obtained the simpler HJB Eq. (\ref{HJB2}).
+In the end of Chapter \ref{Chapter6} we developed the algorithm [\ref{algo2}] to solve the maximization problem (\ref{max_probl1}) associated to the HJB eq. (\ref{HJB1})
 and presented numerical results. 
 
 However, more emphasis has been given to the reduced problem (\ref{minimization}), which is also the main topic of the paper \cite{Canta}.
@@ -1175,30 +1169,5 @@ The Brownian motion and the Merton process can be discretized directly,
 while the VG process needs to be approximated to remove the infinite activity jump component.
 Due to this approximation, the algorithm [\ref{algo}] has slower convergence when applied to the VG dynamics.
 Using numerical experiments, we confirmed some features of the model such as the dependency degree of the price on the transaction costs, the risk aversion and the drift. 
-In the end of chapter \ref{Chapter6} we also computed the option prices by using the multinomial method, i.e. we derived the transition probabilities 
-from the approximation introduced in chapter \ref{Chapter3}. 
-
-To conclude, we want to mention some possible future improvements in this area of research. 
-An interesting direction can be the development of a more efficient numerical method for the HJB equations (\ref{HJB2}) and in particular (\ref{HJB1}), which has a hige time complexity.
-There are several approaches in the literature to solve variational inequalities, such as the policy iteration method of \cite{FoHu12a}, or the penalty method of 
-\cite{FoHu12b}, \cite{Song14}.
-We argue that an implicit/explicit (IMEX), with the possible help of the Fast-Fourier-Transform for evaluating the integral term, (as in \cite{AnAn00} for instance) 
-can increase the efficiency of the numerical method.
-Also, using a non-uniform grid as in \cite{Haentjens13}, can help to improve the efficiency 
-and reduce the computational cost for both the differential and the integral part.
-
-
-
-\section*{Acknowledgements}
-
-First of all, I want to thank my PhD supervisors Prof. João Guerra and Prof. Manuel Guerra for the
-patience they had with me, for the useful discussions and the many emails we have exchanged in recent years.
-I would like to express my thanks to Prof. Maria do Rosário Grossinho, who gave me the opportunity to start
-this doctoral program together with the European network STRIKE \url{http://www.itn-strike.eu/} and who has always 
-given me positive energy.
-Last, but not least, I want to thank my family and my friends Pedro Polvora, Yaser Faghan Kord, Radoslav Vulkov, 
-Daniele Polencic and Alessandro Scalia for their never-ending support.
-
-This research was supported by the European Union in the FP7-PEOPLE-2012-ITN project STRIKE - 
-Novel Methods in Computational Finance (304617), and by CEMAPRE
-MULTI/00491, financed by FCT/MEC through Portuguese national funds.
+In the end of Chapter \ref{Chapter6} we also computed the option prices by using the multinomial approach, i.e. we derived the transition probabilities 
+from the approximation introduced in Chapter \ref{Chapter3}. 

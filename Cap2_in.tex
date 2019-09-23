@@ -23,11 +23,11 @@ Because of the $\max$ operator in the payoff, the options are nonlinear instrume
 
 Determining the correct price of an option is not a simple task. 
 It requires a stochastic model for the dynamics of the underlying price and several assumptions on the market.
-The solution of this problem has been presented for the first time in the celebrated paper of \cite{BS73}. 
-The Black-Scholes (BS) model is built on the concept of an \textbf{ideal market}, where all the following 
+The solution of this problem has been presented for the first time in the celebrated paper \cite{BS73}. 
+The standard Black-Scholes (BS) model is built on the concept of \textbf{ideal market}, where all the following 
 conditions are fulfilled:
 \begin{enumerate}
- \item \emph{There are no arbitrage possibilities (see [\ref{arbitrage_def}] below).}
+ \item \emph{There are no arbitrage possibilities} (see Definition \ref{arbitrage_def}).
  \item \emph{Exists a risk free asset $B$ with dynamics
         \begin{equation}
          dB_t = r_t B_t dt
@@ -43,7 +43,9 @@ conditions are fulfilled:
 \item \emph{The stock does not pay dividends.}	
 \end{enumerate}
 
-By relaxing one or more of the previous assumptions, it is possible to develop new models that usually are generalizations of the BS model. 
+This is a modern formulation, taken from \cite{Musiela}, of the original assumptions presented in the article \cite{BS73}.
+By relaxing one or more of the previous hypothesis, it is possible to develop new models that usually are generalizations of the standard BS model. 
+For instance, it is common to relax the hypothesis (7) in order to extend the model to stocks that pay dividends. In this thesis we will not do it.
 
 The hypothesis of \emph{frictionless market} implies that the cost of trading is zero. This means that: all investors are price takers (no market impact), 
 all parties have the same access to the relevant information, there are no transaction costs or commissions, and all assets are
@@ -135,7 +137,7 @@ is represented by the \emph{risk neutral} pricing rule
 \end{equation}
 where $\Q$ is an EEM.
 
-The concept of arbitrage is related with the existence of an equivalent martingale measures through the \textbf{first fundamental theorem of asset pricing}.
+The concept of arbitrage is related with the existence of an equivalent martingale measure through the \textbf{first fundamental theorem of asset pricing}.
 \begin{Theorem}
  A market model does not admit arbitrage if and only if there exists a risk-neutral probability measure. 
 \end{Theorem}
@@ -180,7 +182,7 @@ notion of martingale measure.
 In the case where the stock process has unbounded jumps, which is the case of most exponential Lévy models, a rigorous formulation is quite difficult
 and we refer to \cite{ChSh02} and \cite{Kabanov01} for more information.
 
-The ideal market assumed by Black-Scholes is complete (see Theorem 8.3 of \cite{Bjork}). 
+The ideal market assumed by Black and Scholes is complete (see Theorem 8.3 of \cite{Bjork}). 
 However, the majority of the models used in finance are not.
 
 In this thesis we analyze a market model that is not complete. The introduction of proportional transaction costs prevents to trade continuously in time  
@@ -192,7 +194,7 @@ except for some particular cases i.e. when the driving noise is a Brownian motio
 In a complete market there is only one arbitrage-free way to price a financial derivative, and the price is defined as the cost to replicate the derivative's payoff.
 In an incomplete market, instead, the notion of perfect replication does not exist. 
 Therefore the hedging strategy will only approximate the payoff of the derivative. Different ways to measure the risk of trading lead to different 
-ways to hedge the derivative. In this thesis we focus on the approach based on the concept of \emph{utility maximization} (see chapter \ref{Chapter5}).
+ways to hedge the derivative. In this thesis we focus on the approach based on the concept of \emph{utility maximization} (see Chapter \ref{Chapter5}).
 
 In the following of this chapter we consider a frictionless market where the stock price follows an exponential Lévy process. 
 In in such a market, the class of EMM is infinite, 
@@ -200,7 +202,7 @@ i.e. there are infinite EMMs such that the discounted stock prices are martingal
 This means that for every financial derivative there are infinite prices satisfying the condition of no-arbitrage. 
 
 In order to overcome this problem, there are several methods to select the best EMM to use in the pricing formula (\ref{derivative_price}) (
-see \cite{Cont}, chapter 10).
+see \cite{Cont}, Chapter 10).
 However, the best approach is to derive the model parameters directly from the prices of derivatives (usually European call and put options with different strikes and maturities) 
 already quoted in the market.
 The process of choosing the risk neutral parameters for a model that reproduces the prices in the market is called \emph{model calibration}.
@@ -231,7 +233,7 @@ For functions with time dependence, e.g. $\phi : [0,T] \times \R^n \to \R$, we m
  \mathcal{C}_p \bigl([0,T] \times \R^n \bigr) = \left\{  \phi \in C^0\bigl( [0,T] \times \R^n \bigr) : \sup_{[0,T] \times \R^n} 
  \frac{|\phi(t,x)|}{1+|x|^p} <\infty   \right\}. 
 \end{equation}
-We consider only the case $p=2$, because we are working with underlying processes with finite second moment. (see assumption \textbf{EM} in section \ref{AssumptionEM} ).
+We consider only the case $p=2$, because we are working with underlying processes with finite second moment. (see assumption \textbf{EM} in Section \ref{AssumptionEM} ).
 
 The following theorem will be useful.
 \begin{Theorem}
@@ -261,7 +263,7 @@ In Chapter \ref{Chapter1} we derived the infinitesimal generator for an exponent
 parameter $\mu$ in (\ref{mu}).
 We can repeat the same computation that led to Eq. (\ref{exp_sde}) for the process $L_t = X_t + rt$ and define the new parameter
 \begin{equation}\label{mu2}
- \mu := r + b + \frac{1}{2}\sigma^2 + \int_{\R} ( e^{z} - 1 -z1_{|z|<1}) \nu(dz)
+ \mu := r + b + \frac{1}{2}\sigma^2 + \int_{\R} ( e^{z} - 1 -z\mathbbm{1}_{|z|<1}) \nu(dz)
 \end{equation}
 Using the condition (\ref{martingale_b}) we obtain the fundamental relation
 \begin{equation}\label{mu=r}
@@ -281,10 +283,10 @@ For $f \in C^{2}(\R^+) \bigcap \mathcal{C}_2(\R^+)$, the associated infinitesima
 The derivative pricing function $V(t,s)$ with $t \in [0,T]$ and $s\in \R^+$, can be obtain by solving a pricing PIDE according to the following theorem.
 \begin{Theorem}
  Let us consider an arbitrage free market, where the underlying stock price follows the exponential Lévy process (\ref{ELM2}). 
- Let also assume that $V(t,s) \in C^{1,2}([t_0,T] \times \R^+) \bigcap \mathcal{C}_2([t_0,T] \times \R^+)$,
- $\frac{\partial V}{\partial t}$ and $\frac{\partial V}{\partial s}$ are in $\mathcal{C}_1([t_0,T] \times \R^+)$
- and $\frac{\partial^2 V}{\partial s^2}$ is bounded.
- The payoff $\Phi(\cdot)$ is such that $\E[\Phi(S_T)]< \infty$. 
+ Let also assume that $V(t,s) \in C^{1,2}([t_0,T] \times \R^+)$ and the derivatives   %\bigcap \mathcal{C}_2([t_0,T] \times \R^+)$,
+ $\frac{\partial V}{\partial t}$, $\frac{\partial V}{\partial s}$ %are in $\mathcal{C}_1([t_0,T] \times \R^+)$
+ and $\frac{\partial^2 V}{\partial s^2}$ are bounded.
+ % The payoff $\Phi(\cdot)$ is such that $\E[\Phi(S_T)]< \infty$. 
  Therefore $V(t,s)$ satisfies the PIDE
 \begin{align}\label{derivative_PIDE}
  & \frac{\partial V(t,s)}{\partial t} + \LL^{S} V(t,s) -r V(t,s) = 0 \\
@@ -301,20 +303,51 @@ where $\LL^S$ is the infinitesimal generator in (\ref{RN_inf_gen}).
  \end{equation*}
  We can write $D(0,\tau) V(\tau,S_{\tau}) = D(0,t) V(t,s) + \int_t^{\tau} d\bigl(D(t,u) V(u,S_u)\bigr) du$. 
  Using the It\=o product rule (\ref{Ito_product}) we get:
- $$ \E^{\Q} \biggl[ \int_t^{\tau} e^{-r(u-t)} \biggl( \frac{\partial V(u,S_u)}{\partial u} + \LL^{S} V(u,S_u) -r V(u,S_u) \biggr) du \bigg| S_t=s \biggr] = 0, $$
- where all the martingales terms have zero expectation. 
- In the last step we also introduced the explicit expression of the discount factor (\ref{discount_factor}) with constant $r$.
+ \begin{align}\label{proof_Cont_V}
+  0 =& \; \E^{\Q} \biggl[ \int_t^{\tau} e^{-r(u-t)} \biggl( \frac{\partial V(u,S_{u^-})}{\partial u} + \LL^{S} V(u,S_{u^-}) -r V(u,S_{u^-}) \biggr) du \bigg| S_t=s \biggr] \\ \label{term1}
+     & + \E^{\Q} \biggl[ \int_t^{\tau} e^{-r(u-t)} \frac{\partial V(u,S_{u^-})}{\partial s} \sigma S_{u^-} \; dW_u \; \bigg| S_t=s \biggr] \\ \label{term2}
+     & + \E^{\Q} \biggl[ \int_t^{\tau} e^{-r(u-t)} \int_{\R} \bigl( V(u,S_{u^-}e^z) - V(u,S_{u^-}) \bigr) \tilde N(du,dz) \; \bigg| S_t=s \biggr]
+ \end{align}
+ where we introduced the explicit expression of the discount factor (\ref{discount_factor}) with constant $r$.
+ The terms inside the expectations in the second and third lines are martingales only if their expectations are finite.
+ Let us look at the integrability condition for the term (\ref{term1}). 
+ \begin{align*}
+& \E^{\Q} \biggl[ \int_t^{\tau} \big| e^{-r(u-t)} \frac{\partial V(u,S_{u^-})}{\partial s} \sigma S_{u^-} \big|^2 du \; \bigg| S_t=s \biggr] \\
+& \leq \sigma^2 C^2\, \E^{\Q} \biggl[ \int_t^{\tau} \big| e^{-r(u-t)} S_{u^-} \big|^2 du \; \bigg| S_t=s \biggr] \\
+& < \sigma^2 C^2\, \E^{\Q} \biggl[ \int_t^{T} \bigg| \sup_{u\in [t,T]} e^{-r(u-t)} S_{u^-} \bigg|^2 du \; \bigg| S_t=s \biggr] \\
+& = \sigma^2 C^2 (T-t)\, \E^{\Q} \biggl[ \bigg| \sup_{u\in [t,T]} e^{-r(u-t)} S_{u^-} \bigg|^2  \; \bigg| S_t=s \biggr] \\
+& \leq \, 4 \sigma^2 C^2 (T-t)\, \E^{\Q} \biggl[ \big| e^{-r(T-t)} S_{T^-} \big|^2  \; \bigg| S_t=s \biggr] \\
+& = 4 \, \sigma^2 C^2 (T-t) e^{-2r(T-t)}\, \E^{\Q} \bigl[  S_{T^-}^2  \; \big| S_t=s \bigr] < \infty,
+ \end{align*}
+ where in the second line we used the fact that the partial derivative is bounded by a constant $C$. 
+ In the third line we considered the integral over $[t,T]$, which is greater than the integral over $[t,\tau]$ almost surely, since the integrand is positive. 
+ We also introduce the supremum of the martingale term $e^{-r(u-t)} S_{u^-}$.  
+ In the fifth line we used the Doob martingale inequality\footnote{ 
+ The Doob martingale inequality says that if $\{X_t\}_{t\in[0,T]}$ is a martingale, then $$\E \bigl[ |\sup_{t\in [0,T]} X_t |^2 \bigr] 
+ \leq 4 \E\bigl[ |X_T|^2 \bigr].$$} and in the last line we used the finite variance assumption.\\
+ The term (\ref{term2}) is well defined if
+ \begin{align*}
+& \E^{\Q} \biggl[ \int_t^{\tau} \int_{\R} \bigg| e^{-r(u-t)} \bigl( V(u,S_{u^-}e^z) - V(u,S_{u^-}) \bigr) \bigg|^2 \nu(dz) dt \; \bigg| S_t=s \biggr]  \\
+& \leq \E^{\Q} \biggl[ \int_t^{\tau} \int_{\R} \bigg| e^{-r(u-t)} C S_{u^-} (e^z-1) \bigg|^2 \nu(dz) dt \; \bigg| S_t=s \biggr]  \\
+& \leq C^2 \int_{\R} (e^z-1)^2 \nu(dz) \; \E^{\Q} \biggl[ \int_t^{T} \bigg| e^{-r(u-t)} S_{u^-} \bigg|^2 dt \; \bigg| S_t=s \biggr] < \infty. 
+\end{align*}
+In the second line we used the Lipschitz property of $V(t,s)$\footnote{A $C^1(\R)$ function $f$ with bounded derivative is Lipschitz. 
+Let $a,b \in \R$ with $a<b$, by the mean value theorem there exists $c\in [a,b]$ such that $f(b)-f(a) = f'(c) (b-a)$. Using $|f'(c)|\leq C$, we obtain the Lipschitz condition
+$$ f(b)-f(a) \leq C (b-a). $$}.
+In the third line, the integral $\int_{\R} (e^z-1)^2 \nu(dz)$ is finite, as we have already verified in Section \ref{Section_ELM33}.
+In order to verify that the expectation is also finite, we can apply the same argument used above i.e. considering the supremum and the Doob martingale inequality.
  
- By definition, the terms inside the integral are all continuous and are all dominated by some quadratic functions that do not depend on $\tau$.
+ Now let us consider (\ref{proof_Cont_V}).
+ By definition, the terms inside the integral are all continuous and are all dominated by some polynomial functions of order $p\in[0,2]$ that do not depend on $\tau$.
  We can divide both sides by $(\tau-t)$ and take the limit for $\tau \to t$. Using the mean value theorem, there exists $u \in [t,\tau]$ such that 
  $$ \lim_{u \to t} \E^{\Q} \biggl[ e^{-r(u-t)} \biggl( \frac{\partial V(u,S_u)}{\partial u} + \LL^{S} V(u,S_u) -r V(u,S_u) \biggr) \bigg| S_t=s \biggr] = 0. $$
  When $\tau\to t$ also $u\to t$. Thanks to the dominated convergence theorem we can take the limit inside the expectation and conclude the proof.
 \end{proof}
 In practice, the hypothesis of the theorem above are rarely satisfied. 
 The payoff $\Phi$ is usually not in the domain of $\LL$ and sometimes is not even differentiable, e.g. call/put options.   
-For this reasons, the option price should be considered a solution of (\ref{derivative_PIDE}) in a weaker sense. 
+For these reasons, the option price should be considered a solution of (\ref{derivative_PIDE}) in a weaker sense. 
 The notion of \emph{viscosity solution} allows to cover this case.
-We will introduce it in section (\ref{viscosity_solution_section}). 
+We will introduce it in Section \ref{viscosity_solution_section}. 
 For a complete exposition on this topic, we refer to \cite{CoVo05}.  The authors prove that, in a general setting,
 option prices in exponential Lévy models correspond to viscosity solutions of the pricing PIDE.
 
@@ -513,7 +546,7 @@ In the next sections let us discuss about the application of the IMEX scheme to 
 \begin{figure}[t]
    \centering
    \includegraphics[width=0.8\linewidth]{BS_surface.jpg}
-   \caption{Call option surface obtained by solving the Black-Scholes PDE. It is computed with the parameters in table \ref{tab:BS}}
+   \caption{Call option surface obtained by solving the Black-Scholes PDE. It is computed with the parameters in Table \ref{tab:BS}}
    \label{BS_surface} 
 \end{figure}
 
@@ -547,7 +580,7 @@ and write it in matrix form:
 \begin{figure}[t]
    \centering
    \includegraphics[width=0.7\linewidth]{BS_call.png}
-   \caption{Price of a call option at time $t=0$ with parameters in table \ref{tab:BS}.}
+   \caption{Price of a call option at time $t=0$ with parameters in Table \ref{tab:BS}.}
    \label{BS_call}
 \end{figure}  
 $$
@@ -610,14 +643,14 @@ $K$ & $T$ & $r$ & $\sigma$ \\
 \label{tab:BS}		
 \end{table}
 
-Using the parameters in table (\ref{tab:BS}) we can solve the linear system and plot the solution in Figures \ref{BS_surface} and \ref{BS_call}.
+Using the parameters in Table \ref{tab:BS} we can solve the linear system and plot the solution in Figures \ref{BS_surface} and \ref{BS_call}.
 
 
 
 \subsection{Merton PIDE}
 
 
-We presented the Merton model in section (\ref{Merton_section}). 
+We presented the Merton model in Section \ref{Merton_section}. 
 Let us recall that the jump component of the Merton process has finite activity, $\nu(\R) = \lambda < \infty$.
 Following Eq. (\ref{PIDE_log}), the Merton PIDE in log-variables has the following form: 
 \begin{align}\label{Merton_PIDE}
@@ -656,7 +689,7 @@ The discretized equation using the IMEX scheme becomes:
 Rearranging the terms: 
 \begin{align*}
 \underbrace{ V^{n+1}_{i} + \Delta t \sum_{k = -K_1}^{K_2} \nu_k V^{n+1}_{i+k} }_{\tilde V^{n+1}_i} &= 
-	V^{n}_{i} \biggl( 1 + (r+\hat \lambda)\Delta t + \sigma^2 \frac{\Delta t}{h_x^2} \biggr)  \\
+	V^{n}_{i} \biggl( 1 + (r+\hat \lambda)\Delta t + \sigma^2 \frac{\Delta t}{\Delta x^2} \biggr)  \\
 & + V^{n}_{i+1} \biggl( -(r -\frac{1}{2}\sigma^2 -\hat m )\frac{\Delta t}{2 \Delta x} +
 \frac{1}{2}\sigma^2 \frac{\Delta t}{\Delta x^2}  \biggr)  \\
 & + V^{n}_{i-1} \biggl( (r -\frac{1}{2}\sigma^2 - \hat m)\frac{\Delta t}{2 \Delta x} + 
@@ -682,7 +715,7 @@ where $\mathcal{D}$ is the tridiagonal matrix formed by the coefficients $a,b,c$
    \centering
    \includegraphics[width=0.7\linewidth]{Mert-BS_same_var.png}
    \caption{Comparison of prices of a call option at time $t=0$ for Merton and BS models with same standard deviation. The Merton parameters are those in the second line of
-   the table \ref{tab:Mert}, while the diffusion parameter $\sigma$ for the BS prices is chosen such that the variances of the two processes are the same. }
+   the Table \ref{tab:Mert}, while the diffusion parameter $\sigma$ for the BS prices is chosen such that the variances of the two processes are the same. }
    \label{BS_Merton2} 
  \end{figure}
 
@@ -701,16 +734,16 @@ where $\mathcal{D}$ is the tridiagonal matrix formed by the coefficients $a,b,c$
   \caption{Option's parameters and Merton process parameters.}
   \label{tab:Mert}
 \end{table}
-In Figure \ref{BS_Merton} we computed the BS and Merton curves using the parameters in tables \ref{tab:BS} and \ref{tab:Mert}. 
+In Figure \ref{BS_Merton} we computed the BS and Merton curves using the parameters in Tables \ref{tab:BS} and \ref{tab:Mert}. 
 The Merton curve is everywhere higher than the BS curve. 
 This is a consequence 
 of the additional jump component in the Merton process that increases the total variance. 
 The two processes have same diffusion component $\sigma$, 
 but the Merton process has total variance $\sigma^2 + \lambda \xi^2 +\lambda \alpha^2$, while the diffusion process has only variance $\sigma^2$.
 
-In order to investigate the effect of the heavy tails on the shape of the option curve, let us consider the second set of parameters in table \ref{tab:Mert}. 
+In order to investigate the effect of the heavy tails on the shape of the option curve, let us consider the second set of parameters in Table \ref{tab:Mert}. 
 Under these parameters, the Merton distribution has a very high kurtosis ($\kappa = 97.32$). 
-In figure \ref{BS_Merton2} we compare the Merton curve with a BS curve computed using the volatility parameter 
+In Figure \ref{BS_Merton2} we compare the Merton curve with a BS curve computed using the volatility parameter 
 $\sigma_{BS} = \sqrt{\sigma^2 + \lambda \xi^2 +\lambda \alpha^2 }$. 
 In this way, the differences in the shape are only due to the kurtosis, since both processes have zero skewness and equal mean and variance. 
 
@@ -800,7 +833,7 @@ Using this generator and equations (\ref{derivative_PIDE}) and (\ref{mu=r}), the
 \begin{figure}[!t]
    \centering
    \includegraphics[width=0.7\linewidth]{VG-BS_theta_negative.png}
-   \caption{\textbf{Negative skewness:} Comparison of call option curves at $t=0$ for VG and BS models. The VG parameters are in table (\ref{tab:VG}). The BS curve is computed with a 
+   \caption{\textbf{Negative skewness:} Comparison of call option curves at $t=0$ for VG and BS models. The VG parameters are in Table (\ref{tab:VG}). The BS curve is computed with a 
    $\sigma_{BS} = \sqrt{\bar\sigma^2 + \theta^2 \kappa}$, such that the two processes have same variance.}
    \label{BS_VG} 
  \end{figure}
@@ -830,14 +863,14 @@ In this way, only the features coming from skewness and kurtosis should pop up.
 Under this choice of parameters the VG process has standard deviation equal to $0.37$, skewness (in absolute value) $3.05$ and kurtosis $14.38$.
 The sign of the skewness is determined by the sign of the parameter $\theta$.
 
-In figures \ref{BS_VG} and \ref{BS_VG2} we compare the BS and VG curves.
+In Figures \ref{BS_VG} and \ref{BS_VG2} we compare the BS and VG curves.
 This example wants to show how different the shape of the VG curves can be by modifying the skewness parameter.
 
 The reader can consult \cite{Schoutens} for further information on Merton and VG processes and on general numerical tests and calibration of exponential Lévy processes. 
 \begin{figure}[!t]
    \centering
    \includegraphics[width=0.7\linewidth]{VG-BS_theta_positive.png}
-   \caption{\textbf{Positive skewness:} Comparison of call option curves at $t=0$ for VG and BS models. The VG parameters are in table (\ref{tab:VG}). The BS curve is computed with a 
+   \caption{\textbf{Positive skewness:} Comparison of call option curves at $t=0$ for VG and BS models. The VG parameters are in Table \ref{tab:VG}. The BS curve is computed with a 
    $\sigma_{BS} = \sqrt{\bar\sigma^2 + \theta^2 \kappa}$, such that the two processes have same variance.}
    \label{BS_VG2} 
 \end{figure}
@@ -857,18 +890,18 @@ Merton  &  3.477645  & 3.477468 \\
 VG      &  1.987006  & 1.987089 \\
 \bottomrule
 \end{tabular}
-\caption{Option prices with $S_0=K=15$ and $T=1$. Black Scholes parameters are in tables \ref{tab:BS}. Merton parameters are in the first line of table \ref{tab:Mert}.
+\caption{Option prices with $S_0=K=15$ and $T=1$. Black Scholes parameters are in Table \ref{tab:BS}. Merton parameters are in the first line of Table \ref{tab:Mert}.
 The Variance Gamma parameters are $\theta=-0.1$, $\bar \sigma = 0.2$, $\kappa = 0.1$.}
 \label{tab:prices_BS_M_VG}
 \end{table}%
 
-In table \ref{tab:prices_BS_M_VG} we compare the ATM (\emph{at the money}) prices of a European call option computed with the algorithms presented 
+In Table \ref{tab:prices_BS_M_VG} we compare the ATM (\emph{at the money}) prices of a European call option computed with the algorithms presented 
 in the previous sections, with the prices obtained by closed formulas.
 For the BS model, we used the well known closed formula presented in the paper \cite{BS73}. 
 In order to compute the Merton price we use the semi-closed formula derived in \cite{Me76},
 and for the VG price we used the semi-closed formula of \cite{MCC98}. 
 The PIDE prices are obtained by solving the equations (\ref{BS_PDE}), (\ref{Merton_PIDE}) and (\ref{VG_JD}).
-In this analysis we consider the same sets of parameters that we will use in chapter \ref{Chapter6} (see table \ref{tab:ATM_price}).
+In this analysis we consider the same sets of parameters that we will use in Chapter \ref{Chapter6} (see Table \ref{tab:ATM_price}).
 
 It is a common practice to select the upper-bound and lower-bound of the price as a multiple of the strike price. 
 In our case we set $S_{max} = 6K$ and $S_{min} = K/6$.
@@ -919,20 +952,20 @@ The parameters $A_1$, $A_2$, $B_1$ and $B_2$ are very important and should be se
 \label{tab:time_conv}
 \end{table}%
 
-The PDE/PIDE prices in table \ref{tab:prices_BS_M_VG} are obtained by dividing the space interval $[A_1,A_2]$ in $M=16000$ steps and the time interval $[t_0,T]$ in $N=12000$ steps.
+The PDE/PIDE prices in Table \ref{tab:prices_BS_M_VG} are obtained by dividing the space interval $[A_1,A_2]$ in $M=16000$ steps and the time interval $[t_0,T]$ in $N=12000$ steps.
 %\footnote{In the Merton and VG problems, the intervals $[-B_1,A_1]$ and $[A_2,B_2]$ contain additional 11161 and 4520 space steps respectively.}
 We can see that BS and VG prices are accurate up to the fourth decimal digit and Merton is accurate up to the third decimal digit. 
 In the following analysis we assume they are the correct limiting 
 value of the numerical algorithm, and indicate them by $V^* = \lim_{M,N \to \infty} V^{M,N}$.
 
-In tables \ref{tab:space_conv} we computed option prices $V^M$, by varying the number of space steps $M$ and keeping the time steps fixed $N=12000$.
-In table \ref{tab:time_conv} we did the opposite i.e. we computed $V^N$ for different values of $N$ and constant $M=16000$.
+In Tables \ref{tab:space_conv} we computed option prices $V^M$, by varying the number of space steps $M$ and keeping the time steps fixed $N=12000$.
+In Table \ref{tab:time_conv} we did the opposite i.e. we computed $V^N$ for different values of $N$ and constant $M=16000$.
 From these values it is possible to investigate how the error changes with respect to the discretization step.
 
 Let us consider for instance the space discretization. 
 If we define the error $\varepsilon_M = |V^M - V^*|$, we can assume that it has a polynomial relation with the discretization step $\Delta x = \frac{A_2 - A_1}{M}$ i.e. 
 $\varepsilon_M \propto (\frac{1}{M})^p$, where $p$ is the \textbf{order of convergence}.
-In the table \ref{tab:space_conv} we chose $M$ in a smart way such that $M = 50\cdot2^n$, for $0 \leq n \leq 7$. We can take the $\log_2$ on both sides such that
+In the Table \ref{tab:space_conv} we chose $M$ in a smart way such that $M = 50\cdot2^n$, for $0 \leq n \leq 7$. We can take the $\log_2$ on both sides such that
 \begin{equation}
  - \log_2 \varepsilon_n = C + np,
 \end{equation}
@@ -943,7 +976,7 @@ The same analysis can be done for the time discretization.
    \centering
  \includegraphics[width=\linewidth]{space_convergence.png}
  % EU_call.png: 0x0 pixel, 300dpi, 0.00x0.00 cm, bb=
- \caption{Log-error of the prices in table \ref{tab:space_conv}.}
+ \caption{Log-error of the prices in Table \ref{tab:space_conv}.}
  \label{fig_space}
   \end{minipage}
  \ \hspace{2mm} \hspace{3mm} \
@@ -951,22 +984,22 @@ The same analysis can be done for the time discretization.
  \centering
  \includegraphics[width=\linewidth]{time_convergence.png}
  % EU_call.png: 0x0 pixel, 300dpi, 0.00x0.00 cm, bb=
- \caption{Log-error of the prices in table \ref{tab:time_conv}.}
+ \caption{Log-error of the prices in Table \ref{tab:time_conv}.}
  \label{fig_time}
  \end{minipage}
 \end{figure}
 
 The theoretical order of convergence of the implicit scheme applied to the BS PDE is $p=2$ for the space discretization and $p=1$ for the time discretization.
-For a discussion on the convergence rate for IMEX schemes applied to PIDEs we refer to \cite{CoVo05b} (section 6.4). 
+For a discussion on the convergence rate for IMEX schemes applied to PIDEs we refer to \cite{CoVo05b} (Section 6.4). 
 Since the theoretical analysis of convergence for IMEX schemes is a wide topic, in this thesis we just perform a numerical convergence analysis.
 
 In the two pictures \ref{fig_space} and \ref{fig_time} we plotted the log-error $- \log_2 \varepsilon_n$ for the values 
-in the tables \ref{tab:space_conv} and \ref{tab:time_conv} respectively.
+in the Tables \ref{tab:space_conv} and \ref{tab:time_conv} respectively.
 It turns out that both the BS and Merton prices have a quadratic error ($p=2$) in space, while VG prices have a convergence order much smaller ($p\sim 0.8$). 
 It is worth to mention that in our algorithm we choose the truncation parameter $\epsilon = 1.5 \Delta x$.
 This choice not only influences the convergence of the numerical scheme, but also the convergence of the Brownian approximation, since the parameters in (\ref{sig_eps}) depend on 
 $\epsilon$.\\
-According to the results of figure \ref{fig_time}, the time error is linear ($p=1$) for all the three models.
+According to the results of Figure \ref{fig_time}, the time error is linear ($p=1$) for all the three models.
 
 
 
@@ -983,15 +1016,15 @@ The martingale pricing theory applies to all exponential Lévy processes that sa
 For the purpose of this thesis, the contents of this chapter are quite important because we will use them to make comparisons 
 with the more complex models introduced in the next chapters.
 
-In section \ref{No_arbitrage_theory} we present the fundamental concepts necessary to define the pricing function of a derivative contract.
+In Section \ref{No_arbitrage_theory} we present the fundamental concepts necessary to define the pricing function of a derivative contract.
 Then we prove that this pricing function is the solution of a partial integro-differential equation when the stock dynamics follows an exponential Lévy process.
 
-In the second part of the chapter, section \ref{Finite_difference_methods}, we describe the algorithm used for the numerical solution of the Black-Scholes PDE and the
+In the second part of the chapter, Section \ref{Finite_difference_methods}, we describe the algorithm used for the numerical solution of the Black-Scholes PDE and the
 Merton and VG PIDEs.
 We explain how to discretize the PIDE using the IMEX finite difference method proposed in \cite{CoVo05b}. We also provide a numerical convergence analysis of this method.
-The numerical results of this chapter will be used for comparison in chapters \ref{Chapter3} and \ref{Chapter6}.
-In specific, in chapter \ref{Chapter3} we compare the prices obtained by the multinomial method with those obtained by solving the VG PIDE.  
-In chapter \ref{Chapter6}, instead, we will see that when the transaction costs go to zero, 
+The numerical results of this chapter will be used for comparison in Chapters \ref{Chapter3} and \ref{Chapter6}.
+In Chapter \ref{Chapter3} we compare the prices obtained by the multinomial method with those obtained by solving the VG PIDE.  
+In Chapter \ref{Chapter6}, instead, we will see that when the transaction costs go to zero, 
 the prices obtained from the transaction costs model are equal to the prices obtained by the martingale pricing theory.
 
 %The python code for the algorithms presented in this chapter can be found in the github page \url{https://github.com/cantaro86}. 

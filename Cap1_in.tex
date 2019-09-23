@@ -21,7 +21,7 @@ Furthermore, log-returns can assume negative values, and thus can be modeled by 
 with ``nicer'' analytical properties.\\
 Since the renowned paper of \cite{BS73}, a common assumption is that $t$-log-returns are 
 normally distributed as $\mathcal{N}(\mu t,\sigma^2 t)$. 
-This is largely due to the fact that normal distribution as well as the continuous-time process
+This is largely due to the fact that the normal distribution as well as the continuous-time process
 it generates (Brownian motion) has nice analytical properties.
 Under this assumption, the dynamics  of log-returns follows the Brownian motion process
 \begin{equation}\label{GBM}
@@ -37,7 +37,7 @@ By the way, a thorough look at data collections from various areas of finance, r
 is not a very good approximation of reality.
 Indeed, empirical return distributions have substantially 
 more mass around the origin and along the tails (\emph{heavy tails}), see \cite{Cont01}.
-This means that normal distribution underestimates the probability of large positive and negative returns. 
+This means that the normal distribution underestimates the probability of large positive and negative returns. 
 In the real market instead, returns manifest frequently high peaks, that come more and more evident when 
 looking at short time scales.
 The return peaks correspond to sudden large changes in the price, that cannot be reproduced by the dynamics of the Brownian motion.\\
@@ -75,17 +75,20 @@ the \emph{Merton model} and the \emph{Variance Gamma model}.
 
 \subsection{Basic definitions}
 
-Let $\{X_t\}_{t \ge 0}$ be a stochastic process defined on a probability space $(\Omega,\mathcal{F},\{\mathcal{F}_t\}_{t \ge 0},\PP)$, 
+Let $\{X_t\}_{t \ge 0}$ be a stochastic process taking values in $\R^n$,
+defined on a probability space $(\Omega,\mathcal{F},\{\mathcal{F}_t\}_{t \ge 0},\PP)$,
 where $\mathcal{F}_t$ is the natural filtration\footnote{The natural filtration is defined as $\mathcal{F}_{t}^X = \sigma\{X(s) :
 0\leq s \leq t\} $.} to which the process $\{X_t\}_{t \ge 0}$ is adapted.\\ 
 \begin{Definition}\label{LevyDef}
-We say that $\{X_t\}_{t \ge 0}$ is a \textbf{Lévy Process} if:
+We say that $\{X_t\}_{t \ge 0}$ is a \textbf{Lévy Process} if the following conditions hold:
 \begin{itemize}
- \item[(\textbf{L1})] $X_{t=0} = 0$.
- \item[(\textbf{L2})] $\{X_t\}_{t \ge 0}$ has independent and stationary increments:\\ For each $0<t_1<t_2 <... <t<\infty$
-   $$ X_{t_{j+1}} - X_{t_j} \mbox{are independent.} $$
-   $$ X_{t_{j+1}} - X_{t_j} \; \overset{d}{=} \; X_{t_{j+1}- t_{j} }. $$ 
- \item[(\textbf{L3})] $\{X_t\}_{t \ge 0}$ is stochastically continuous: $\forall \epsilon > 0 $ and $\forall t \ge 0$  $$\lim_{h\to 0} \PP(|X_{t+h}-X_t| > \epsilon)=0. $$ 
+ \item[(\textbf{L1})] $X_{0} = 0$.
+%  \item[(\textbf{L2})] $\{X_t\}_{t \ge 0}$ has independent and stationary increments:\\ For each sequence $t_1,t_2,...,t_n$ such that $0<t_1<t_2 <... <t_n<\infty$ 
+%    $$ X_{t_{j+1}} - X_{t_j} \mbox{are independent.} $$
+%    $$ X_{t_{j+1}} - X_{t_j} \; \overset{d}{=} \; X_{t_{j+1}- t_{j} }. $$ 
+ \item[(\textbf{L2})] $\{X_t\}_{t \ge 0}$ has independent increments i.e. $X_t - X_s$ is independent of $\mathcal{F}_s$ for any $t > s \geq 0$.
+ \item[(\textbf{L3})] $\{X_t\}_{t \ge 0}$ has stationary increments i.e. for any $s,t \geq 0$, the distribution of $X_{t+s} - X_t$ does not depend on $t$.  
+ \item[(\textbf{L4})] $\{X_t\}_{t \ge 0}$ is stochastically continuous: $\forall \epsilon > 0 $ and $\forall t \ge 0$  $$\lim_{h\to 0} \PP(|X_{t+h}-X_t| > \epsilon)=0. $$ 
 \end{itemize}
 \end{Definition}
 It is well known (see \cite{Protter} Chapter 1, Theorem 30) that a Lévy process has a modification with ``cádlág''
@@ -93,12 +96,12 @@ paths, i.e. paths which are right-continuous and have left limits. \\
 Lévy processes are intrinsically connected with infinitely divisible distributions. In particular the Lévy-Khintchine formula 
 for infinitely divisible random variables, is an essential tool for the classification of the Lévy processes by the form of their
 characteristic functions.\\
-In the following let us present some basic definitions for random variables. In $\R^n$ we indicate a vector of random variables with $X = (X^1, ..., X^n)$.\footnote{ 
+In the following, let us present some basic definitions. In $\R^n$ we indicate a vector of random variables with $X = (X^1, ..., X^n)$.\footnote{ 
 Let us recall some basic definitions. We denote the inner product for $x,y \in \R^n$ by
 $$(x,y) := \sum_{i=1}^n x_i y_i ,$$ and the Euclidean norm by $$|x| := \sqrt{(x,x)}.$$ }
 
 \begin{Definition} \label{chf}
-Let $X:(\Omega,\mathcal{F}, \PP) \to \R^n$.\\ 
+Let $X$ be a random variable taking values in $\R^n$.\\ 
 The \textbf{Characteristic function} $\phi_X:\R^n \to \C$  of $X$, is defined by
 \begin{align}
 \phi_{X}(u) &= \E [e^{i(u,X)}] \nonumber \\
@@ -118,10 +121,10 @@ The following properties hold for all $p>0$:
  \item $\E \bigl[ |X|^p \bigr] < \infty $ if and only if $\E \bigl[ |(X^j)|^p \bigr] < \infty $ for each $1 \leq j \leq n$. 
  \item If $\E \bigl[ |X|^p \bigr] < \infty $ then $\E \bigl[ |X|^q \bigr] < \infty $ for all $0 < q < p$.
 \end{itemize}
-For more information see sections 1.1.2 and 1.1.6 of \cite{Applebaum}.
+For more information see Sections 1.1.2 and 1.1.6 of \cite{Applebaum}.
 \begin{Definition}\label{inf_div}
- Let $X:(\Omega,\mathcal{F}, \PP) \to \R^n$.
- We say that X is \textbf{infinitely divisible} if for all $m \in \N$ there exist i.i.d. random variables $X_1^{(m)},...,X_m^{(m)}$
+Let $X$ be a random variable taking values in $\R^n$.
+We say that X is \textbf{infinitely divisible} if for all $m \in \N$ there exist i.i.d. random variables $X_1^{(m)},...,X_m^{(m)}$
  such that
  \begin{equation}
   X \overset{d}{=} X_1^{(m)} + ... + X_m^{(m)}.
@@ -135,7 +138,7 @@ For more information see sections 1.1.2 and 1.1.6 of \cite{Applebaum}.
 \begin{proof}
  For each $n \in \N$ we can write 
  $$ X_t = \bigl( X_1^{(m)} \bigr)_t + ... + \bigl( X_m^{(m)} \bigr)_t $$
- where $ \bigl( X_k^{(m)} \bigr)_t = X_{\frac{kt}{m}} - X_{\frac{(k-1)t}{m}} $ are i.i.d. by definition (\ref{LevyDef}, L2).
+ where $ \bigl( X_k^{(m)} \bigr)_t = X_{\frac{kt}{m}} - X_{\frac{(k-1)t}{m}} $ are i.i.d. by Definition \ref{LevyDef}.
 \end{proof}
 
 The opposite implication also holds. 
@@ -144,7 +147,7 @@ Every infinitely divisible distribution is the distribution of a Lévy process.
 \end{Theorem}
 A proof of the previous theorem can be found in \cite{Applebaum} (Corollary 1.4.6).
 
-Other properties of infinitely divisible distribution and connections with Lévy processes can be found in the chapter 2 of \cite{Sato}.\\
+Other properties of infinitely divisible distribution and connections with Lévy processes can be found in Chapter 2 of \cite{Sato}.\\
 
 \subsection{Lévy-Khintchine representation}
 
@@ -152,7 +155,7 @@ We now present a beautiful formula, first established by Paul Lévy and A.Ya. Kh
 which gives a characterization of every infinitely divisible random variable.\\
 
 \begin{Definition} \label{Levy_measure}
-Let $\nu(dx)$ be a Borel measure. We say it is a \textbf{Lévy measure} if it satisfies
+Let $\nu(dx)$ be a Borel measure defined in $\R^n$. We say it is a \textbf{Lévy measure} if it satisfies
 \begin{equation}
  \nu (\{ 0 \} ) = 0,
 \end{equation}
@@ -162,7 +165,7 @@ Let $\nu(dx)$ be a Borel measure. We say it is a \textbf{Lévy measure} if it sa
 \end{Definition}
 The characteristic function of an infinitely divisible random variable has the following \textbf{Lévy Khintchine representation}:
 \begin{Theorem}
- Let $X$ be an infinitely divisible random variable. Then there exist $b\in R^n$, a positive definite $n\times n$ matrix $A$
+ Let $X$ be an infinitely divisible random variable. Then there exist $b\in \R^n$, a positive definite $n\times n$ matrix $A$
  and a Lévy measure $\nu$ on $\R^n$, such that $\forall u \in \R^n$:
 \begin{align}
 \phi_X(u)  &= \mathbb{E} [e^{i(u,X)}]  \\ 
@@ -182,19 +185,22 @@ Now we can easily find the Lévy Khintchine representation for a Lévy process
  \end{equation}
 where $\eta$ is the Lévy symbol of the random variable $X_t$ at $t=1$.
 \end{Theorem}
-See \cite{Applebaum} (Theorem 1.3.3).
+For a proof of this theorem see Theorem 1.3.3 in \cite{Applebaum}.
 The triplet $(b, A, \nu)$ is called \textbf{Lévy triplet}, and completely characterizes the Lévy process.
 
 \subsection{Random measures}\label{random_measures}
 
 A convenient tool for analyzing the jumps of a Lévy process is the random
-measure of the jumps of the process.
+measure of the jumps.
 The jump process $\{\Delta X_t\}_{t \ge 0}$ associated to the Lévy process $\{X_t\}_{t \ge 0}$ is
 defined, for each $t \geq 0$ , by
 \begin{equation}\label{jump}
  \Delta X_t = X_t - X_{t^-}
 \end{equation}
-where $X_{t^-} = \lim_{s\uparrow t} X_s $.\\ 
+where $X_{t^-} = \lim_{s\uparrow t} X_s $.\\
+In the following, we indicate with $\mathcal{B}(\R^n)$ 
+the Borel $\sigma$-algebra of $\R^n$, i.e. the smallest $\sigma$-algebra of subsets of $\R^n$ that contains all the open sets.
+
 \begin{Definition}
 Consider a set $A \in \mathcal{B}(\R^n \backslash \{ 0 \})$.
 We define the \textbf{random measure} of the jumps of the process $\{X_t\}_{t \ge 0}$ by
@@ -259,7 +265,7 @@ This is the Theorem 2.3.7 in \cite{Applebaum}. By differentiation (see eq. \ref{
 \end{equation}
 
 \noindent
-We can also define in the same way the \textbf{compensated Poisson integral}
+For $f \in L^1(A,\mu_A)$, we can also define the \textbf{compensated Poisson integral}
 \begin{equation}
   \int_A f(x) \tilde{N}(t,dx) := \int_A f(x) N(t,dx) - t \int_A f(x) \mu(dx), 
 \end{equation}
@@ -296,7 +302,7 @@ of independent processes: a drift term, a Brownian motion, a Poisson process wit
  \begin{equation}\label{Levy_Ito}
   X_t = bt + W^A_t + \int_{|x|<1} x \tilde{N}(t,dx) + \int_{|x|\geq1} x N(t,dx).
  \end{equation}
- This is called \textbf{Lévy-It\={o} decomposition}.
+ This is called the \textbf{Lévy-It\={o} decomposition}.
 \end{Theorem}
  For a proof the reader can look at Theorem 2.4.16 in \cite{Applebaum}.\\
 A lot of information on the features of a Lévy process can be derived from the integrability conditions of its Lévy measure. 
@@ -327,7 +333,7 @@ See \cite{Sato} theorem 25.17.
 
 The majority of Lévy processes used in finance have finite moments.
 For practical reasons, it makes sense to assume finite mean and variance of the price process.
-In this thesis we will model (see section \ref{Section_ELM}) the 1-dimensional dynamics of the prices with the exponential of a Lévy process, 
+In this thesis we will model (see Section \ref{Section_ELM}) the 1-dimensional dynamics of the prices with the exponential of a Lévy process, 
 i.e. $S_t = S_0 e^{X_t}$. Let us introduce the important assumption:  
 \begin{center}
 \begin{riquadro}{12cm}
@@ -373,9 +379,10 @@ considered in this chapter.
 
 
 Let us denote with $B_b(\R^n)$ 
-the linear space of all bounded Borel measurable function $f: \R^n \to \R$. 
-Let $C_0(\R^n)$ be the subspace of $B_b(\R^n)$ containing continuous functions such that $\lim_{|x|\to \infty} f(x) = 0$.
-They are both Banach spaces under the norm $||f|| = \sup\{ |f(x)| : x\in \R^n \}$.
+the linear space of all bounded Borel measurable functions $f: \R^n \to \R$. 
+Let $C_b(\R^n)$ be the subspace of $B_b(\R^n)$ containing continuous functions, and
+$C_0(\R^n)$ be the subspace of $C_b(\R^n)$ containing continuous functions such that $\lim_{|x|\to \infty} f(x) = 0$.
+The spaces introduced above are all Banach spaces under the norm $||f|| = \sup\{ |f(x)| : x\in \R^n \}$.
 We also denote with $C_0^{n}(\R^n)$ the set of $f \in C_0(\R^n)$ such that $f$ is $n$ time differentiable and 
 the partial derivatives of $f$ with order $\leq n$ belong to $C_0(\R^n)$.  \\
 Let us also recall some definitions of operators in a Banach space $B$.
@@ -385,7 +392,7 @@ The set $D_{\LL}$ is the domain of $\LL$. A linear operator is called bounded if
 If the previous conditions are not satisfied, the operator is called unbounded.
 
 \begin{Definition}
- Let $\{X_t\}_{t \ge 0}$  be an adapted process on the probability space $(\Omega,\mathcal{F},\PP)$ equipped with a filtration $\mathcal{F}_t$.
+ Let $\{X_t\}_{t \ge 0}$  be an adapted process on the probability space $(\Omega,\mathcal{F},\PP)$ equipped with a filtration $\{ \mathcal{F}_t\}_{t\geq0}$.
  We say that $\{X_t\}_{t \ge 0}$ is a \textbf{Markov process} if for all $f\in B_b(\R^n)$
  and $0\leq s \leq t < \infty$
  \begin{equation} \label{Markov_prop}
@@ -424,7 +431,7 @@ The transition probabilities satisfy the properties
  \begin{enumerate}
   \item The maps $x \to p_{s,t}(x,A)$ are measurable for each $A\in \mathcal{B}(\R^n)$.
   \item $p_{s,t}(x,\cdot)$ is a probability measure on $\mathcal{B}(\R^n)$ for each $x \in \R^n$.
-  \item $p_{s,s}(x,B) = \delta_x(B)$ for $s \geq 0$. 
+  \item $p_{s,s}(x,B) = \mathbbm{1}_B(x)$ for $s \geq 0$. 
   \item For $0\leq r \leq s \leq t$ it satisfies the \textbf{Chapman-Kolmogorov} equation
   \begin{equation}
    p_{r,t}(x,B) = \int_{\R^n} p_{r,s}(x,dy) p_{s,t}(y,B). 
@@ -448,7 +455,7 @@ where $B-x = \{y-x : y\in B \}$.
 \begin{Theorem}
 Every Lévy process is a time homogeneous and translation invariant Markov process.
 \end{Theorem}
-See Theorems (10.4) and (10.5) in \cite{Sato}.\\
+For a proof of this theorem, we refer to Theorems (10.4) and (10.5) in \cite{Sato}.\\
 
 \noindent
 A Markov process is said to be time homogeneous if the associated stochastic evolution operator satisfies $T_{s,t} = T_{0,t-s}$ for all $0 \leq s \leq t < \infty$.
@@ -469,8 +476,8 @@ The operator $T_t$ associated with a time homogeneous Markov process, is called 
 \end{Definition}
 The homogeneous Markov process associated with the Feller semigroup is called \textbf{Feller process}.
 
-In the definition of Feller semigroup, we used the space $C_0(\R^n)$ in place of $C_b(\R^n)$. 
-The space $C_0(\R^n)$ has nicer analytical properties than $C_b(\R^n)$ and allows the proof of important probabilistic theorems.
+In the definition of Feller semigroup, we used the space $C_0(\R^n)$ although some authors prefer to use $C_b(\R^n)$. 
+The space $C_0(\R^n)$ has nicer analytical properties than $C_b(\R^n)$ and allows to prove important probabilistic theorems.
 In particular, when replacing $C_0(\R^n)$ by $C_b(\R^n)$, the condition 2 above may fail.
 
 \begin{Definition}
@@ -502,19 +509,20 @@ of a general Lévy process.
 A proof of this theorem can be found in \cite{Sato} (Theorem 31.5).\\
 
 \noindent
-In the more general framework of section \ref{Optimal_control_framework} we will show that the integral term of 
+In the more general framework of Section \ref{Optimal_control_framework} we will show that the integral term of 
 $\LL$ is well defined also for continuous functions that do not vanish at infinity, but have 
-polynomial growth (see definition (\ref{Cp})). 
+polynomial growth (see Definition \ref{Cp}). 
 
 
   
 \subsection{The It\={o} formula} 
 
-Following the section 4.2.2 of \cite{Applebaum}, we call $\mathcal{P}_2(T,E)$ with $E \in \mathcal{B}(\R^n)$, 
+Following the Section 4.2.2 of \cite{Applebaum}, we call $\mathcal{P}_2(T,E)$ with $E \in \mathcal{B}(\R^n)$, 
 the set of all functions $f:[0,T]\times E \times \Omega \to \R$ satisfying the two conditions:
 \begin{enumerate}
- \item Predictable\footnote{Given the probability space $(\Omega,\mathcal{F},\mathcal{F}_t,\PP)$ and $E \in \mathcal{B}(\R^n)$. A function $f:[0,T]\times E \times \Omega \to \R$
- is said to be \textbf{predictable}, if for each $0 \leq t \leq T$ the mapping $(x,\omega) \to F(t,x,\omega)$ is $\mathcal{B}(E)\otimes \mathcal{F}_t$-measurable,
+ \item Predictable\footnote{Given the probability space $(\Omega,\mathcal{F},\{\mathcal{F}_t\}_{t\in [0,T]},\PP)$ and $E \in \mathcal{B}(\R^n)$. 
+ A function $f:[0,T]\times E \times \Omega \to \R$
+ is said to be \textbf{predictable}, if for each $0 \leq t \leq T$ the mapping $(x,\omega) \to f(t,x,\omega)$ is $\mathcal{B}(E)\otimes \mathcal{F}_t$-measurable,
  and for each $x\in E$ and $\omega \in \Omega$ the mapping $t \to f(t,x,\omega)$ is left-continuous.\\
  If $f$ is predictable, the process $t \to f(t,x,\cdot)$ for each $x \in E$, is adapted.}.
  \item  $\PP \biggl( \int_0^T \int_E |f(t,x)|^2 \nu(dx) dt  <\infty \biggr) = 1 $.
@@ -631,7 +639,7 @@ $\rho$ satisfying:
 \end{equation}
 then again the growth condition is a consequence of the Lipschitz condition.
 \begin{Theorem}
- Given the conditions \textbf{C1}, \textbf{C2}, there exist a unique strong solution $Y_t$ of (\ref{modSDE}) with initial condition $Y_{t=0}=Y_{0}$.
+ Given the conditions \textbf{C1}, \textbf{C2}, there exists a unique strong solution $Y_t$ of (\ref{modSDE}) with initial condition $Y_{t=0}=Y_{0}$.
  The process $\{Y_t\}_{t\geq 0}$ is cádlág and $\mathcal{F}_t$-adapted.
 \end{Theorem}
 A proof of existence and uniqueness based on Picard iteration, can be found in \cite{Applebaum} (see Theorem 6.2.3). For more information we refer to Chapter 3.2 of
@@ -658,9 +666,9 @@ The proof can be obtained by the application of the It\={o} lemma, see Theorem 6
 \section{Exponential Lévy models}\label{Section_ELM}
 
 Finally we are able to generalize the equation (\ref{GBM}) for the process of the log-returns\footnote{
-It is also possible to generalize the differential equation (\ref{GBM_sde}). The solution of the modified SDE 
-is the \textbf{Doleans-Dade exponential} of a Lévy process. The two approaches are equivalent (see propositions 8.22 in \cite{Cont}).
-In this thesis we choose to use exponential Lévy models. }.
+It is also possible to generalize the differential equation (\ref{GBM_sde}). The modified SDE is called \emph{geometric Lévy process}
+and its solution is the \emph{Doleans-Dade exponential} of a Lévy process. The two approaches are equivalent (see propositions 8.22 in \cite{Cont}).
+In this thesis we choose to use exponential Lévy models.}.
 We write:
 \begin{equation}
  \log \left( \frac{S_t}{S_0} \right) = X_t ,
@@ -672,7 +680,7 @@ The name \textbf{exponential Lévy model} comes from the expression written as:
  S_t = S_0 e^{X_t} ,
 \end{equation}
 
-\subsection{Exponential Lévy SDE}
+\subsection{Exponential Lévy SDE}\label{Section_ELM33}
 
 In order to obtain an SDE for the process (\ref{ELM}), we apply It\={o} formula (\ref{Ito_form}), and we consider 
 the Lévy-It\={o} decomposition (\ref{Levy_Ito}) for $X_t$, written in the differential form like (\ref{Levy_diff}).
@@ -688,11 +696,11 @@ After some substitutions we can see that the resulting equation, as expected, is
                           &+ \int_{|x|< 1} ( e^{x} - x - 1) \nu(dx) dt \\ \nonumber
                           &+ \int_{|x|\geq 1} (e^{x} - 1) N(dt,dx) + \int_{|x|< 1} (e^{x} - 1) \tilde N(dt,dx). \nonumber
 \end{align}
-Thanks to the assumption \textbf{EM} (section \ref{AssumptionEM}) we can simplify this equation.
+Thanks to the assumption \textbf{EM} (Section \ref{AssumptionEM}) we can simplify this equation.
 First we look at the integrability conditions:
 \begin{itemize}
  \item $\int_{|x|\geq 1}  e^{x} \nu(dx) < \infty$ by \textbf{EM}.  
- \item $\int_{|x|\geq 1} 1\; \nu(dx) < \infty$ by definition (\ref{Levy_measure}) of $\nu$.
+ \item $\int_{|x|\geq 1} 1\; \nu(dx) < \infty$ by Definition \ref{Levy_measure}.
 \end{itemize}
 We can add and subtract $\pm \int_{|x|\geq 1} ( e^{x} - 1) \nu(dx) dt $ and obtain the final form
 \begin{align} \label{exp_sde}
@@ -723,7 +731,7 @@ We write $$ \int_{\R} (e^x-1)^2 \nu(dx) = \int_{|x|\geq1} (e^x-1)^2 \nu(dx) + \i
   $\int_{|x|\geq1} \nu(dx)$ are finite by assumption \textbf{EM} and by (\ref{Levy_m}).
   \item For $|x| < 1$: 
   $$(e^x-1)^2 \; = \; x^2 \left(\frac{e^x-1}{x}\right)^2 \; < \; x^2 (e-1)^2. $$ 
-The definition (\ref{Levy_m}) of Lévy measure says $ \int_{|x|<1} |x|^2 \nu(dx) < \infty $, so
+The Definition \ref{Levy_m} of Lévy measure says $ \int_{|x|<1} |x|^2 \nu(dx) < \infty $, so
 $$ \int_{|x|<1} (e^x-1)^2 \nu(dx) \; < \; (e-1)^2 \int_{|x|<1} |x|^2 \nu(dx) \; < \; \infty. $$  
  \end{itemize}
 So we have checked that the equation (\ref{exp_sde2}) admits a unique solution which is given by the exponential 
@@ -831,7 +839,7 @@ processes. In this case the two increasing processes are Gamma processes:
 with $Y^p_t \sim \Gamma(\mu_p t, \kappa_p t)$ and $Y^n_t \sim \Gamma(\mu_n t, \kappa_n t)$. For the specific relation between the parameters
 $\mu_p,\kappa_p,\mu_n,\kappa_n$ and $\bar\sigma,\kappa,\theta$ we refer to \cite{MCC98}.\\
 \newline
-The pdf of $X_t$ can be computed conditioning on the realization of $T_t$:
+The probability density function of $X_t$ can be computed conditioning on the realization of $T_t$:
 \begin{align}\label{VG_density}
  f_{X_t}(x) &= \int_y f_{X_t,T_t}(x,y) dy = \int_y f_{X_t|T_t}(x|y) f_{T_t}(y) dy \\ \nonumber
          &= \int_0^{\infty} \frac{1}{\bar\sigma \sqrt{2\pi y}} e^{-\frac{(x -\theta y)^2}{2\bar\sigma^2 y}}
@@ -1025,21 +1033,21 @@ In this chapter we present the main theoretical features of Lévy processes in a
 In this thesis we model the log-price dynamics by using stochastic differential equations involving Lévy processes. 
 For this purpose it is important to present a complete framework containing all the tools needed in the next chapters.
 Starting with the basic definition of a Lévy process and the form of its characteristic function, we then introduce the concept of \emph{random measures}
-which is a method to describe the jumps of the process, and the important \emph{Lévy-It\=o decomposition} that permits to decompose any Lévy processes into 
-the superposition of a Brownian motion with drift and two jump process.
+which is a method to describe the jumps of the process, and the important \emph{Lévy-It\=o decomposition} that permits to decompose any Lévy process into 
+the superposition of a Brownian motion with drift and two jump processes.
 We then introduce the assumption of finite exponential second moment, called assumption \textbf{EM}, which is recurrent throughout the thesis.\\
-The two concepts of \emph{infinitesimal generator} and \emph{It\=o formula} are presented in a general form in section \ref{Infinitesimal_generator_stoch_calc}, where we 
+The concept of \emph{infinitesimal generator} and the \emph{It\=o formula} are presented in a general form in Section \ref{Infinitesimal_generator_stoch_calc}, where we 
 also discussed the hypothesis for the existence of a unique solution of the Lévy-type SDE. 
-All these concepts are applied in section (\ref{Section_ELM}) to the specific case of exponential Lévy processes. 
+All these concepts are applied in Section \ref{Section_ELM} to the specific case of exponential Lévy processes. 
 We derive the exponential Lévy SDE and the form of the infinitesimal generator associated to the process.   
-These formulas are fundamental in the thesis and will be used several times in chapter \ref{Chapter2} 
-for the derivation of the pricing PIDE, and in chapter \ref{Chapter5} for the derivation of the 
+These formulas are fundamental in the thesis and will be used several times in Chapter \ref{Chapter2} 
+for the derivation of the pricing PIDE, and in Chapter \ref{Chapter5} for the derivation of the 
 dynamic programming equation associated with the main problem of the thesis.\\
 In the end of the chapter we introduce two of the most popular Lévy processes used in finance, i.e. the \emph{Merton model} and the \emph{Variance Gamma model}.
 They are used throughout the thesis as practical examples in the numerical calculations.
-In chapter \ref{Chapter2} we present the numerical solution of the Merton and VG pricing PIDEs and 
-in chapter \ref{Chapter6} we solve numerically the pricing problem under transaction costs considering these two processes.
-Furthermore, the whole \ref{Chapter3} is dedicated to the application of the multinomial method to the pricing problem under VG process. 
+In Chapter \ref{Chapter2} we present the numerical solution of the Merton and VG pricing PIDEs and 
+in Chapter \ref{Chapter6} we solve numerically the pricing problem under transaction costs considering these two processes.
+Furthermore, the entire Chapter \ref{Chapter3} is dedicated to the application of the multinomial method to the pricing problem under VG process. 
 
 
 
