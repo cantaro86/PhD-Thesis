@@ -34,16 +34,16 @@ There is a huge literature of option pricing models considering an underlying pr
 Most of these models assume the log-price dynamics to be a \emph{Lévy process}. 
  
 
-A second issue of the Black-Scholes model is that it does not consider the presence of market frictions i.e.
-bid/ask spread, transaction fees and budget constraints.
+A second issue of the Black-Scholes model is that it does not consider the presence of budget constraints and market frictions i.e.
+bid/ask spread or transaction fees.
 The securities in the market are traded with a bid-ask spread, and this means that there are two prices for the
 same security. But the Black-Scholes formula just gives one price.
 Moreover, the replicating portfolio cannot be perfectly implemented,
 since the delta-hedging strategy involves continuous time trading. 
 This is impractical because the presence of transaction costs makes it infinitely costly.
-Another kind of market friction that needs to be considered are the budget constraints. 
-A limit in the budget or a restriction in the possibility of 
-selling short, clearly restricts the set of possible trading strategies.
+Another feature that needs to be considered is the presence of budget constraints in the real market. 
+A limit in the available budget, or (most commonly) a restriction in the possibility of 
+selling short, clearly restricts the set of hedging strategies of the investor.
 
 Many authors attempted to include the presence of proportional transaction costs in option pricing models.
 In \cite{Le85}, in order to avoid continuous trading, the author specifies 
@@ -67,9 +67,9 @@ They show that it is impossible to hedge perfectly the option. The optimal strat
 a band called \emph{no transaction region}. Using numerical experiments, they verify that this strategy outperforms the one 
 proposed in \cite{Le85}.
 This approach has been further developed in \cite{DaPaZa93}, where the problem is formulated rigorously as a singular 
-stochastic optimal control problem. The authors prove that the value functions of the two optimization problems
-can be interpreted as the solutions of the associated Hamilton-Jacobi-Bellman (HJB) equation in the viscosity sense. 
-They prove also that the numerical scheme, based on the \emph{Markov chain approximation}, converges to the viscosity solution.
+stochastic optimal control problem. The authors prove that the value function of the optimization problem
+can be interpreted as the solution of the associated Hamilton-Jacobi-Bellman (HJB) equation in the viscosit	y sense. 
+They prove also that the solution of the proposed numerical scheme, based on the \emph{Markov chain approximation}, converges to the viscosity solution.
 Numerical methods for this model are presented in \cite{DaPa94}, \cite{ClHo97} and \cite{Mon03}, \cite{Mon04}.
 In \cite{WhWi97} and \cite{BaSo98} the problem is simplified by using asymptotic analysis methods for small levels of 
 transaction costs. The authors, starting from the general HJB variational inequality, derive a simpler non-linear PDE for the option price. 
@@ -79,32 +79,36 @@ He found that under certain conditions the model is quite robust with respect to
 
 In this thesis the main goal is to develop and analyze a model for pricing options when the market is incomplete due to the presence of jumps in the stock dynamics 
 and transaction costs. 
-The topics of the thesis are based on the two papers 
-\cite{Canta2}, \cite{Canta} \todo{If the paper is accepted I have to update the reference}
-and the contributed chapter \emph{Indifference pricing in a market with transaction costs and jumps} by N. Cantarutti, J. Guerra, M. Guerra and 
-M.R. Grossinho, published in the book of \cite{Matthias}.\\
-Portfolio selection models with transaction costs and Lévy processes have already been introduced in the financial literature, see for instance \cite{OkSu01}, \cite{BKR01} and \cite{Kab16} 
-but these models have never been used to price options.  
-We present and analyze the theoretical properties of the model, and prove the existence of a viscosity solution 
-of the nonlinear
-Partial Integro-Differential Equation (PIDE) associated to the optimization problem. We also develop numerical methods to solve the problem under different assumptions, i.e. ignoring the 
+The topics of the thesis are based on the articles 
+\cite{Canta2}, \cite{Canta}
+and on the contributed chapter \cite{Canta3}, published in the book of \cite{Matthias}.\\
+Portfolio selection models with transaction costs and Lévy processes have already been introduced in the financial literature, 
+see for instance \cite{OkSu01}, \cite{BKR01} and \cite{Kab16}, 
+but these models have never been used to price options.\\  
+In this thesis we present a model that is a generalization of \cite{DaPaZa93}. 
+We analyze the theoretical properties of the model, and prove the existence of a viscosity solution 
+of the nonlinear Partial Integro-Differential Equation (PIDE) associated with the optimization problem. 
+We also develop numerical methods to solve the problem under different assumptions, i.e. ignoring the 
 default event and not.
-We present new numerical results and compare them with numerical values obtained from existing reference models. We also prove that 
+We present new numerical results and compare them with numerical values obtained from standard reference models. We also prove that 
 the proposed numerical scheme is monotone, stable and consistent, and its solution converges to the viscosity solution of the continuous problem.
 
-In Chapter \ref{Chapter1}, we introduce the general theory for Lévy processes, with a deeper focus on the specific Lévy processes used in this thesis i.e.  
+In Chapter \ref{Chapter1}, we introduce the general theory of Lévy processes, with a deeper focus on the specific Lévy processes used in this thesis i.e.  
 the \emph{Merton} and \emph{Variance Gamma} processes.   
 In Chapter \ref{Chapter2} we make a small summary of the main assumptions and theorems of the \emph{No arbitrage theory} for derivative pricing. After that we present 
 the most common numerical finite differences methods used to solve the option pricing PIDEs. 
-The Chapter \ref{Chapter3} is a digression based on the paper \cite{Canta2} on the application of the multinomial method to solve option pricing problems under the Variance Gamma process. 
-In Chapter \ref{Chapter4} we present the optimal control theory for regular and singular controls, and the definition of viscosity solutions. 
+The Chapter \ref{Chapter3} is a digression based on the paper \cite{Canta2} on the applications 
+of the multinomial method to solve option pricing problems under the Variance Gamma model. 
+In Chapter \ref{Chapter4} we present the optimal control theory for regular and singular controls, and the definition of viscosity solution. 
 In Chapter \ref{Chapter5}, we will develop the model for option pricing in presence of proportional transaction costs. This model is a singular stochastic
-control problem, which is a generalization of the model proposed in \cite{DaPaZa93}. We derive the general HJB equation and prove that the value function of the optimization problem 
-can be interpreted as the viscosity solution of the HJB equation.  
-In Chapter \ref{Chapter6} we present the numerical method used to solve the optimization problem and several numerical results. 
-First, we consider the simplified problem where the number of variables is reduced by one thanks to the assumption of no default and the property of the exponential utility. 
-The same results are also presented in \cite{Canta} and \cite{Matthias}.\\
-Then we solve the general problem with four variables, considering the possibility of default. Last, we also show that the moment matching method developed for 
-the Variance Gamma process, can be used to solve these kind of problems with good performance. \\
-At the end of each chapters there is a conclusive section containing a summary of the main concepts and their relevance for the thesis. 
+control problem, which is a generalization of the model proposed in \cite{DaPaZa93}. We derive the HJB equation associated with the optimization problem, 
+and prove that the value function can be interpreted as the viscosity solution of this HJB equation.  
+In Chapter \ref{Chapter6} we describe the numerical methods used to solve the optimization problems introduced in Chapter \ref{Chapter5}, and present several numerical results. 
+In the first part of the chapter, we consider the simplified problem where the number of variables is reduced by one, 
+thanks to the assumption of no default and the property of the exponential utility. 
+These topics are also analyzed in \cite{Canta} and \cite{Canta3}.\\
+In the end of the chapter, we solve the general problem with four variables, considering the possibility of default. 
+We also show that the moment matching method developed for 
+the Variance Gamma process, can be applied to these kind of problems with good performances. \\
+At the end of each chapter we provide a conclusive section containing a summary of the main presented concepts, and their relevance for the thesis. 
 

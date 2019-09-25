@@ -86,10 +86,11 @@ The state of the portfolio at time $t\in [t_0,T]$ is $(B^{\pi}_t,Y^{\pi}_t,S_t)$
  dS_t &=  S_t \left( \mu dt + \sigma dW_t \right).
 \end{cases}
 \end{equation} 
-for a particular strategy $\{\pi_t\}_{t \in [t_0,T]} := \{(L_t,M_t)\}_{t \in [t_0,T]}$.
+%for a particular strategy $\{\pi_t\}_{t \in [t_0,T]} := \{(L_t,M_t)\}_{t \in [t_0,T]}$.
+for $\mu>r$ and $\sigma>0$.
 The parameters $\theta_b$, $\theta_s \geq 0$ are the proportional transaction costs when buying and selling respectively.
 This portfolio equation is a generalization of the portfolio in the Merton problem (\ref{Merton_problem1}), 
-where there is a new state variable $Y$ and the action of the controls is represented with a different approach.
+where a new state variable $Y$ is considered.
 The control process $\{\pi_t\}_{t \in [t_0,T]} := \{(L_t,M_t)\}_{t \in [t_0,T]}$ represents the trading strategy and indicates the 
 cumulative number of shares bought and sold respectively in $[t_0,T]$.
 The strategy $\pi_t$ is a cádlág, $\mathcal{F}_t$-progressively measurable, nondecreasing process with bounded variation in every finite time interval and such that
@@ -202,6 +203,42 @@ V^j(t,b,y,s) := \sup_{\pi \in \Pi^j(t,b,y,s)} \; & \E_{t,b,y,s}\biggl[
 \end{align}
 where $\mathcal{U}: \R \to \R$ is a concave increasing utility function such that $\mathcal{U}(0)=0$.
 \end{Definition}
+Let us verify that the assumption (\ref{assumption_DPP}) is satisfied. Let us consider only the case $j=0$, because $j=w,b$ are straightforward generalization.
+\begin{Theorem}
+The objective function is finite, i.e.
+$$ \E_{t,b,y,s}\biggl[ \mathcal{U}(\mathcal{W}^{\pi}_T) \biggr] < \infty$$
+for all $\pi \in \Pi(t,b,y,s)$.
+\end{Theorem}
+\begin{proof}
+ Since the utility function is concave, thanks to the Jensen inequality $\E_{t,b,y,s} \bigl[\mathcal{U}(\mathcal{W}^{\pi}_T)\bigr] \leq 
+ \mathcal{U}\bigl( \E_{t,b,y,s}[\mathcal{W}^{\pi}_T] \bigr)$,
+ it is enough to prove $\E_{t,b,y,s}[\mathcal{W}^{\pi}_T] < \infty$.\\
+ The wealth at time $T$ is:
+ \begin{align*}
+   \mathcal{W}^{\pi}_T &=  B^{\pi}_T + c(Y^{\pi}_T,S_T) \\
+                       &\leq B^{\pi}_T + Y^{\pi}_T S_T.
+ \end{align*}
+ where $B^{\pi}_T$ is the solution of the first line of (\ref{DPZ_porfolio_dynamics}) i.e.
+ \begin{equation*}
+ B^{\pi}_T =  \frac{b}{\delta(t,T)} - \int_{t}^T
+ (1+\theta_b)\frac{S_u}{\delta(u,T)} dL_u + \int_{t}^T
+ (1-\theta_s) \frac{S_u}{\delta(u,T)} dM_u 
+ \end{equation*}
+ with $\delta(u,T) = e^{-r(T-u)}$.  
+ By definition, a stochastic process has bounded variation if its sample paths have bounded variation for almost all $\omega \in \Omega$. 
+ Then we can define $C = \sup_{\omega \in \Omega} (L_T-L_t) < \infty$.
+ \begin{align*}
+ \E_{t,b,y,s}\biggl[ \int_{t}^T (1+\theta_b)\frac{S_u}{\delta(u,T)} dL_u  \biggr] &\leq \frac{(1+\theta_b)}{\delta(t,T)} \E_{t,b,y,s}\biggl[ \sup_{u\in[t,T]} S_u \int_{t}^T dL_u  \biggr] \\
+                                                                                &\leq \frac{(1+\theta_b)}{\delta(t,T)} \E_{t,b,y,s}\biggl[ \sup_{u\in[t,T]} S_u (L_T-L_t)  \biggr] \\
+                                                                                &\leq \frac{(1+\theta_b)C}{\delta(t,T)} \E_{t,b,y,s}\biggl[ \sup_{u\in[t,T]} S_u \biggr] < \infty.
+ \end{align*}
+The term $\E_{t,b,y,s}\bigl[ \sup_{u\in[t,T]} S_u \bigr]$ is finite because of (\ref{cond_4}).
+The same argument can be applied to $\E_{t,b,y,s}\bigl[ \int_{t}^T (1-\theta_s) \frac{S_u}{\delta(u,T)} dM_u \bigr]$.\\
+The term $Y^{\pi}_T = L_T - M_T$ is also bounded by a constant $C$, and we obtain that $\E_{t,b,y,s}\bigl[ Y^{\pi}_T S_T \bigr] \leq C \E_{t,b,y,s}\bigl[ S_T \bigr] < \infty$.
+This concludes the proof.
+\end{proof}
+
+
 
 The writer (buyer) option price is defined as the amount of cash to add (subtract) to the bank account, 
 such that the maximal expected utility of wealth of the writer (buyer) is the same he could get with 

@@ -93,7 +93,7 @@ Note that the Lipschitz conditions (\ref{Lipschitz_control}) and (\ref{Lipschitz
  \begin{align}
   \E_{t,x}\bigl[ |X_{\tau}|^k \bigr] &\leq C (1+|x|^k) \\ \label{cond_2}
   \E_{t,x}\bigl[ |X_{\tau} - x|^k \bigr] &\leq C (1+|x|^k)h^{k/2} \\ \label{cond_3}
-  \E_{t,x}\biggl[ \biggl( \sup_{0\leq s\leq h} |X_{s} - x| \biggr)^k \biggr] &\leq C (1+|x|^k)h^{k/2} \\ 
+  \E_{t,x}\biggl[ \biggl( \sup_{0\leq s\leq h} |X_{s} - x| \biggr)^k \biggr] &\leq C (1+|x|^k)h^{k/2} \\ \label{cond_4} 
   \E_{t,x,y}\bigl[ |X_{\tau} - Y_{\tau}|^k \bigr] &\leq C |x-y|^2 \\ \nonumber
  \end{align}
 \end{Theorem}
@@ -148,8 +148,15 @@ For $y \in \bigl(x, \gamma(t,x,a,z)\bigr)$, we can write:
 where we used the Schwarz inequality and $M = \sup_{y \in [x, \bar \gamma]} || D_{xx} \phi(t,y) ||$. 
 Thanks to (\ref{rho}) we can see that the integral is well defined.
 
-Let us consider the integral (\ref{integral_2}) on $|z|\geq \delta$. By definition $\phi \in \mathcal{C}_2([0,T] \times \R^n) $ has quadratic growth.
-Thanks to Theorem (\ref{assumptionM}) and (\ref{Growth_control2}) each term inside the integral is well defined.
+Let us consider the integral (\ref{integral_2}) on $|z|\geq \delta$. 
+\begin{align*}
+ & \bigg|\phi(t,x + \gamma(t,x,a,z)) - \phi(t,x) - p \cdot \gamma(t,x,a,z) \bigg| \\ 
+ & \leq \big| \phi(t,x + \gamma(t,x,a,z))\big| + \big| \phi(t,x)\big| + \big|p \cdot \gamma(t,x,a,z) \big| \\ 
+ & \leq C (1 + |\rho(z)|^2)(1 + |x|^2).
+\end{align*}
+By definition $\phi \in \mathcal{C}_2([0,T] \times \R^n)$ has quadratic growth.
+Then we use (\ref{Growth_control2}) for $|\gamma(t,x,a,z)|$.
+Again, thanks to (\ref{rho}) we verify that the integral is well defined.
 
 Finally, for $\phi \in C^{1,2}([0,T] \times \R^n) \bigcap \mathcal{C}_2([0,T] \times \R^n)$ we can define the 
 \textbf{Integral operator}:
@@ -160,12 +167,15 @@ Finally, for $\phi \in C^{1,2}([0,T] \times \R^n) \bigcap \mathcal{C}_2([0,T] \t
 \end{align}
 
 \noindent
-The one dimensional \textbf{Lévy operator} can be obtained with $\gamma(t,x,a,z) = z$, $\delta = 1$ and $p=0$ in this way:
+The \textbf{Lévy operator} can be obtained with $\gamma(t,x,a,z) = z$, $\delta = 1$ and $p=0$ in this way:
 \begin{align*}
 \mathcal{I}_L(t,x,\phi) &= \mathcal{I}^{1,1,0}(t,x,\phi) + \mathcal{I}^{2,1,0}(t,x,0,\phi)\\  
-                   &= \int_{\R^n} \biggl[ \phi(t,x+ z) - \phi(t,x) - D_x \phi(t,x)\, z \mathbbm{1}_{|z|<1}(z) \biggr] \nu(dz) 
+                   &= \int_{\R^n} \biggl[ \phi(t,x+ z) - \phi(t,x) - D_x \phi(t,x) \cdot z \mathbbm{1}_{|z|<1}(z) \biggr] \nu(dz) 
 \end{align*}
-corresponding to the integral term in (\ref{genLevy}).
+corresponding to the integral term in (\ref{genLevy}).\\
+Let us recall that we are considering only Lévy processes with finite moments (see Section \ref{AssumptionEM}). 
+This assumption ensure that (\ref{rho}) is finite for $\rho(z) = z$, thanks to Theorem (\ref{assumptionM}).
+
 The \textbf{controlled integro-differential operator} is defined as:
 \begin{equation}\label{int_diff_oper}
  \LL^{a}(t,x,\phi) = A^{a} \phi(t,x) + \mathcal{I}^{a}(t,x,\phi)
@@ -436,7 +446,11 @@ A straightforward modification of (\ref{DPP1}) and (\ref{DPP2}) yields the expre
 \begin{riquadro}{12cm}
 \textbf{Assumption:}\\
 We assume that the value function (\ref{controlled_VF}) satisfies the DPP for singular control problem, under the hypothesis presented in this section. 
-For the purpose of this thesis, we require that it holds for $f = h = 0$ and for $g$ with polynomial growth of order $p\geq 1$.  
+For the purpose of this thesis, we require that it holds for $f = h = 0$ and for $g$ satisfying
+\begin{equation}\label{assumption_DPP}
+ \E_{t,x} \biggl[ g(\tau, X_{\tau}) \biggr] \,< \, \infty
+\end{equation}
+for all $\xi \in \Pi_{t,x}$.
 \end{riquadro}
 \end{center}
 
@@ -446,7 +460,7 @@ In \cite{Kab16} the authors prove the DPP for a singular-regular control problem
 The singular control influences only the state dynamics, described by a geometric Lévy process. The function $f$, instead, is affected by the regular control i.e. 
 $f(t,\alpha_t) = e^{-\beta t} \mathcal{U}(\alpha_t)$, with $\beta>0$ and $\mathcal{U} : A \to \R^+$ a concave function such that $\mathcal{U}(0)=0$ and 
 $\frac{\mathcal{U}(x)}{x}\to 0$ as $x\to \infty$.\\
-We argue that the proof of the DPP in our case, can be obtained by a slight modification of the proof in \cite{Kab16}.
+%We argue that the proof of the DPP in our case, can be obtained by a slight modification of the proof in \cite{Kab16}.
 
 
 

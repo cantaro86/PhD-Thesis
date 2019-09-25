@@ -9,7 +9,7 @@
 
 This chapter presents the numerical methods for solving the option pricing problems with transaction costs presented in Section \ref{DPZ_j_sec}.
 The optimization problems (\ref{max_probl1}) and (\ref{minimization}) are solved by using the Markov chain approximation method. The same approach has been used 
-frequently in the literature in the case of diffusion processes, (see for instance \cite{HoNe89}, \cite{DaPaZa93}, \cite{Damgaard}, \cite{Mon04} and \cite{Pal15}). 
+frequently in the literature in the case of diffusion processes, e.g. \cite{HoNe89}, \cite{DaPaZa93}, \cite{Damgaard}, \cite{Mon04} and \cite{Pal15}. 
 We present results for the particular cases of diffusion process, Merton jump-diffusion and Variance Gamma process, although our scheme works for any Lévy process with finite variance. 
 We show that our numerical scheme, applied to the problem (\ref{minimization}), is monotone, consistent and stable, and that its solution converges to the viscosity solution of the  
 HJB eq. (\ref{HJB2}).
@@ -191,7 +191,7 @@ such that $l\in \{0,...,K_4-j\}$ and $m\in \{0,...,K_3+j\}$ for each fixed $j$.
 %\end{remark}
 
 \noindent
-The computational complexity of the algorithm (\ref{algo}) is 
+The computational complexity of the Algorithm [\ref{algo}] is 
 $$\mathcal{O}\biggl( (N+1)\bigl[\frac{N(\bar L-1)}{2}+1 \bigr] \times \bar M \times \bar M \biggr).$$
 The first factor comes from the loop over all the nodes of the tree i.e. $\sum_{n=0}^N n(\bar L-1)+1$. The second factor, $\bar M$, comes from the loop over all the values $y_j$, 
 and the third factor, $\bar M$, comes from the minimum search. 
@@ -362,7 +362,7 @@ $\hat \alpha \to \alpha$ and $\hat \eta \to \eta$.
 
 In Section \ref{algorithm_Sect} we introduced the discretization parameter $\rho = (\Delta t, h_x, h_y)$ and the discretized value function $Q^{\rho}$. 
 For a fixed $\rho$, we indicate $Q^n_{j,i} := Q^{\rho}(t_n,y_j,x_i)$.\\
-Using the functions in (\ref{FG}), let us define the numerical scheme corresponding to the algorithm \ref{algo}:
+Using the functions in (\ref{FG}), let us define the numerical scheme corresponding to the Algorithm [\ref{algo}]:
 
 \begin{scheme}\label{scheme}
 Let us define a two steps numerical scheme $\mathbb{S}$ such that 
@@ -486,7 +486,7 @@ $$ F\bigl(\bar \xx, \phi(\bar \xx), D\phi(\bar \xx), D^2\phi(\bar \xx), I(\bar \
 \section{Numerical results}\label{numerical} 
 
 
-In this section we implement the algorithm [\ref{algo}] described in Section \ref{algorithm_Sect} and calculate the prices of European call options for the writer and the buyer.
+In this section we implement the Algorithm [\ref{algo}] described in Section \ref{algorithm_Sect} and calculate the prices of European call options for the writer and the buyer.
 The prices are computed under the assumption that the stock log-price follows three different L\'evy processes: a Brownian motion, a Merton jump-diffusion and a Variance Gamma, with
 parameters in Table \ref{tab:parameters}.
 \begin{table}[ht]
@@ -805,7 +805,7 @@ indeed very close to the theoretical $\mathcal{O}(N^4)$.
 
 \subsection{Numerical convergence analysis}\label{num_conv_analysis}
 
-In this section we want to analyze the convergence properties of the algorithm [\ref{algo}] considering the prices presented in 
+In this section we want to analyze the convergence properties of the Algorithm [\ref{algo}] considering the prices presented in 
 Tables \ref{tab:convergence}, \ref{tab:convergence3} and \ref{tab:convergence4}. 
 
 \begin{figure}[t!]
@@ -1078,7 +1078,7 @@ With this method the total computational complexity is reduced because the numbe
 Although the method still relies on an approximation (the VG process is approximated by a general jump process with only the first four moments corresponding to the moments of the 
 original VG process),
 the number of branches is fixed to $\bar L = 5$, and therefore the computational complexity is reduced by a factor $\sqrt{N}$.
-Recall that the complexity of the algorithm [\ref{algo}] is 
+Recall that the complexity of the Algorithm [\ref{algo}] is 
 $$\mathcal{O}\biggl( (N+1)\bigl[\frac{N(\bar L-1)}{2}+1 \bigr] \times \bar M \times \bar M \biggr).$$
 Assuming $\bar M = N$ and $\bar L = 5$, the computational time is reduced to $\mathcal{O}(N^4)$. 
 \begin{table}[t!]
@@ -1150,24 +1150,31 @@ In Figures \ref{Fig32} and \ref{Fig33} we present numerical results obtained usi
 
 \section{Chapter conclusions}
 
-\todo{Not ready!! Still work in progress}
 
 In Chapter \ref{Chapter5} we derived the general HJB equation of the model, eq. (\ref{HJB1}), which is 
 a complicated equation with three state variables and a time variable. 
 After that, we decided to simplify the problem by reducing the number of variables, and we obtained the simpler HJB Eq. (\ref{HJB2}).
-In the end of Chapter \ref{Chapter6} we developed the algorithm [\ref{algo2}] to solve the maximization problem (\ref{max_probl1}) associated to the HJB eq. (\ref{HJB1})
-and presented numerical results. 
 
-However, more emphasis has been given to the reduced problem (\ref{minimization}), which is also the main topic of the paper \cite{Canta}.
-We proposed a monotone, stable and consistent numerical scheme and proved that its solution converges to the viscosity solution of the
+The objective of Chapter \ref{Chapter6} is to present numerical solutions of these optimization problems. 
+The chapter starts with the description of the Markov chain approximation approach, and presents the discretization of the continuous time problem.\\
+We proposed a monotone, stable and consistent numerical scheme. We also proved that the solution of the proposed scheme converges to the viscosity solution of the
 HJB equation (\ref{HJB2}).
-Numerical results of the equation (\ref{HJB2}) are obtained for the particular cases of diffusion, Merton jump-diffusion and Variance Gamma process, 
+
+Numerical results of the equation (\ref{HJB2}) are obtained for the particular cases of diffusion, Merton jump-diffusion and Variance Gamma processes, 
 although any Lévy process satisfying the conditions \textbf{EM} can be used. 
 The transition probabilities in the Markov chain approximation are obtained by explicit finite difference discretization of the 
 infinitesimal generator of the process. 
 The Brownian motion and the Merton process can be discretized directly, 
 while the VG process needs to be approximated to remove the infinite activity jump component.
-Due to this approximation, the algorithm [\ref{algo}] has slower convergence when applied to the VG dynamics.
-Using numerical experiments, we confirmed some features of the model such as the dependency degree of the price on the transaction costs, the risk aversion and the drift. 
-In the end of Chapter \ref{Chapter6} we also computed the option prices by using the multinomial approach, i.e. we derived the transition probabilities 
+Due to this approximation, the Algorithm [\ref{algo}] has slower convergence when applied to the VG dynamics.
+Using numerical experiments, we confirmed some features of the model such as the sensitivity of the price with respect to transaction costs, the risk aversion and the drift
+parameters. \\
+We also developed the Algorithm [\ref{algo2}] to solve the maximization problem (\ref{max_probl1}) associated to the HJB eq. (\ref{HJB1})
+and presented numerical results that consider the case of default. \\
+We conclude the Chapter \ref{Chapter6} presenting option prices under VG model, computed using the multinomial approach, 
+where the transition probabilities are obtained
 from the approximation introduced in Chapter \ref{Chapter3}. 
+
+
+
+
