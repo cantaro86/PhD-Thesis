@@ -11,25 +11,26 @@
 
 The main objective of this thesis is to develop a new model for pricing options in presence of proportional transaction costs.
 We propose a model that is a generalization of the model first introduced by \cite{HoNe89} and then formalized by \cite{DaPaZa93}.
-The principal difference with previous works in the literature is that we are considering a stock dynamics following a generic exponential Lévy process.
+The main difference with previous works in the literature is that we are considering a stock dynamics following a generic exponential Lévy process.
 Another new feature introduced in our model is the possibility of default for the investor's portfolio. These new features have already been introduced in articles 
 concerning portfolio selection problems e.g. \cite{Kab16}, but to our knowledge are completely new in the area of option pricing under transaction costs.
 Following the framework of \cite{Kab16}, we present an optimal singular control problem and derive the associated Hamilton-Jacobi-Bellman equation.
 In the thesis the option price is defined as the \emph{indifference price}, whose definition is based on the \emph{expected utility maximization} concept.
 One of the main theoretical contributions of the thesis is the proof of the existence of a viscosity solution 
-of this HJB equation. 
+for this HJB equation. 
 
 Since the general maximization problem (\ref{max_probl1}) is quite complex and its numerical solution is computationally expensive,
 we considered also the special case of an investor with a very large \emph{credit availability} i.e. the possibility of default is ignored.
 Under this assumption it is possible to reduce the number of variables of the problem. We then obtained the simplified problem (\ref{minimization}), 
 with the associated HJB equation (\ref{HJB2}).
-We proposed a monotone, stable and consistent numerical scheme and proved that its solution converges to the viscosity solution of the
+We proposed a numerical scheme and proved that it is a monotone, stable and consistent scheme.  
+Moreover, we proved that its solution converges to the viscosity solution of the
 HJB equation (\ref{HJB2}). This is another important theoretical contribution of the thesis.
 
 Numerical solutions are provided for both the HJB equations (\ref{HJB2}) and (\ref{HJB1}). 
 More emphasis was given to (\ref{HJB2}) where we presented several numerical results for different Lévy processes and we provided convergence and time complexity 
 analysis.
-The numerical example are provided for three different Lévy processes i.e. the Brownian motion, the Merton jump-diffusion and the Variance Gamma processes. 
+Numerical examples are provided for three different Lévy processes: the Brownian motion, the Merton jump-diffusion and the Variance Gamma processes. 
 We compared the results of our model with the prices obtained with the martingale pricing theory.
 We verified that for small risk aversion and for zero transaction costs, our model is able to replicate those prices with good precision.
 
@@ -38,7 +39,7 @@ discretization of the infinitesimal generator of the continuous time process.
 We showed that the Brownian motion and the Merton process can be discretized directly, 
 while the VG process needs to be approximated to remove the infinite activity jump component.
 We also present results obtained with the multinomial method of \cite{YaPr01} for the Variance Gamma process. In this case, there is no need to discretize the infinitesimal
-generator in order to construct the Markov chain approximation, and the computational complexity results smaller. 
+generator in order to construct the Markov chain approximation, and the computational complexity of the method is smaller. 
 
 
 To conclude, we want to mention some possible future improvements in this area of research. 

@@ -1151,16 +1151,17 @@ In Figures \ref{Fig32} and \ref{Fig33} we present numerical results obtained usi
 \section{Chapter conclusions}
 
 
-In Chapter \ref{Chapter5} we derived the general HJB equation of the model, eq. (\ref{HJB1}), which is 
-a complicated equation with three state variables and a time variable. 
+In Chapter \ref{Chapter5} we derived the general HJB equation of the model, Eq. (\ref{HJB1}), which is 
+an equation with three state variables and a time variable. 
 After that, we decided to simplify the problem by reducing the number of variables, and we obtained the simpler HJB Eq. (\ref{HJB2}).
 
 The objective of Chapter \ref{Chapter6} is to present numerical solutions of these optimization problems. 
 The chapter starts with the description of the Markov chain approximation approach, and presents the discretization of the continuous time problem.\\
-We proposed a monotone, stable and consistent numerical scheme. We also proved that the solution of the proposed scheme converges to the viscosity solution of the
+We proposed a numerical scheme and proved that it is monotone, stable and consistent. 
+We also proved that the solution of the proposed scheme converges to the viscosity solution of the
 HJB equation (\ref{HJB2}).
 
-Numerical results of the equation (\ref{HJB2}) are obtained for the particular cases of diffusion, Merton jump-diffusion and Variance Gamma processes, 
+Numerical results for the equation (\ref{HJB2}) are obtained for the particular cases of diffusion, Merton jump-diffusion and Variance Gamma processes, 
 although any Lévy process satisfying the conditions \textbf{EM} can be used. 
 The transition probabilities in the Markov chain approximation are obtained by explicit finite difference discretization of the 
 infinitesimal generator of the process. 
@@ -1169,9 +1170,9 @@ while the VG process needs to be approximated to remove the infinite activity ju
 Due to this approximation, the Algorithm [\ref{algo}] has slower convergence when applied to the VG dynamics.
 Using numerical experiments, we confirmed some features of the model such as the sensitivity of the price with respect to transaction costs, the risk aversion and the drift
 parameters. \\
-We also developed the Algorithm [\ref{algo2}] to solve the maximization problem (\ref{max_probl1}) associated to the HJB eq. (\ref{HJB1})
+We also developed the Algorithm [\ref{algo2}] to solve the maximization problem (\ref{max_probl1}) associated to the HJB Eq. (\ref{HJB1})
 and presented numerical results that consider the case of default. \\
-We conclude the Chapter \ref{Chapter6} presenting option prices under VG model, computed using the multinomial approach, 
+We conclude the Chapter \ref{Chapter6} by discussing how option prices can be computed under the VG model using the multinomial approach, 
 where the transition probabilities are obtained
 from the approximation introduced in Chapter \ref{Chapter3}. 
 
