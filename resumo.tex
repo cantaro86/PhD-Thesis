@@ -1,0 +1,87 @@
+
+    
+\vspace{10em}
+
+
+Na área da Matemática Financeira, um dos problemas fundamentais é a determinação do “preço justo” de uma opção. 
+Este problema não é trivial e para o resolver é necessário considerar um modelo estocástico adequado para a dinâmica do ativo financeiro subjacente 
+e também algumas hipóteses sobre o funcionamento do mercado. 
+
+Uma solução para o problema de avaliação de opções foi apresentada pela primeira vez no célebre artigo de  Fischer Black e Myron Scholes (\cite{BS73}). 
+No modelo de Black-Scholes standard assume-se um mercado sem fricções, onde a taxa de juro é constante e o processo de preço do ativo subjacente é um movimento Browniano geométrico. 
+Este modelo é, ainda hoje, um dos modelos mais usados para avaliar opções e definir estratégias de cobertura de risco. 
+As razões para a popularidade deste modelo prendem-se sobretudo com o facto dele fornecer fórmulas fechadas para o cálculo do preço das opções mais simples 
+e permitir estratégias de cobertura de risco facilmente implementáveis. 
+
+Apesar do modelo de Black-Scholes ser bastante popular, a aplicação do modelo pressupõe hipóteses que não refletem as verdadeiras características observadas empiricamente no mercado. 
+Em particular, a hipótese de que o processo de preço do ativo subjacente é um movimento Browniano geométrico, o que implica uma distribuição dos retornos logarítmicos Gaussiana, 
+é frequentemente rejeitada através de análises estatísticas rigorosas dos dados empíricos. 
+As distribuições empíricas dos retornos logarítmicos são habitualmente caracterizadas por uma maior massa na vizinhança do centro da distribuição e por caudas pesadas 
+(quando comparadas com a distribuição normal). 
+
+De forma a ultrapassar a inconsistência entre o movimento Browniano geométrico e os dados empíricos, vários autores consideraram processos estocásticos alternativos 
+para descrever a dinâmica dos preços do ativo subjacente. 
+Em particular, os processos de Lévy tornaram-se relativamente populares nas últimas duas décadas e são bons candidatos para reproduzir de forma mais precisa as distribuições empíricas 
+dos retornos logarítmicos. 
+Estes processos têm boas propriedades analíticas e incluem processos associados a distribuições com caudas pesadas. 
+Os processos de Lévy são, essencialmente, processos estocásticos com incrementos independentes e estacionários, que satisfazem também a propriedade de continuidade estocástica. 
+Nesta tese consideraremos em geral processos de Lévy para modelar o processo de preço do ativo subjacente e, em particular, consideraremos como principais exemplos 
+o movimento Browniano, o modelo de difusão com saltos de Merton e o processo “Variance Gamma”, que é um processo de atividade infinita.  
+
+A hipótese de mercado sem fricções, que é assumida no modelo de Black-Scholes standard, é também francamente irrealista, 
+porque os mercados financeiros são habitualmente caracterizados por diferentes tipos de taxas cobradas aos investidores sempre que estes realizam transações. 
+Em particular, as transações realizadas em tempo contínuo, tal como prescritas pelo modelo de Black-Scholes, não são praticáveis na realidade. 
+Além disso, a presença de custos ou taxas de transação impede a replicação perfeita do “payoff” da opção. 
+
+Nesta tese apresentamos um novo modelo para avaliação de opções na presença de custos de transação, 
+considerando que o processo de preço do ativo subjacente é um processo de Lévy exponencial. 
+O modelo proposto é a generalização do modelo introduzido inicialmente por \cite{HoNe89} e mais tarde formalizado por 
+\cite{DaPaZa93}, onde apenas o termo de difusão é considerado na dinâmica do preço. 
+No modelo estudado nesta tese introduzimos também a possibilidade de incumprimento (ou “default”) para a carteira do investidor. 
+No nosso modelo, o preço de uma opção é definido usando o conceito de “preço de indiferença”, considerando funções de utilidade e a teoria de otimização de carteiras em tempo contínuo. 
+O preço de uma opção é o valor que faz com que a escolha de um investidor seja indiferente (em termos da utilidade esperada da riqueza final) 
+entre as possibilidades de ter uma carteira com uma opção e ter uma carteira com a opção substituída por um prémio de risco fixo. 
+Na presença de custos de transação, a carteira de replicação perfeita não pode ser implementada. 
+Como consequência, a estratégia de cobertura de risco deixa de ser uma estratégia sem risco.  
+A estratégia de cobertura de risco ótima consiste em manter o valor da carteira dentro de uma região designada por “região de não transação”.  
+Considerando a abordagem descrita em \cite{Kab16}, formulamos o nosso problema de avaliação de opções com custos de transação como um problema de controlo singular ótimo 
+e deduzimos a equação de Hamilton-Jacobi-Bellman (HJB) para este problema. 
+Esta equação é uma equação integro-diferencial parcial (EIDP), que toma a forma de uma desigualdade variacional. 
+Assumimos que a função valor do problema é contínua e satisfaz o princípio de programação dinâmica. 
+Sob esta hipótese, provamos que a função valor é uma solução da equação HJB. 
+Esta solução deve ser interpretada como uma solução de viscosidade para o problema. 
+O problema de otimização original é complexo e obter uma aproximação numérica para a solução é, do ponto de vista computacional, um processo bastante intenso. 
+Para simplificar o problema considerámos o caso particular de um investidor com grandes recursos de crédito, de forma a ignorar a possibilidade de “default”. 
+Sob esta hipótese, e devido às propriedades da função utilidade exponencial, é possível reduzir o número de variáveis do problema e obter uma versão tridimensional do mesmo 
+e da equação HJB associada. 
+
+Um algoritmo é proposto para obter soluções numéricas para o problema original e para o problema simplificado. 
+No entanto, foi dada maior enfâse ao problema simplificado, uma vez que neste caso a complexidade computacional é menor e foi possível realizar mais estudos numéricos. 
+A abordagem numérica baseia-se no método de aproximação por cadeias de Markov proposto em \cite{Kushner}. 
+A dinâmica da carteira é aproximada por uma cadeia de Markov em tempo discreto. 
+Uma forma de construir a cadeia de Markov é através da discretização do gerador infinitesimal do processo, usando um método de diferenças finitas explícito. 
+Este tipo de construção é imediata para processos de atividade finita como o processo de difusão com saltos de Merton, mas para processos de atividade infinita, 
+como o processo “Variance-Gamma”, não é claro como obter as probabilidades de transição por este método. 
+Um procedimento alternativo habitual é aproximar a componente de martingala dos “saltos pequenos” do processo de atividade infinita por um movimento Browniano com a mesma variância, 
+de forma a remover a singularidade da medida de Lévy na vizinhança da origem. 
+Relativamente ao método numérico, este consiste essencialmente em criar um algoritmo de programação dinâmica recursivo, 
+de forma a calcular a função valor no instante “t” a partir do seu valor no instante “t+Δt”. 
+Em \cite{Kushner}, os autores provaram que a função valor obtida através de um algoritmo de programação dinâmica discreta deste tipo converge para a função valor do problema 
+original usando um argumento de convergência em probabilidade. 
+De forma a provar a convergência do nosso esquema numérico, usamos outra abordagem, baseada no método de prova de convergência para a solução de viscosidade introduzido 
+em \cite{BaSo91}. 
+Provamos que o esquema é monótono, estável e consistente. Provamos também que a solução obtida pelo esquema numérico converge para a solução de viscosidade da equação HJB. 
+
+Exemplos numéricos são apresentados para os casos particulares em que a dinâmica do preço do ativo subjacente é dada por: 
+(i) Movimento Browniano; (ii) Processo de difusão com saltos de Merton; (iii) Processo “Variance-Gamma”.  
+Comparamos os resultados obtidos pelo nosso modelo com os preços obtidos ao resolver a EIDP deduzida a partir da teoria de avaliação pelo método de martingala standard. 
+Para pequena aversão ao risco e para custos de transação nulos, o nosso modelo replica os preços obtidos a partir da EIDP com boa precisão.  
+As EIDP foram resolvidas através do esquema de diferenças finitas do tipo implícito-explícito proposto em \cite{CoVo05b}. 
+
+Nesta tese discutimos também o método multinomial proposto em \cite{YaPr01}, que é um método alternativo que permite obter as probabilidades de transição da cadeia de Markov aproximadas. 
+Aplicamos este método ao processo “Variance Gamma”, o qual é previamente aproximado por um processo de saltos com os mesmos quatro primeiros momentos e depois é discretizado 
+no tempo e no espaço. 
+Comparamos os resultados obtidos pelo método multinomial com os resultados obtidos a partir da solução da EIDP para o caso de opções Europeias e Americanas standard. 
+Aplicamos também o método multinomial ao modelo com custos de transação proposto nesta tese. 
+Neste método não há necessidade de discretizar o gerador infinitesimal para a construção da cadeia de Markov. 
+Uma vez que o número de ramos no método multinomial proposto é mantido fixo e igual a cinco, a complexidade computacional é mais pequena. 

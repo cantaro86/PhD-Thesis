@@ -84,13 +84,54 @@
 
 \graphicspath{{./pics/}}
 
+% ABSTRACT
+\newenvironment{abstract}[1]{%
+\begin{center}\normalfont\textbf{Abstract}\end{center}
+\begin{quotation} #1 \end{quotation}
+}{%
+\vspace{1cm}
+}
+
+% BLACK PAGE
+\def\blankpage{%
+      \clearpage%
+      \thispagestyle{empty}%
+      \addtocounter{page}{-1}%
+      \null%
+      \clearpage}
+
 \begin{document}
    
-
+\pagenumbering{gobble}
 \input{./Title.tex}
+
+\blankpage
+
+\abstract{\small
+In this thesis we present a new model for pricing European call options in presence of proportional transaction costs, 
+when the stock price follows a general exponential Lévy process.  
+The model is a generalization of the celebrated work of Davis, Panas and Zariphopoulou, where the value of the option is defined as the utility indifference price. 
+This approach requires the solution of a stochastic singular control problem in finite time. 
+We introduce the general formulation of the problem, and derive the associated Hamilton-Jacobi-Bellman equation (HJB), 
+which is a nonlinear partial integro-differential equation, with the form of a variational inequality.  
+We prove that the value function of the problem is a solution of the HJB equation in the viscosity sense.
+The original problem is then simplified for the specific case of the exponential utility function, under the assumption of absence of default for the investor's portfolio. 
+We solve numerically the optimization problems using the Markov chain approximation method. 
+We also apply the multinomial method to the Variance Gamma process, which is an alternative and more efficient approach to discretize the continuous time process.  
+We provide a numerical scheme and prove that it is monotone, stable and consistent and that the solution converges to the viscosity solution of the original HJB equation. 
+Several numerical solutions are presented for both the original problem and the simplified problem. 
+Numerical results are obtained for the cases of diffusion, Merton and Variance Gamma processes. 
+We provide convergence and time complexity analysis and comparisons with option prices computed using the standard martingale pricing theory.
+}
+\newpage
+
+\input{./resumo.tex}
+\newpage
 
 \dominitoc[n] % Initialization
 \tableofcontents
+
+%\pagenumbering{arabic}
 
 \frontmatter
 \input{./Introduction.tex}
