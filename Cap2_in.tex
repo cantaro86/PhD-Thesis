@@ -298,9 +298,10 @@ where $\LL^S$ is the infinitesimal generator in (\ref{RN_inf_gen}).
  Let us consider the formula 
  (\ref{derivative_price}) together with the Markov property (\ref{Markov_prop}). 
  For any stopping time $\tau$ such that $0 \leq t \leq \tau \leq T$, we can use the law of iterated expectations:
- \begin{equation*}
-   D(0,t) V(t,s) = \E^{\Q}  \biggl[ \E^{\Q} \bigl[ D(0,T) V(T,S_T) \big| S_{\tau} \bigr] \bigg| S_t \biggr] = \E^{\Q} \bigl[ D(0,\tau) V(\tau,S_{\tau}) \big| S_t \bigr]. 
- \end{equation*}
+ \begin{align*}
+   D(0,t) V(t,s) &= \E^{\Q}  \biggl[ \E^{\Q} \bigl[ D(0,T) V(T,S_T) \big| S_{\tau} \bigr] \bigg| S_t=s \biggr] \\ 
+                 &= \E^{\Q} \bigl[ D(0,\tau) V(\tau,S_{\tau}) \big| S_t=s \bigr]. 
+ \end{align*}
  We can write $D(0,\tau) V(\tau,S_{\tau}) = D(0,t) V(t,s) + \int_t^{\tau} d\bigl(D(t,u) V(u,S_u)\bigr) du$. 
  Using the It\=o product rule (\ref{Ito_product}) we get:
  \begin{align}\label{proof_Cont_V}

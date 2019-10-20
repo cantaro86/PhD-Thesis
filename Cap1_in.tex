@@ -77,8 +77,8 @@ the \emph{Merton model} and the \emph{Variance Gamma model}.
 
 Let $\{X_t\}_{t \ge 0}$ be a stochastic process taking values in $\R^n$,
 defined on a probability space $(\Omega,\mathcal{F},\{\mathcal{F}_t\}_{t \ge 0},\PP)$,
-where $\mathcal{F}_t$ is the natural filtration\footnote{The natural filtration is defined as $\mathcal{F}_{t}^X = \sigma\{X(s) :
-0\leq s \leq t\} $.} to which the process $\{X_t\}_{t \ge 0}$ is adapted.\\ 
+where we assume $\{\mathcal{F}_t\}_{t \ge 0}$ is the natural filtration\footnote{The natural filtration is defined as $\mathcal{F}_{t} = \sigma\{X_s :
+0\leq s \leq t\} $. Any process $\{X_t\}_{t \geq 0}$ is adapted to its own filtration.}.\\ 
 \begin{Definition}\label{LevyDef}
 We say that $\{X_t\}_{t \ge 0}$ is a \textbf{Lévy Process} if the following conditions hold:
 \begin{itemize}
@@ -480,7 +480,7 @@ In the definition of Feller semigroup, we used the space $C_0(\R^n)$ although so
 The space $C_0(\R^n)$ has nicer analytical properties than $C_b(\R^n)$ and allows to prove important probabilistic theorems.
 In particular, when replacing $C_0(\R^n)$ by $C_b(\R^n)$, the condition 2 above may fail.
 
-\begin{Definition}
+\begin{Definition}\label{Infinitesimal_generator_def}
 The \textbf{infinitesimal generator} $\LL$ of the Feller semigroup $T_t$ is defined by
 \begin{equation}
  \LL f =  \lim_{t \downarrow 0} \frac{T_t f - f}{t}.  
@@ -509,15 +509,13 @@ of a general Lévy process.
 A proof of this theorem can be found in \cite{Sato} (Theorem 31.5).\\
 
 \noindent
-In the more general framework of Section \ref{Optimal_control_framework} we will show that the integral term of 
-$\LL$ is well defined also for continuous functions that do not vanish at infinity, but have 
-polynomial growth (see Definition \ref{Cp}). 
-
+In the more general framework of Section \ref{Optimal_control_framework}, we will show that for processes with finite second moment, the operator 
+$\LL$ is well defined also for functions that do not vanish at infinity, but have polynomial growth (see Definition \ref{Cp}) of second order. 
 
   
 \subsection{The It\={o} formula} 
 
-Following the Section 4.2.2 of \cite{Applebaum}, we call $\mathcal{P}_2(T,E)$ with $E \in \mathcal{B}(\R^n)$, 
+Following Section 4.2.2 of \cite{Applebaum}, we call $\mathcal{P}_2(T,E)$ with $E \in \mathcal{B}(\R^n)$, 
 the set of all functions $f:[0,T]\times E \times \Omega \to \R$ satisfying the two conditions:
 \begin{enumerate}
  \item Predictable\footnote{Given the probability space $(\Omega,\mathcal{F},\{\mathcal{F}_t\}_{t\in [0,T]},\PP)$ and $E \in \mathcal{B}(\R^n)$. 
@@ -541,7 +539,7 @@ The expression (\ref{Levy_int}) has the differential form
  dY_t &= G_t dt  + F_t dW_t \\ \nonumber
      &+ \int_{|x|<1} H(t,x) \tilde N (dt,dx) + \int_{|x|\geq 1} K(t,x) N(dt,dx).
 \end{align}
-where we dropped the indexes and used the convention that integrals are taken on each components.
+where we dropped the indexes and used the convention that integrals are taken on each component.
 In order for (\ref{Levy_int}) to be well defined, for each $1 \leq i \leq n$, the processes $|G^i_s|^{1/2}$ and $F^i_s$ are in $\mathcal{P}_2 \bigl( T,\{0\} \bigr)$.
 The function $H^i(s,x) \in \mathcal{P}_2 \bigl( T, \{ |x|<1 \} \bigr)$ 
 and $K^i(s,x)$ have to be predictable.
@@ -642,8 +640,8 @@ then again the growth condition is a consequence of the Lipschitz condition.
  Given the conditions \textbf{C1}, \textbf{C2}, there exists a unique strong solution $Y_t$ of (\ref{modSDE}) with initial condition $Y_{t=0}=Y_{0}$.
  The process $\{Y_t\}_{t\geq 0}$ is cádlág and $\mathcal{F}_t$-adapted.
 \end{Theorem}
-A proof of existence and uniqueness based on Picard iteration, can be found in \cite{Applebaum} (see Theorem 6.2.3). For more information we refer to Chapter 3.2 of
-\cite{Skorohod} where the time inhomogeneous case is considered. 
+A proof of existence and uniqueness based on Picard iteration, can be found in \cite{Applebaum} (Theorem 6.2.3). For more information we refer to Chapter 3.2 of
+\cite{Skorohod} (Theorem 3.4) where the time inhomogeneous case is considered.
 
 
 \begin{Theorem}
