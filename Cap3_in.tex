@@ -269,7 +269,7 @@ $r$ & $\theta$ & $\sigma$ & $\kappa$ \\
 
 \begin{Remark}
 In practice, the risk neutral parameters of the VG model should be calibrated from market prices of European vanilla options, using the closed pricing formula of \cite{MCC98}.
-Then, this risk neutral VG model can be used to price exotic derivatives for which there are no closed formulas.
+After that, the risk neutral VG model can be used to price exotic derivatives for which there are no available closed formulas.
 The multinomial method is particularly suitable for American-style options, since Monte Carlo and PIDEs methods are in general more difficult to implement. 
 For this reason, tree methods are quite popular among practitioners. 
 \end{Remark}
@@ -367,6 +367,27 @@ To solve this equation we use the same discretization and same settings used in 
 
 The numerical values obtained by multinomial and PIDE methods are collected in Tab. \ref{Option_values3}.
 The run times for the multinomial algorithm are shown in the convergence Table \ref{Convergence}.
+The run times in the last column of Table \ref{Convergence} (for the American put option) can be compared with run times of the PIDE method, reported in Table \ref{PIDE_times}. 
+We can see that the difference is quite big. In order to achieve a precision of three decimal digits the PIDE algorithm takes more than two minutes, while the multinomial algorithm
+can achieve a precision of four decimal digits in about 10 seconds. 
+On the other hand, the multinomial prices are only approximations because are calculated considering the approximated process $X^A$ in place of the original VG process. 
+This is the reason of the discrepancy in the prices presented in the two tables, which still is a discrepancy of just $1\%$.
+\begin{table}[ht]
+\centering
+{\begin{tabular}{llll} 
+\toprule
+ M & N & PIDE Put & Time (seconds) \\
+\midrule
+ 8000  & 6000  & 2.3493 & 10 \\
+ 16000 & 12000 & 2.3521 & 50 \\
+ 25000 & 20000 & 2.3530 & 143 \\
+ 30000 & 25000 & 2.3532 & 229 \\
+\bottomrule
+\end{tabular}}
+\caption{American put option, with strike $K=40$ and $T=1$ and parameters in Tab. \ref{sample-table}. Computational times for $M$ space steps and $N$ time steps.}
+\label{PIDE_times}
+\end{table}
+
 \begin{figure}[ht!]
  \centering
  \includegraphics[scale=0.4]{American_VG.png}
@@ -386,7 +407,7 @@ $S_0$ & BS Eu. Put & VG Eu. Put & BS Am. Put & VG Am. Put & VG Am. PIDE Put \\
   34 & 5.1169 & 4.9851 & 6.0894 & 6      & 6 \\
   36 & 3.9150 & 3.7837 & 4.5415 & 4.3173 & 4.3982 \\
   38 & 2.9263 & 2.7756 & 3.3264 & 3.2034 & 3.2195 \\
-  40 & 2.1388 & 2.0908 & 2.3924 & 2.3767 & 2.3531 \\
+  40 & 2.1388 & 2.0908 & 2.3924 & 2.3767 & 2.3521 \\
   42 & 1.5322 & 1.5014 & 1.6911 & 1.6947 & 1.6849 \\
   44 & 1.0766 & 1.1229 & 1.1755 & 1.2267 & 1.2118 \\
   46 & 0.7433 & 0.7858 & 0.8043 & 0.8699 & 0.8650 \\

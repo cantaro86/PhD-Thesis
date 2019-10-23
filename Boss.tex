@@ -58,6 +58,11 @@
 {} % Theorem head spec (can be left empty, meaning `normal')
 
 
+% Roman numbers
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
 % riquadro attorno al testo
 \newbox{\riquadrobox}
 \newenvironment{riquadro}[1]
