@@ -16,9 +16,13 @@ and one ``risky" asset $S$. The assets in the portfolio have dynamics
  dS_t &=  S_t \left( \mu dt + \sigma dW_t \right),
 \end{cases}
 \end{equation} 
-with $\mu>r$ and $\sigma>0$. We denote by $\mathcal{W}_t = B_t + S_t$  the wealth at time $t$, and by $\pi_t$ the fraction of wealth invested in the risky asset. 
+with $\mu>r$ and $\sigma>0$. We denote by $\mathcal{W}_t = \omega^1_t B_t + \omega^2_t S_t$  the wealth at time $t$, where $\omega^1_t, \omega^2_t \in \R$ 
+are the quantities of the two assets held at time $t$.
+It is common to introduce the fraction $\pi_t$ of wealth invested in the risky asset. 
 In this way, it is possible to write
-$S_t = \pi_t \mathcal{W}_t$ and $B_t = (1-\pi_t) \mathcal{W}_t$. The model also considers the investor consumption $\{c_t\}_{0 \leq t \leq T}$. 
+$\omega^2_t S_t = \pi_t \mathcal{W}_t$ and $\omega^1_t B_t = (1-\pi_t) \mathcal{W}_t$ and the wealth equation becomes simply 
+$\mathcal{W}_t = \pi_t \mathcal{W}_t + (1-\pi_t) \mathcal{W}_t$. \\ 
+The model also considers the investor consumption $\{c_t\}_{0 \leq t \leq T}$. 
 The optimization problem can be formulated considering the utility function of the consumption and the terminal condition. It consists in maximizing the objective function
 \begin{equation}
  J(x;\pi,c) = \E_x \biggl[ \int_0^{T} e^{-\beta t} \mathcal{U}(c_t) dt + g(T,\mathcal{W}_T) \biggr],
@@ -138,19 +142,19 @@ as the set of all right-continuous, nondecreasing, $\mathcal{F}_t$-progressively
 $\{\pi_t\}_{t \in [t_0,T]}$, such that $(B^\pi_t,Y^\pi_t,S_t)$ is a solution of (\ref{DPZ_porfolio_dynamics}) with initial values $(B^\pi_{t_0} = b, Y^\pi_{t_0} = y, S_{t_0} = s)$, 
 and 
 \begin{equation}
- \mathcal{W}^{\pi}_t \in \mathcal{S}
+ (B^\pi_t,Y^\pi_t,S_t) \in \mathcal{S}
 \end{equation}
 for $t \in [t_0,T]$ almost surely.
 \end{Definition}
 
-\begin{Remark}
-In the first problem formulation of \cite{HoNe89}, the authors 
-consider a portfolio starting with zero total wealth. 
-The writer (or buyer) of the option creates a portfolio at time $t_0$ with the purpose of hedging the option.
-It is reasonable to assume that no shares of the underlying stock are contained in the portfolio at time $t_0$. 
-In the numerical computations of Chapter \ref{Chapter6}, we will consider portfolios with zero initial shares and initial cash amount $B_0$. 
-The model is able to compute option prices for an investor with any initial number $Y_0$ of shares if needed.
-\end{Remark}
+% \begin{Remark}
+% In the first problem formulation of \cite{HoNe89}, the authors 
+% consider a portfolio starting with zero total wealth. 
+% The writer (or buyer) of the option creates a portfolio at time $t_0$ with the purpose of hedging the option.
+% It is reasonable to assume that no shares of the underlying stock are contained in the portfolio at time $t_0$. 
+% In the numerical computations of Chapter \ref{Chapter6}, we will consider portfolios with zero initial shares and initial cash amount $B_0$. 
+% The model is able to compute option prices for an investor with any initial number $Y_0$ of shares if needed.
+% \end{Remark}
 
 
 
@@ -180,14 +184,14 @@ For $t \in [t_0,T]$, we define the wealth processes for the writer:
  \centering
  \includegraphics[scale=0.5]{payoff_comparison.png}
  % payoff_comparison.png: 0x0 pixel, 300dpi, 0.00x0.00 cm, bb=
- \caption{Comparison of payoffs of an European Call option with strike $K=15$, in a market with zero costs and in a market with $\theta_b=0.01$.}
+ \caption{Comparison of exercise conditions for a European Call option with strike $K=15$, in a market with zero costs and in a market with $\theta_b=0.01$.}
  \label{fig:payoff_comparison}
 \end{figure}
 In the case the option is exercised, $S_T(1+ \theta_b ) > K$, the buyer pays to the writer the strike value $K$ in cash, 
 and the writer delivers one share to the buyer.
 In a market with transaction costs the real value (in cash) of a share incorporates the transaction costs. 
 Therefore the buyer does not exercise when $S_T > K$, but when $S_T(1+ \theta_b ) > K$. 
-In Figure \ref{fig:payoff_comparison} there is a comparison between the payoff in a market with zero costs (such as in the Black-Scholes model) and a market with 
+In Figure \ref{fig:payoff_comparison} there is a comparison between the exercise conditions in a market with zero costs (as in Black-Scholes) and in a market with 
 transaction costs.
 
 The objective of the investor is to maximize the expected utility of the wealth at terminal time $T$ over all the admissible
@@ -203,7 +207,7 @@ V^j(t,b,y,s) := \sup_{\pi \in \Pi^j(t,b,y,s)} \; & \E_{t,b,y,s}\biggl[
 \end{align}
 where $\mathcal{U}: \R \to \R$ is a concave increasing utility function such that $\mathcal{U}(0)=0$.
 \end{Definition}
-Let us verify that the assumption (\ref{assumption_DPP}) is satisfied. Let us consider only the case $j=0$, because for $j=w,b$ the generalization is straightforward.
+Let us verify that the cost function is well defined. Let us consider only the case $j=0$, because for $j=w,b$ the generalization is straightforward.
 \begin{Theorem}
 The objective function is finite, i.e.
 $$ \E_{t,b,y,s}\biggl[ \mathcal{U}(\mathcal{W}^{\pi}_T) \biggr] < \infty$$
@@ -225,17 +229,28 @@ for all $\pi \in \Pi(t,b,y,s)$.
  (1-\theta_s) \frac{S_u}{\delta(u,T)} dM_u 
  \end{equation*}
  with $\delta(u,T) = e^{-r(T-u)}$.  
- By definition, a stochastic process has bounded variation if its sample paths have bounded variation for almost all $\omega \in \Omega$. 
- Then we can define $C = \sup_{\omega \in \Omega} (L_T-L_t) < \infty$.
+ By taking the expectation we get
  \begin{align*}
- \E_{t,b,y,s}\biggl[ \int_{t}^T (1+\theta_b)\frac{S_u}{\delta(u,T)} dL_u  \biggr] &\leq \frac{(1+\theta_b)}{\delta(t,T)} \E_{t,b,y,s}\biggl[ \sup_{u\in[t,T]} S_u \int_{t}^T dL_u  \biggr] \\
-                                                                                &\leq \frac{(1+\theta_b)}{\delta(t,T)} \E_{t,b,y,s}\biggl[ \sup_{u\in[t,T]} S_u (L_T-L_t)  \biggr] \\
-                                                                                &\leq \frac{(1+\theta_b)C}{\delta(t,T)} \E_{t,b,y,s}\biggl[ \sup_{u\in[t,T]} S_u \biggr] < \infty.
+ \E_{t,b,y,s}\biggl[ \int_{t}^T (1+\theta_b)\frac{S_u}{\delta(u,T)} dL_u  \biggr] & \leq \frac{(1+\theta_b)}{\delta(t,T)} 
+                                                                                    \E_{t,b,y,s}\biggl[ \biggl(\max_{u\in[t,T]} S_u \biggr)\int_{t}^T dL_u  \biggr] \\
+                                                                                &\leq \frac{(1+\theta_b)}{\delta(t,T)} \E_{t,b,y,s}\biggl[ \biggl(\max_{u\in[t,T]} S_u \biggr) L_T  \biggr] 
  \end{align*}
-The term $\E_{t,b,y,s}\bigl[ \sup_{u\in[t,T]} S_u \bigr]$ is finite because of (\ref{cond_3}).
+where for simplicity we assume $L_t=0$.
+ Let us define the running maximum $\mathcal{M}_T := \max_{u\in[t,T]} S_{u}$ 
+and introduce the (Radon-Nikodým derivative) random variable 
+\begin{equation}
+ Z_T = \frac{d \tilde{\PP}}{d \PP} := \frac{\mathcal{M}_T}{\mathbb{E}[\mathcal{M}_T]}. 
+\end{equation}
+where the term $\E \bigl[ \mathcal{M}_T \bigr] < \infty$ because of (\ref{cond_3}), and $Z_T$ satisfies the conditions $Z_T > 0$ and $\mathbb{E} \bigl[ Z_T \bigr] = 1$.
+We also know that $\E \bigl[ L_T \bigr] < \infty $ because of the assumption (\ref{singular_moments}).
+Now we can simplify the problem considering the equivalent measure $\tilde{\PP}$ in the expectation:
+\begin{align}
+  \E \bigl[ \mathcal{M}_T L_T \bigr]  =  \E[\mathcal{M}_T] \, \E \bigl[ Z_T L_T \bigr]      \\ \nonumber
+                            = \E[\mathcal{M}_T] \, \tilde \E \bigl[ L_T \bigr] < \infty.
+\end{align}
 The same argument can be applied to $\E_{t,b,y,s}\bigl[ \int_{t}^T (1-\theta_s) \frac{S_u}{\delta(u,T)} dM_u \bigr]$.\\
-The term $Y^{\pi}_T = L_T - M_T$ is also bounded by a constant $C$, and we obtain that $\E_{t,b,y,s}\bigl[ Y^{\pi}_T S_T \bigr] \leq C \E_{t,b,y,s}\bigl[ S_T \bigr] < \infty$.
-This concludes the proof.
+The term $\E_{t,b,y,s}\bigl[S_T (Y^{\pi}_T)\bigr] = \E_{t,b,y,s}\bigl[ S_T(L_T - M_T) \bigr]$ is finite as well.
+We can change the measure using  $Z_T := \frac{S_T}{\mathbb{E}[S_T]}$ and obtain the same result.
 \end{proof}
 
 
@@ -280,7 +295,7 @@ dt +  \left( \begin{array}{l}
 \sigma S_{t}
 \end{array} \right) dW_t \\ \nonumber
 &+ \underbrace{\left( \begin{array}{cc}
--S_{t}(1+\sigma_b) & S_{t}(1-\sigma_s) \\
+-S_{t}(1+\theta_b) & S_{t}(1-\theta_s) \\
 1 & -1 \\
 0 & 0
 \end{array} \right)}_{\kappa(t,X_t)}
@@ -291,26 +306,104 @@ dM_t
 \end{align}
 which can be easily identified with the general equation (\ref{singular_SDE}).
 The state $X^{\pi}_t$ takes values in $\OO$ corresponding to the solvency region $\SI$.
-The value function (\ref{max_probl0}) has a cost functional as in (\ref{singular_cost_functional}) with $f$ and $h$ equal to zero. 
+The objective function that we maximize in Eq. (\ref{max_probl0}) corresponds to Eq. (\ref{singular_cost_functional}) with $\hat f$ and $h$ equal to zero. 
 
+Let us check that the Frobenius condition (\ref{Frobenius}) is satisfied.
+Let us call $\tilde \theta_b = (1+\theta_b)$ and $\tilde \theta_s = (1-\theta_s)$.  The commutator is:
+\begin{equation}
+ \left( \begin{array}{ccc}
+0 & 0 & -\tilde \theta_b \\
+0 & 0 & 0 \\
+0 & 0 & 0
+\end{array} \right)
+\left( \begin{array}{l}
+ S_{t}\tilde \theta_s \\
+-1 \\
+0
+\end{array} \right) -
+ \left( \begin{array}{ccc}
+0 & 0 & \tilde \theta_s \\
+0 & 0 & 0 \\
+0 & 0 & 0
+\end{array} \right)
+\left( \begin{array}{l}
+-S_{t}\tilde \theta_b \\
+1 \\
+0
+\end{array} \right) = 0
+\end{equation}
+which shows that the condition is satisfied.
 
 According to singular control theory, the HJB equation of a singular control problem is a variational inequality. Here we can obtain the HJB equation of this problem 
 from the general equation (\ref{variational_inequality}). We omit the subscript of $V^j$ when the discussion refers to all the three problems. 
-Let us indicate $x = (b,y,s)$, then
-\begin{itemize}
- \item $ D_x V(t,x) = \left( \frac{\partial V(t,b,y,s)}{\partial b}, \frac{\partial V(t,b,y,s)}{\partial y}, \frac{\partial V(t,b,y,s)}{\partial s} \right) $
- \item $H(t,x,p) = \sup_{a \in \hat K} \bigl( p \cdot \kappa(t,x) \cdot a  \bigr) \quad \mbox{ and define } 
-        \quad \hat K = \left( \begin{array}{c}
+Let us indicate $x = (b,y,s)$. Let us consider:
+$$ D_x V(t,x) = \left( \frac{\partial V(t,b,y,s)}{\partial b}, \frac{\partial V(t,b,y,s)}{\partial y}, \frac{\partial V(t,b,y,s)}{\partial s} \right) $$
+and
+$$ \hat K := \biggl \{ \biggl( \begin{array}{c} l \\ m \end{array} \biggr) \in [0,\infty) \times [0,\infty): |l|^2 + |m|^2 = 1 \biggr \}. $$ 
+Following (\ref{set_K}) we obtain
+\begin{align*}
+& \sup_{l,m \in \hat K}
+\left( \frac{\partial V}{\partial b}, \frac{\partial V}{\partial y}, \frac{\partial V}{\partial s} \right)
+\left( \begin{array}{cc}
+-s(1+\theta_b) & s(1-\theta_s) \\
+1 & -1 \\
+0 & 0
+\end{array} \right)
+\left( \begin{array}{c}
+l \\
+m 
+\end{array} \right) \\ 
+= & \sup_{l,m \in \hat K}
+\frac{\partial V}{\partial b} \biggl( -s(1+\theta_b)l + s(1-\theta_s)m \biggr) +
+\frac{\partial V}{\partial y} \bigl( l-m \bigr) \\
+= & \sup_{l,m \in \hat K}
+l \biggl( -s(1+\theta_b)\frac{\partial V}{\partial b} + \frac{\partial V}{\partial y} \biggr) +
+m \biggl( s(1-\theta_s)\frac{\partial V}{\partial b} - \frac{\partial V}{\partial y} \biggr)
+\end{align*}
+
+\vspace{3em}
+\noindent
+The terms 
+$$ \biggl( -s(1+\theta_b)\frac{\partial V}{\partial b} + \frac{\partial V}{\partial y} \biggr) 
+\quad \mbox{and} \quad \biggl( s(1-\theta_s)\frac{\partial V}{\partial b} - \frac{\partial V}{\partial y} \biggr)  $$
+cannot be positive at the same time, otherwise we would get
+$$ s(1+\theta_b)\frac{\partial V}{\partial b} < \frac{\partial V}{\partial y} < s(1-\theta_s)\frac{\partial V}{\partial b} $$
+which is impossible for $s,\theta_b,\theta_s>0$. \\
+
+\noindent
+The other possibilities are 
+\begin{enumerate}
+ \item $\biggl(-s(1+\theta_b)\frac{\partial V}{\partial b} + \frac{\partial V}{\partial y}\biggr) > 0$ 
+ and $\biggl(s(1-\theta_s)\frac{\partial V}{\partial b} - \frac{\partial V}{\partial y}\biggr) \leq 0$. \\ The optimal control is $l=1$ and $m=0$.
+ \item $\biggl(-s(1+\theta_b)\frac{\partial V}{\partial b} + \frac{\partial V}{\partial y}\biggr) \leq 0$
+ and $\biggl(s(1-\theta_s)\frac{\partial V}{\partial b} - \frac{\partial V}{\partial y}\biggr) > 0$. \\ The optimal control is $l=0$ and $m=1$.
+ \item $\biggl(-s(1+\theta_b)\frac{\partial V}{\partial b} + \frac{\partial V}{\partial y}\biggr) < 0$ and 
+ $\biggl(s(1-\theta_s)\frac{\partial V}{\partial b} - \frac{\partial V}{\partial y}\biggr) < 0$. \\ The optimal control is $l=0$ and $m=1$ or $l=1$ and $m=0$, depending on which term 
+ is bigger.
+\end{enumerate}
+
+\noindent
+We should also consider the case when both are zero, which happens for 
+$$\frac{\partial V}{\partial b} = \frac{\partial V}{\partial y} = 0.$$ 
+But this is not possible because the function $V$ is an increasing function of $b$ and $y$ 
+(for a proof see Theorem 5.3.4 in \cite{Damgaard}).
+Intuitively, this can be explained by thinking that an extra initial wealth provides higher final expected utility.
+
+\noindent
+From this argument we derived the optimal set $\hat K = \left( \begin{array}{c}
 			   1 \\
 			   0
                           \end{array} \right) \bigcup \left( \begin{array}{c}
 			   0 \\
 			   1
-                          \end{array}
-  \right)$ 
- \item $H \bigl(t,x, D_x V(t,x) \bigr) = \max \biggl\{ \frac{\partial V}{\partial y}-(1+\theta_b) s \frac{\partial V}{\partial b} ,
- -\bigl( \frac{\partial V}{\partial y} -(1-\theta_s)s \frac{\partial V}{\partial b} \bigr) \biggr\} $
-\end{itemize}
+                          \end{array} \right)$.
+
+Considering again Eq. (\ref{set_K}), together with the optimal set $\hat K$,
+we obtain
+$$ H \bigl(t,x, D_x V(t,x) \bigr) = \max \biggl\{ \frac{\partial V}{\partial y}-(1+\theta_b) s \frac{\partial V}{\partial b} ,
+ -\bigl( \frac{\partial V}{\partial y} -(1-\theta_s)s \frac{\partial V}{\partial b} \bigr) \biggr\}. $$
+
+\noindent 
 The resulting HJB equation is
 \begin{align}\label{DPZ_HJB}
 & \max \; \biggl\{ \; \frac{\partial V}{\partial t} + rb\frac{\partial V}{\partial b} 
@@ -366,10 +459,12 @@ and the \textbf{No Transaction} (NT) regions.
    \end{cases}
   \end{equation*}
 \end{itemize}
-The optimization problem is a free boundary problem, and its solution consists of finding the value function $V$ and the 
+The optimization problem is a free boundary problem, and its solution consists in finding the value function $V$ and the 
 optimal boundaries that divide the three regions.
-We assume that the Buy and Sell regions are separated by the NT region. This assumption is reasonable since buying and selling a share at the same time just decreases the 
-total wealth (because of the transaction costs) and therefore makes no sense. 
+The Buy and Sell regions do not intersect, and are separated by the NT region. 
+In the derivation of the optimal set $\hat K$, we have seen that it is not optimal to buy and sell a share at the same time. 
+This is reasonable since buying and selling a share at the same time just decreases the 
+total wealth, because of the transaction costs, and therefore makes no sense. 
 
 The free boundaries of the NT region completely characterize the investor's trading strategy.
 The optimal strategy consists in keeping the portfolio process inside the NT region. 
@@ -403,12 +498,12 @@ The state of the portfolio at time $t\in [t_0,T]$ is $(B^{\pi}_t,Y^{\pi}_t,S_t)$
  dS_t &=  S_{t^-} \left( \mu dt + \sigma dW_t + \int_{\R} (e^z-1) \tilde N(dt,dz) \right).
 \end{cases}
 \end{equation}
-The strategy $\{\pi_t\}_{t \in [t_0,T]}$ is a cádlág, \textbf{predictable}, nondecreasing process with bounded variation, such that
+The strategy $\{\pi_t\}_{t \in [t_0,T]}$ is a cádlág, predictable with respect to $\{\mathcal{F}^S_t\}_{t\in[t_0,T]}$, nondecreasing process with bounded variation, such that
 $ \pi_{t_0^-} = \bigl ( L_{t_0^-} , M_{t_0^-} \bigr ) = (0,0)$.
 Under these assumptions the portfolio process 
-$\bigl \{(B^{\pi}_t,Y^{\pi}_t,S_t)\bigr \}_{t \in [t_0,T]}$ is cádlág.
+$\bigl \{(B^{\pi}_t,Y^{\pi}_t,S_t)\bigr \}_{t \in [t_0,T]}$ has a cádlág modification, and this is what we consider.
 
-If at time $t$ there is an unpredictable jump in the stock price $\Delta S_t = S_t - S_{t^-}$, a possible transaction should happen immediately after the jump.
+If at time $t$ there is an unpredictable jump in the stock price $\Delta S_t = S_t - S_{t^-}$, a possible transaction should happen after the jump.
 The control process $\{\pi_t\}_{t \in [t_0,T]}$ is assumed to be predictable, i.e. measurable with respect to the left-continuous filtration generated by $\{S_{t^-}\}_{t \in [t_0,T]}$.
 Therefore, a jump in the price and a jump in the control cannot occur simultaneously, almost surely. 
 A deeper digression on this topic can be found in Section 2 of \cite{Kab16}.   
@@ -423,18 +518,17 @@ solvent for all $t \in [t_0,T]$. When holding short positions, it is possible th
 causes the total wealth to jump out of the solvency region. 
 The same can happen with a downward jump when the investor is long in stocks and negative in cash. 
 The immediate decrease of the stock's price makes him unable to pay the debts.
-If the investor goes bankrupt, there are no trading strategies to save him.
 \begin{Definition}
 The first \textbf{exit time} from the solvency region is defined as:
 \begin{equation}\label{exit_time}
- \tau := \inf \bigl\{ t \in [t_0,T] : \mathcal{W}^{\pi}_t \not\in \SI \bigr\}.
+ \tau := \inf \bigl\{ t \in [t_0,T] : (B^\pi_t,Y^\pi_t,S_t) \not\in \SI \bigr\}.
 \end{equation} 
 \end{Definition}
 \begin{Definition}\label{set_trad_strat}
 The set of \textbf{admissible trading strategies} $\Pi(t_0,b,y,s)$   
 is the set of all cádlág, nondecreasing, predictable, bounded variation processes $\{\pi_t\}_{t \in [t_0,T]}$
 such that $(B^\pi_t,Y^\pi_t,S_t)$ is a solution of (\ref{porfolio_dynamics}) with initial values $(B^\pi_{t_0} = b, Y^\pi_{t_0} = y, S_{t_0} = s)$ and such that
-$\mathcal{W}^{\pi}_t \in \SI$ almost surely for all $t\in [t_0,\tau)$, and $\pi_t = \pi_{\tau}$ for all $t \geq \tau$.  
+$\pi_t = \pi_{\tau}$ for all $t \geq \tau$.  
 \end{Definition}
 
 The objective of the investor is to maximize the expected utility of the wealth at $\tau^j \wedge T$ over all the admissible
@@ -490,7 +584,7 @@ $B^{\pi}_t \geq 0$ and $Y^{\pi}_t \geq 0$ for all $t\in [t_0,T]$ (see \cite{Bent
 However, in order to implement a hedging strategy, we are interested in portfolios containing short positions as well.
 So, we can assume that the investor has a very large credit availability $C$ in the sense that
 \begin{equation}\label{P_tau}
- \PP(\tau > T) \underset{C\to \infty}{\approx} 1.
+ \PP(\tau > T) \underset{C\to \infty}{\to} 1.
 \end{equation}
 In practical terms, we ignore the possibility of default. The solvency region becomes $\mathcal{S} = \R^2 \times \R^{+}$ and no lateral boundary conditions are imposed.
 
@@ -581,8 +675,8 @@ fails because the state process may jump due to the singular control and it need
 in a small ball\footnote{For processes of type (\ref{singular_SDE}) it is not possible to apply the theorem (\ref{stochastic_theorem}).} 
 for a small $\Delta t$.
 This problem can be circumvented by relying on the
-existence of the optimal control, as done in \cite{DaPaZa93}. However, in our proof we will not assume the existence of the optimal control, which  
-in this framework does not exist.
+existence of the optimal control, as done in \cite{DaPaZa93}. However, in our proof we will not assume the existence of the optimal control, because 
+in this framework it does not exist (as explained in Section \ref{DPZ_j_sec} it is not possible to give an immediate response at the jump time of the stock).
 We will assume that the \textbf{DPP} for the singular control problem (\ref{porfolio_dynamics}), (\ref{max_probl1}) holds, and that the value function  
 is continuous. We refer to Sections 4 and 9 of \cite{Kab16} for the proofs of these statements. 
 
@@ -591,12 +685,12 @@ as the viscosity solution of the HJB equation (\ref{HJB1}).
 The proof follows the approach in \cite{OkSu01}.
 
 Let us call $\tau_{\SI}$ the first exit time from $\SI$.
-Since the stock dynamics is stochastically continuous and (by definition) the control process $\pi$ cannot be the cause of bankruptcy,
+Since the stock dynamics is stochastically continuous and the control process $\pi$ cannot be the cause of bankruptcy,
 we can exclude an immediate jump out of the solvency region, i.e. $t_0 \not = \tau_{\SI}$.
 
 We have to interpret the HJB equation (\ref{HJB1}) with boundary conditions (\ref{lat_bound}) and (\ref{terminal_conditions}) 
 as a parabolic problem of the type (\ref{parabolic_PIDE}). 
-We use the dummy variable $x = (b,y,s)$ to indicate a point in $\R^2\times \R^+$. In order to satisfy the parabolic conditions we reformulate the HJB as 
+Let us use the notation $x = (b,y,s)$ to indicate a point in $\R^2\times \R^+$. In order to satisfy the parabolic conditions we reformulate the HJB as 
 \begin{align}\label{HJB22}
 & \min \; \biggl\{ - \biggl( \; \frac{\partial V}{\partial t} + rb\frac{\partial V}{\partial b} 
 + \mu s \frac{\partial V}{\partial s} + \frac{1}{2}\sigma^2 s^2 \frac{\partial^2 V}{\partial s^2} \\ \nonumber
@@ -658,7 +752,7 @@ This means that all the terms inside the minimum in Eq. (\ref{qvi_min}) are posi
  -(1+\theta_b) \bar s \frac{\partial \phi}{\partial b}(\bar t, \bar x)\right) > \kappa,$
  \item $\frac{\partial \phi}{\partial y}(\bar t, \bar x)-(1-\theta_s) \bar s \frac{\partial \phi}{\partial b}(\bar t, \bar x) > \kappa.$
 \end{enumerate}
-Since the test function is smooth by definition, there exist a ball $\mathcal{B}(\bar x, \rho) \subset \SI$
+Since the test function is smooth by definition, there exists a closed ball $\mathcal{B}(\bar x, \rho) \subset \SI$
 where the three previous conditions are satisfied $\forall x \in \mathcal{B}(\bar x, \rho)$. 
 We can define the exit time of the process $\{X_t\}_{t \in [\bar t, T\wedge \tau_{\SI}]}$ from the ball $\mathcal{B}(\bar x, \rho)$:
 \begin{equation}
@@ -705,7 +799,7 @@ Using (\ref{max_point}) and (\ref{max_point2}) we can write:
  \leq \E_{\bar x}[\phi(\tau_{\rho}, X^{\pi}_{\tau_{\rho}})] + \epsilon.
 \end{equation*}
 In the following, in order to get a more readable notation, when necessary we indicate $X_t$ with $X(t)$.
-The test function $\phi$ is smooth enough to use the generalized It\=o formula.
+The test function $\phi$ is smooth enough to use the generalized It\=o formula (see Appendix A in \cite{OkSu01}).
 \begin{align}\label{first_inequality}
  0 \; \leq & \; \E_{\bar x} \biggl[ \phi(\tau_{\rho}, X^{\pi}_{\tau_{\rho}}) - \phi(\bar t, \bar x) \biggr] + \epsilon \\ \nonumber
     = & \; \E_{\bar x} \biggl[ \int_{\bar t}^{\tau_{\rho}} -\LL \phi(t,X^{\pi}_t) dt \\ \nonumber
@@ -716,7 +810,11 @@ The test function $\phi$ is smooth enough to use the generalized It\=o formula.
     & + \sum_{\bar t \leq t_k \leq \tau_{\rho}} \biggl( \phi \bigl( t_k, B^{\pi}(t_k^-) + (1-\theta_s) S(t_k^-)\, \Delta M_{t_k}, Y^{\pi}(t_k^-) - \Delta M_{t_k}, S(t_k) \bigr) \\ \nonumber
     & \hspace{4em} - \phi \bigl(t_k, B^{\pi}(t_k^-), Y^{\pi}(t_k^-), S(t_k) \bigr) \biggr) \biggr] + \epsilon
 \end{align}
-where again $t_k$ denotes the jump times of $\{\pi_t\}_{t \in [\bar t, \tau_{\rho}]}$ and we indicate the continuous parts of $\pi$ as
+where the expectation of the martingale terms is zero\footnote{
+The martingale terms have the same expression as (\ref{term1}) and (\ref{term2}). 
+Thanks to the smoothness assumption of $\phi$, the derivatives of $\phi$ are continuous in $[\bar t, \tau_{\rho}] \times \mathcal{B}(\bar x, \rho)$ and therefore are bounded.
+Using the same arguments as in Theorem \ref{Theorem_PIDE} it follows that the expectations are zero. }. 
+We denote with $t_k$ the jump times of $\{\pi_t\}_{t \in [\bar t, \tau_{\rho}]}$ and indicate the continuous parts of $\pi$ as
 \begin{equation}
  L^c_t = L_t - \sum_{\bar t \leq t_k \leq \tau_{\rho}} \Delta L_{t_k} \quad \mbox{ and } \quad  M^c_t = M_t - \sum_{\bar t \leq t_k \leq \tau_{\rho}} \Delta M_{t_k}.
 \end{equation}
@@ -836,6 +934,7 @@ The test function $\phi$ is smooth enough to use the generalized It\=o formula.
     & \hspace{4em} - \phi \bigl(t_k, B^{\pi}(t_k^-), Y^{\pi}(t_k^-), S(t_k) \bigr) \biggr) \biggr] 
 \end{align}
 where, as in (\ref{first_inequality}) the $t_k$ denote the jump times of $\{\pi_t\}_{t \in [\bar t, \tau]}$ and $L^c$, $M^c$ indicate the continuous parts of $\pi$. 
+As explained for (\ref{first_inequality}), the expectation of the martingale terms is zero.
 
 Now we can consider the two cases:
 \begin{enumerate}

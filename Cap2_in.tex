@@ -205,7 +205,7 @@ In order to overcome this problem, there are several methods to select the best 
 see \cite{Cont}, Chapter 10).
 However, the best approach is to derive the model parameters directly from the prices of derivatives (usually European call and put options with different strikes and maturities) 
 already quoted in the market.
-The process of choosing the risk neutral parameters for a model that reproduces the prices in the market is called \emph{model calibration}.
+The process of choosing the risk neutral parameters for a model, such that it reproduces the prices in the market is called \emph{model calibration}.
 In this chapter all the parameters of the Lévy processes used for the pricing purpose, are intended to be risk neutral parameters obtained by a calibration process.
 
 
@@ -281,7 +281,7 @@ For $f \in C^{2}(\R^+) \bigcap \mathcal{C}_2(\R^+)$, the associated infinitesima
 \end{align}
 
 The derivative pricing function $V(t,s)$ with $t \in [0,T]$ and $s\in \R^+$, can be obtain by solving a pricing PIDE according to the following theorem.
-\begin{Theorem}
+\begin{Theorem}\label{Theorem_PIDE}
  Let us consider an arbitrage free market, where the underlying stock price follows the exponential Lévy process (\ref{ELM2}). 
  Let also assume that $V(t,s) \in C^{1,2}([t_0,T] \times \R^+)$ and the derivatives   %\bigcap \mathcal{C}_2([t_0,T] \times \R^+)$,
  $\frac{\partial V}{\partial t}$, $\frac{\partial V}{\partial s}$ %are in $\mathcal{C}_1([t_0,T] \times \R^+)$

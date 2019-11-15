@@ -65,7 +65,7 @@ We indicate with $\mathcal{A}$ the space of controls.
 This space comprises all predictable processes $\alpha: [0,T]\times \Omega \to  A$, with respect to $\{\mathcal{F}_{t}\}_{t\geq 0}$.
 In this section we assume a compact\footnote{The assumption of a compact set $A$ is a strong assumption. It will be relaxed in the next sections.} set $A \subset \R^m$.
 In this thesis we only consider Markovian controls such that $\alpha_t := \alpha(t,X_{t^-}) $.
-The function $\alpha(t,x) : [0,T] \times \R^n \to A$ must be a measurable function, and 
+The function $\alpha(t,x) : [0,T] \times \R^n \to A$ is a measurable function, and 
 in order to guarantee existence and uniqueness of a solution of (\ref{controlled_SDE}), we assume it satisfies the Lipschitz condition with respect to $x$.
 
 In Section \ref{existence_uniqueness}, we presented existence and uniqueness conditions for a time-homogeneous SDE. 
@@ -204,7 +204,7 @@ The finite second moment assumption ensures that (\ref{rho}) is finite for $\rho
 
 
 
-\subsection{Dynamic Programming Principle}
+\subsection{Dynamic Programming Principle}\label{DPP_section}
 
 Define the cylindrical region $Q = [t_0,T) \times \mathcal{O}$, with $\mathcal{O} \subseteq \R^n$ an open set. 
 We define the first exit time from $Q$ as 
@@ -289,11 +289,14 @@ arbitrarily close to $t$.
 In this section we assume that the value function is continuously differentiable and obtain a formal nonlinear PIDE satisfied by the value function.
 In general however, the value function is not necessarily differentiable, and the notion of \emph{viscosity solution} should be considered.
 The Hamilton-Jacobi-Bellman equation (HJB) is the infinitesimal version of the DPP. It describes the local behavior of the value function when the stopping time $\theta$ converges to $t$. 
-The HJB equation is also called \textbf{dynamic programming equation}.
+The HJB equation is also called \textbf{dynamic programming equation}.\\
+The following heuristic derivation is taken from Section \rom{3}.7 of \cite{FlemingSoner}, where the authors assume the existence of the optimal control.
+For this derivation it is necessary to assume that the control is continuous and of Markov type. 
 \newline
 
 \noindent
-Let us consider the stopping time $\theta = t + h$, with $h>0$, in the DPP (\ref{DPP1}) and a constant control $\alpha_s = a$ for $s \in [t,\theta]$. 
+In the DPP (\ref{DPP1}),
+let us consider the stopping time $\theta = t + h$, with $h>0$ and such that $\theta \in \mathcal{T}_{t,\tau}$, and a constant control $\alpha_s = a$ for $s \in [t,\theta]$. 
 Subtract $V(t,x)$ from both sides and then divide by $h$. This yields
 \begin{align*}
    0 \geq& \; \E_{t,x} \biggl[ \int_t^{t+h} f(s,X_s,a) ds + V(t+h, X_{t+h}) - V(t,x) \biggr]. \\ 
@@ -324,24 +327,7 @@ We can combine the two results (\ref{ineq_HJB}), (\ref{opt_HJB}) in a single com
 \begin{equation}\label{DPE}
  -\frac{\partial V(t,x)}{\partial t} - \sup_{a \in A} \biggl( f(t,x,a) + \LL^{a}V(t,x)  \biggr) = 0.
 \end{equation}
-
-\begin{Remark}
-In the previous sections we worked under the assumption that $A$ is compact. 
-But in general, the HJB (\ref{DPE}) is well defined also for non-compact sets $A$, as long as the supremum in $a\in A$ is finite.
-When $A$ is compact and $b$, $\sigma$, $\gamma$ and $f$ are continuous with respect to $a$, the supremum is always attained. 
-In Section \ref{singular_control} we will see that when $A$ is unbounded, and the supremum in $a\in A$ is not finite, the HJB equation becomes a variational inequality.
-\end{Remark}
-
-Let us define the Hamiltonian function
-\begin{align} \nonumber
- 0 = & - \frac{\partial V(t,x)}{\partial t} - \mathcal{H}\bigl( t,x,D_x V, D_{xx} V, \mathcal{I}^a(t,x,V) \bigr) 
-\end{align}
-where for $(t,x,p,M,I^a) \in Q \times \R^n \times S^n \times \R$:\footnote{$S^n$ is the set of symmetric matrices of dimension $n$.} 
-\begin{align}\label{Hamiltonian}
- \mathcal{H}(t,x,p,M,I^a) =& \sup_{a \in A} \biggl( f(t,x,a) \, + b(t,x,a) p \\ \nonumber
-              &+ \frac{1}{2} \mbox{Tr} \bigl( \sigma(t,x,a)\sigma^T(t,x,a) \, M \bigr) +I^a \biggr) 
-\end{align}
-The regular terminal and lateral boundary conditions of this nonlinear PIDE are: 
+The terminal and lateral boundary conditions of this nonlinear equation are: 
 \begin{equation}\label{DPE_term_cond}
  V(T,x) = g(T,x).
 \end{equation}
@@ -350,19 +336,30 @@ The regular terminal and lateral boundary conditions of this nonlinear PIDE are:
 \end{equation}
 
 
+\begin{Remark}
+The assumptions used in the derivation of (\ref{DPE}) are very restrictive. 
+In general, the HJB (\ref{DPE}) is well defined also for non-compact sets $A$, as long as the supremum in $a\in A$ is attained.
+\end{Remark}
+
+% In Section \ref{singular_control} we will see that when 
+% $A$ is unbounded and the supremum in $a\in A$ is not finite, the HJB equation becomes a variational inequality.
+
+
+
+
 \section{Singular control}\label{singular_control}
 
 In the previous section, the theory of stochastic control for generalized jump-diffusion processes is presented under the assumption that the control process 
 takes values in a compact space.
 In this section this assumption is relaxed, and the control space $A$ is assumed to be unbounded.
-When the problem coefficients are linear functions of the control, the form (\ref{DPE}) of the HJB equation is no more valid. 
+When the problem coefficients are linear functions of the control, the supremum in (\ref{DPE}) can be infinite. 
 In Section \ref{singular_sec1}
-we present a formal derivation of the HJB equation, that under these assumptions has the form of a \textbf{variational inequality}. 
+we present a formal derivation of the HJB equation when $A$ is unbounded and the control acts linearly. This equation has the form of a \textbf{variational inequality}. 
 A rigorous basis to this derivation can be given a posteriori by means of a verification theorem, or by considering the viscosity solution framework. 
 For more details we refer to Chapter \rom{8}.4 of \cite{FlemingSoner} or to Theorem 5.2 of \cite{OksendalSulem}.
 
 When considering $A$ unbounded and a linear dependence of the coefficients on $\alpha$, in general there are no optimal controls, and 
-$\epsilon$-optimal controls take arbitrarily large values.
+$\epsilon$-optimal controls may take arbitrarily large values.
 For this reason it is convenient to reformulate the problem by introducing a new control variable $\xi$ defined as
 \begin{equation}
  \xi_t = \int_0^t \hat \alpha_s du_s,
@@ -377,13 +374,112 @@ with
 u_t = \int_0^t |\alpha_s| ds.
 \end{equation}
 In order to obtain optimal controls we enlarge the class of controls to admit $\xi_t$ which may not be an absolutely continuous function of $t$.
-But we assume that $\xi_t$ is a cádlág, predictable, non-decreasing function with bounded variation on every time interval $[0,T]$.
+We assume that $\xi_t$ is a cádlág, predictable, non-decreasing function with bounded variation on every time interval $[0,T]$.
 In Section \ref{singular_sec2} we present the general formulation for \textbf{singular control} problems.
-The name \emph{singular} comes from the fact that the control process $\xi$ can be singular with respect to the Lebesgue measure $dt$.
+The name \emph{singular} comes from the fact that the control process $\{\xi_t\}_{t \geq 0}$ can be singular with respect to the Lebesgue measure $dt$.
+
+
+\subsection{Singular control formulation}\label{singular_sec2}
+
+Let us consider a state system governed by the following SDE:
+\begin{align}\label{singular_SDE}
+ dX_t =& \hat b(t,X_{t-}) dt + \hat \sigma (t,X_{t-}) dW_t \\ \nonumber
+      &+ \int_{\R} \hat \gamma(t,X_{t-},z) \tilde N(dt,dz) + \kappa(t,X_{t-}) d\xi_t .
+\end{align} 
+where the coefficients 
+$\hat b: [0,T]\times \R^n \to \R^n$, $\hat \sigma: [0,T]\times \R^n \to \R^{n \times d}$, 
+$\hat \gamma: [0,T]\times \R^n \times \R^n \to \R^{n}$, $\kappa : [0,T] \times \R^n \to \R^{n \times m}$
+are continuous and Lipschitz.
+The function $\kappa(t,X_{t-})$ must also satisfy the following:
+\begin{itemize}
+ \item \textbf{Frobenius condition}:
+ \begin{equation}\label{Frobenius}
+  \frac{\partial \kappa^i(t,x)}{\partial x} \kappa^j(t,x) = \frac{\partial \kappa^j(t,x)}{\partial x} \kappa^i(t,x) \quad \mbox{for each} \quad 1 \leq i, j \leq m,
+ \end{equation}
+\end{itemize}
+The Frobenius conditions requires that the columns of the $n\times m$ matrix $\kappa(t,x)$ commutes. For more information on this topic we refer to Chapter 3.3 of \cite{Arutyunov}.  
+
+The m-dimensional process $\xi : [0,T] \times \Omega \to \R^m$ is a $\mathcal{F}_t$-predictable, cádlág, bounded variation, 
+non-decreasing process, with $\xi_{0^-} = 0$. 
+We also assume that 
+\begin{equation}\label{singular_moments}
+\E\bigl[ (\xi_t)^k \bigr] \quad \mbox{for} \quad k=1,2,...  
+\end{equation}
+and denote with $\Pi$ the space of all controls $\xi$.
+
+Proofs of existence and uniqueness of Eq. (\ref{singular_SDE}) can be found for instance in \cite{DoDa76}, \cite{Gal78} and \cite{GyKr80}, 
+where some of the assumptions above are slightly relaxed.  \todo{In Gal-Chuk he proves X has finite moment. Therefore polynomial bound is enough? Or just use 4.38. 
+Let us check together.}   
+
+For $\tau$ defined in (\ref{exit_time_def}), the objective function is:
+\begin{equation}\label{singular_cost_functional}
+ J^{\xi}(t,x) = \E_{t,x} \biggl[ \int_t^{\tau} \hat f(s,X_s) ds + \int_t^{\tau} h(s,X_{s^-}) d\xi_s + g(\tau, X_{\tau}) \biggr], 
+\end{equation}
+with $\hat f:[0,T]\times \R^n \to \R$, $h: [0,T] \times \R^n \to \R^{m}$ 
+and $g: \bigl( [0,T)\times \R^n \backslash \mathcal{O} \bigr) \bigcup \bigl( \R^n \times \{T\} \bigr) \to \R$ continuous and bounded by a 
+polynomial function of a suitable order $p\geq0$. Let us define the set 
+\begin{equation}
+ \Pi_{t,x} = \{ \xi \in \Pi : J^{\xi}(t,x) < \infty \}.
+\end{equation}
+The value function is
+\begin{equation}\label{controlled_VF}
+ V(t,x) = \sup_{\Pi_{t,x}} J^{\xi}(t,x).
+\end{equation}
+
+A straightforward modification of (\ref{DPP1}) and (\ref{DPP2}) yields the: \\
+\textbf{DPP for singular control}:
+\emph{
+ \begin{itemize}
+  \item For all $\xi \in \Pi_{t,x}$ and all stopping time $\theta \in \mathcal{T}_{t,\tau}$:
+  \begin{equation}\label{DPP11}
+   V(t,x) \geq \E_{t,x} \biggl[ \int_t^{\theta} \hat f(s,X_s) ds + \int_t^{\theta} h(s,X_{s^-}) d\xi_s + V(\theta, X_{\theta}) \biggr]. 
+  \end{equation}
+  \item For all $\epsilon > 0$, there exists $\xi \in \Pi_{t,x}$ such that $\forall \theta \in \mathcal{T}_{t,\tau}$: 
+  \begin{equation}\label{DPP22}
+      V(t,x) \leq \E_{t,x} \biggl[ \int_t^{\theta} \hat f(s,X_s) ds + \int_t^{\tau} h(s,X_{s^-}) d\xi_s + V(\theta, X_{\theta}) \biggr] + \epsilon. 
+  \end{equation}
+ \end{itemize}
+}
+
+% \begin{center}
+% \begin{riquadro}{12cm}
+% \textbf{Assumption:}\\
+% We assume that the value function (\ref{controlled_VF}) satisfies the DPP for singular control problem, under the hypothesis presented in this section. 
+% For the purpose of this thesis, we require that it holds for $f = h = 0$ and for $g$ satisfying
+% \begin{equation}\label{assumption_DPP}
+%  \E_{t,x} \biggl[ g(\tau, X_{\tau}) \biggr] \,< \, \infty
+% \end{equation}
+% for all $\xi \in \Pi_{t,x}$. 
+% \end{riquadro}
+% \end{center}
+
+
+To our knowledge, there is no proof of the DPP for singular control under the assumptions presented in this section. \\
+In \cite{FlemingSoner} the authors formulate the DPP in Chapter \rom{8}.5 for diffusion processes, without providing a proof.\\ 
+In \cite{Kab16} the authors prove the DPP for a singular-regular control problem with infinite horizon. 
+The singular control influences only the state dynamics, described by a geometric Lévy process. The function $f$, instead, is affected by the regular control i.e. 
+$f(t,\alpha_t) = e^{-\beta t} \mathcal{U}(\alpha_t)$, with $\beta>0$ and $\mathcal{U} : A \to \R^+$ a concave function such that $\mathcal{U}(0)=0$ and 
+$\frac{\mathcal{U}(x)}{x}\to 0$ as $x\to \infty$.\\
+%We argue that the proof of the DPP in our case, can be obtained by a slight modification of the proof in \cite{Kab16}.
+
 
 \subsection{Derivation of the variational inequality}\label{singular_sec1}
 
-When the control space $A$ is unbounded, the Hamiltonian (\ref{Hamiltonian}) may take infinite values. Let us assume that $A$ is a closed cone in $\R^m$ i.e. 
+
+For $(t,x,p,M,I) \in Q \times \R^n \times S^n \times \R$, let us define the Hamiltonian function:\footnote{$S^n$ is the set of symmetric matrices of dimension $n$.}
+\begin{align}\label{Hamiltonian}
+ \mathcal{H}(t,x,p,M,I) =& \sup_{a \in A} \biggl( f(t,x,a) \, + b(t,x,a) p \\ \nonumber
+              &+ \frac{1}{2} \mbox{Tr} \bigl( \sigma(t,x,a)\sigma^T(t,x,a) \, M \bigr) +I \biggr) 
+\end{align}
+where $f$, $b$, $\sigma$ and $A$ are defined as in Sections \ref{Optimal_control_framework} and \ref{DPP_section}.
+Using (\ref{DPE}), we can write:
+\begin{align} \nonumber
+ 0 = & - \frac{\partial V(t,x)}{\partial t} - \mathcal{H}\bigl( t,x,D_x V, D_{xx} V, \mathcal{I}^a(t,x,V) \bigr) 
+\end{align}
+where $\mathcal{I}^a(t,x,V)$ is the integral operator (\ref{int_oper}).
+
+If we relax the assumption of a compact control space, and consider $A$ to be unbounded, the Hamiltonian (\ref{Hamiltonian}) may be infinity. 
+Let us assume that $A$ is a closed cone in $\R^m$ i.e. 
 \begin{equation}\label{unbounded_set}
  a \in A, \quad \lambda > 0 \Longrightarrow \lambda a \in A.
 \end{equation}
@@ -394,7 +490,7 @@ Let us assume also that the control influences linearly the dynamics of the syst
 \end{align}
 where $\kappa : [0,T] \times \R^n \to \R^{n \times m}$ is continuous and Lipschitz and $h: [0,T] \times \R^n \to \R^{m}$ is a continuous function with polynomial growth of same order
 of $f$.
-Let us indicate with $\hat I$ the integral operator (\ref{int_oper}) containing $\hat \gamma(t,x,z)$.
+Let us indicate with $\hat I$ the integral operator containing $\hat \gamma(t,x,z)$.
 The Hamiltonian becomes
 \begin{align*}
  \mathcal{H}(t,x,p,M,\hat I) =& \biggl( \hat f(t,x) \, + p \, \hat b(t,x) \\ \nonumber
@@ -402,7 +498,7 @@ The Hamiltonian becomes
               \underbrace{\sup_{a \in A} \biggl( \bigl( p \, \kappa(t,x) + h(t,x) \bigr) a \biggr) }_{\hat H(t,x,p)} 
 \end{align*}
 If for some $a\in A$ and for fixed $(t,x)$ we have $\bigl( p \, \kappa(t,x) + h(t,x) \bigr) a>0$, then $\hat H(t,x,p) = \infty$. We can define 
-\begin{equation}
+\begin{equation}\label{set_K}
  H(t,x,p) = \sup_{a \in \hat K} \biggl( \bigl( p \, \kappa(t,x) + h(t,x) \bigr) a \biggr) \quad \mbox{ with } \quad \hat K = \{ a \in A: |a|=1 \}
 \end{equation}
 such that
@@ -428,71 +524,14 @@ The last equation can be written in a more compact form. We have the following \
  \max \biggl\{ \frac{\partial V(t,x)}{\partial t} + \hat f(t,x) + \LL^{a=0}V(t,x) \,,\, H\bigl( t,x, D_x V(t,x) \bigr) \biggr \} =0 \quad \mbox{for} \quad (t,x)\in Q. 
 \end{equation}
 
-\subsection{Singular control formulation}\label{singular_sec2}
 
-Let us consider a state system governed by the following SDE:
-\begin{align}\label{singular_SDE}
- dX_t =& \hat b(t,X_{t-}) dt + \hat \sigma (t,X_{t-}) dW_t \\ \nonumber
-      &+ \int_{\R} \hat \gamma(t,X_{t-},z) \tilde N(dt,dz) + \kappa(t,X_{t-}) d\xi_t .
-\end{align} 
-where the coefficients 
-$\hat b: [0,T]\times \R^n \to \R^n$, $\hat \sigma: [0,T]\times \R^n \to \R^{n \times d}$, 
-$\hat \gamma: [0,T]\times \R^n \times \R^n \to \R^{n \times l}$, $\kappa : [0,T] \times \R^n \to \R^{n \times m}$
-are continuous and Lipschitz.
-The m-dimensional process $\xi : [0,T] \times \Omega \to \R^m$ is a predictable, cádlág, bounded variation, 
-non-decreasing process, with $\xi_{0^-} = 0$. Let us denote with $\Pi$ the space of all controls $\xi$ and with $\Pi_{t,x}$ the subset dependent on the current state $(t,x)$.   
-
-For $\tau$ defined in (\ref{exit_time_def}), the objective function is:
-\begin{equation}\label{singular_cost_functional}
- J^{\xi}(t,x) = \E_{t,x} \biggl[ \int_t^{\tau} f(s,X_s) ds + \int_t^{\tau} h(s,X_{s^-}) d\xi_s + g(\tau, X_{\tau}) \biggr], 
-\end{equation}
-with $\hat f:[0,T]\times \R^n \to \R$, $h: [0,T] \times \R^n \to \R^{m}$ 
-and $g: \bigl( [0,T)\times \R^n \backslash \mathcal{O} \bigr) \bigcup \bigl( \R^n \times \{T\} \bigr) \to \R$ continuous and with polynomial growth of a suitable order $p\geq0$.
-The value function is
-\begin{equation}\label{controlled_VF}
- V(t,x) = \sup_{\Pi_{t,x}} J^{\xi}(t,x).
-\end{equation}
 Under certain assumptions, it can be proved that the value function (\ref{controlled_VF}) is a viscosity solution of a variational inequality 
-with form (\ref{variational_inequality}).
-
-A straightforward modification of (\ref{DPP1}) and (\ref{DPP2}) yields the expressions: \\
-\textbf{DPP for singular control}:
-\emph{
- \begin{itemize}
-  \item For all $\xi \in \Pi_{t,x}$ and all stopping time $\theta \in \mathcal{T}_{t,\tau}$:
-  \begin{equation}\label{DPP11}
-   V(t,x) \geq \E_{t,x} \biggl[ \int_t^{\theta} f(s,X_s) ds + \int_t^{\theta} h(s,X_{s^-}) d\xi_s + V(\theta, X_{\theta}) \biggr]. 
-  \end{equation}
-  \item For all $\epsilon > 0$, there exists $\xi \in \Pi_{t,x}$ such that $\forall \theta \in \mathcal{T}_{t,\tau}$: 
-  \begin{equation}\label{DPP22}
-      V(t,x) \leq \E_{t,x} \biggl[ \int_t^{\theta} f(s,X_s) ds + \int_t^{\tau} h(s,X_{s^-}) d\xi_s + V(\theta, X_{\theta}) \biggr] + \epsilon. 
-  \end{equation}
- \end{itemize}
-}
-
-\begin{center}
-\begin{riquadro}{12cm}
-\textbf{Assumption:}\\
-We assume that the value function (\ref{controlled_VF}) satisfies the DPP for singular control problem, under the hypothesis presented in this section. 
-For the purpose of this thesis, we require that it holds for $f = h = 0$ and for $g$ satisfying
-\begin{equation}\label{assumption_DPP}
- \E_{t,x} \biggl[ g(\tau, X_{\tau}) \biggr] \,< \, \infty
-\end{equation}
-for all $\xi \in \Pi_{t,x}$.
-\end{riquadro}
-\end{center}
-
-To our knowledge, there is no proof of the DPP for singular control under the assumptions presented in this section. \\
-In \cite{FlemingSoner} the authors formulate the DPP in Chapter \rom{8}.5 for diffusion processes, without providing a proof.\\ 
-In \cite{Kab16} the authors prove the DPP for a singular-regular control problem with infinite horizon. 
-The singular control influences only the state dynamics, described by a geometric Lévy process. The function $f$, instead, is affected by the regular control i.e. 
-$f(t,\alpha_t) = e^{-\beta t} \mathcal{U}(\alpha_t)$, with $\beta>0$ and $\mathcal{U} : A \to \R^+$ a concave function such that $\mathcal{U}(0)=0$ and 
-$\frac{\mathcal{U}(x)}{x}\to 0$ as $x\to \infty$.\\
-%We argue that the proof of the DPP in our case, can be obtained by a slight modification of the proof in \cite{Kab16}.
+(\ref{variational_inequality}).
 
 
 
-\section{Viscosity solutions theory}\label{viscosity_solution_section}
+
+\section{Definition of viscosity solution}\label{viscosity_solution_section}
 
 This section is dedicated to the definition of viscosity solutions.
 In the literature there are different definitions of viscosity solution depending on the context. 
@@ -505,7 +544,7 @@ a strong comparison principle.
 
 \noindent
 Here we present the definition for continuous viscosity solutions introduced in \cite{Kab16}, which is suitable for the problem proposed in Chapter \ref{Chapter5} of this thesis.
-
+\newline
 
 % Recall the definition of semi-continuous function:
 % \begin{Definition}
@@ -521,9 +560,7 @@ Here we present the definition for continuous viscosity solutions introduced in 
 
 
 
-\subsection{Definition viscosity solution}
-
-
+\noindent
 Let us consider a general parabolic problem:
 \begin{equation}\label{parabolic_PIDE}
 \begin{cases}
@@ -532,7 +569,8 @@ u(t,x) = g(t,x) \quad \mbox{ for } \quad (t,x) \not \in Q
 \end{cases}
 \end{equation}
 where $g \in C^0 \bigcap \mathcal{C}_2([0,T] \times (\R^n \backslash \OO))$ is a given function and 
-$F$ is a continuous function that satisfies the following elliptic/parabolic local and non local conditions. 
+$F$ is a continuous function that satisfies the following elliptic/parabolic local and non local conditions.\footnote{Although I use the same notation, 
+the functions and variables introduced in this section are not the same as those of the previous sections.} 
 For all $t\in [0,T); \; x \in \OO; \; r,\hat r \in \R; \; q,\hat q \in \R; \; 
 p \in \R^n; \; M,\hat M \in \SI^n; \; \I, \hat \I \in \R$:
 \begin{itemize}
