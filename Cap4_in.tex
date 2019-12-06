@@ -389,7 +389,7 @@ Let us consider a state system governed by the following SDE:
 where the coefficients 
 $\hat b: [0,T]\times \R^n \to \R^n$, $\hat \sigma: [0,T]\times \R^n \to \R^{n \times d}$, 
 $\hat \gamma: [0,T]\times \R^n \times \R^n \to \R^{n}$, $\kappa : [0,T] \times \R^n \to \R^{n \times m}$
-are continuous and Lipschitz.
+are continuous in $t$ and Lipschitz-continuous in $x$.
 The function $\kappa(t,X_{t-})$ must also satisfy the following:
 \begin{itemize}
  \item \textbf{Frobenius condition}:
@@ -403,38 +403,40 @@ The m-dimensional process $\xi : [0,T] \times \Omega \to \R^m$ is a $\mathcal{F}
 non-decreasing process, with $\xi_{0^-} = 0$. 
 We also assume that 
 \begin{equation}\label{singular_moments}
-\E\bigl[ (\xi_t)^k \bigr] \quad \mbox{for} \quad k=1,2,...  
+\E\bigl[ (\xi_T)^2 \bigr] < \infty  
 \end{equation}
 and denote with $\Pi$ the space of all controls $\xi$.
 
-Proofs of existence and uniqueness of Eq. (\ref{singular_SDE}) can be found for instance in \cite{DoDa76}, \cite{Gal78} and \cite{GyKr80}, 
-where some of the assumptions above are slightly relaxed.  \todo{In Gal-Chuk he proves X has finite moment. Therefore polynomial bound is enough? Or just use 4.38. 
-Let us check together.}   
+The proof of existence and uniqueness of a solution 
+of Eq. (\ref{singular_SDE}) can be found in \cite{DoDa76}, where it is also proved that the solution has finite second moment  
+(see Step 3a of Lemma 1). 
+Alternative proofs, where some of the assumptions above are slightly relaxed, can be found in \cite{Gal78} and \cite{GyKr80}.  
 
 For $\tau$ defined in (\ref{exit_time_def}), the objective function is:
 \begin{equation}\label{singular_cost_functional}
- J^{\xi}(t,x) = \E_{t,x} \biggl[ \int_t^{\tau} \hat f(s,X_s) ds + \int_t^{\tau} h(s,X_{s^-}) d\xi_s + g(\tau, X_{\tau}) \biggr], 
+ J^{\xi}(t,x) := \E_{t,x} \biggl[ \int_t^{\tau} \hat f(s,X_{s}) ds + \int_t^{\tau} h(s,X_{s^-}) d\xi_s + g(\tau, X_{\tau}) \biggr], 
 \end{equation}
-with $\hat f:[0,T]\times \R^n \to \R$, $h: [0,T] \times \R^n \to \R^{m}$ 
-and $g: \bigl( [0,T)\times \R^n \backslash \mathcal{O} \bigr) \bigcup \bigl( \R^n \times \{T\} \bigr) \to \R$ continuous and bounded by a 
-polynomial function of a suitable order $p\geq0$. Let us define the set 
-\begin{equation}
- \Pi_{t,x} = \{ \xi \in \Pi : J^{\xi}(t,x) < \infty \}.
-\end{equation}
+where $\hat f:[0,T]\times \R^n \to \R$, $h: [0,T] \times \R^n \to \R^{m}$ 
+and $g: \bigl( [0,T)\times \R^n \backslash \mathcal{O} \bigr) \bigcup \bigl( \R^n \times \{T\} \bigr) \to \R$ are continuous functions bounded by 
+polynomial functions of a suitable order $p\geq0$, in order to guarantee $J^{\xi}(t,x) < \infty$. 
+% Let us define the set 
+% \begin{equation}
+%  \Pi_{t,x} = \{ \xi \in \Pi : J^{\xi}(t,x) < \infty \}.
+% \end{equation}
 The value function is
 \begin{equation}\label{controlled_VF}
- V(t,x) = \sup_{\Pi_{t,x}} J^{\xi}(t,x).
+ V(t,x) := \sup_{\Pi} J^{\xi}(t,x).
 \end{equation}
 
 A straightforward modification of (\ref{DPP1}) and (\ref{DPP2}) yields the: \\
 \textbf{DPP for singular control}:
 \emph{
  \begin{itemize}
-  \item For all $\xi \in \Pi_{t,x}$ and all stopping time $\theta \in \mathcal{T}_{t,\tau}$:
+  \item For all $\xi \in \Pi$ and all stopping time $\theta \in \mathcal{T}_{t,\tau}$:
   \begin{equation}\label{DPP11}
    V(t,x) \geq \E_{t,x} \biggl[ \int_t^{\theta} \hat f(s,X_s) ds + \int_t^{\theta} h(s,X_{s^-}) d\xi_s + V(\theta, X_{\theta}) \biggr]. 
   \end{equation}
-  \item For all $\epsilon > 0$, there exists $\xi \in \Pi_{t,x}$ such that $\forall \theta \in \mathcal{T}_{t,\tau}$: 
+  \item For all $\epsilon > 0$, there exists $\xi \in \Pi$ such that $\forall \theta \in \mathcal{T}_{t,\tau}$: 
   \begin{equation}\label{DPP22}
       V(t,x) \leq \E_{t,x} \biggl[ \int_t^{\theta} \hat f(s,X_s) ds + \int_t^{\tau} h(s,X_{s^-}) d\xi_s + V(\theta, X_{\theta}) \biggr] + \epsilon. 
   \end{equation}
