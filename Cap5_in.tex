@@ -757,12 +757,12 @@ We can define the exit time of the process $\{X^{\pi}_t\}_{t \in [\bar t, T\wedg
 with $N^{\rho}>0$ fixed.
 Since $\mathcal{B}(\bar x, \rho) \subset \SI$ it follows that $\tau_{\rho} \leq \tau_{\SI}$.\\
 We want to localize the problem, inside the ball $\mathcal{B}(\bar x, \rho) $ where the three conditions above are satisfied.
-For this purpose, let us define the ball $\mathcal{B}(\bar x, \delta) \subset \mathcal{B}(\bar x, \rho) $ for a $\delta < \rho$,
+For this purpose, let us define the ball $\mathcal{B}(\bar x, \delta) \subset \mathcal{B}(\bar x, \rho) $ for $\delta < \rho$,
 and the exit time
 \begin{equation}
  \tau_{\delta} := \inf \{ t \in [t_0,T] : X^{\pi}_t \not \in \mathcal{B}(\bar x, \delta) \} \wedge N^{\delta},
 \end{equation}
-with $N^{\delta} < N^{\rho}$. It follows that $\PP(\tau_{\delta} < \tau_{\rho}) = 1$. \\
+with $N^{\delta} < N^{\rho}$. It follows that $\PP(\tau_{\delta} \leq \tau_{\rho}) = 1$. \\
 Let us denote with $t_k$ the jump times of $\{\pi_t\}_{t \in [\bar t, \tau_{\delta}]}$ and indicate the continuous parts of $\pi$ as 
 $\pi^c = (L^c, M^c)$ with
 \begin{equation}
@@ -773,10 +773,10 @@ due to a jump in the stock process $\Delta S_{\tau_{\rho}}$ or due to a jump of 
 
 In order to prevent the exit due to a stock jump, we can take advantage from the stochastic continuity property of the stock process $S$. 
 For this purpose, we can 
-consider the evolution of the portfolio $X^{\pi=0}$ (subject to a null control), up to the exit time from the smaller ball $ \mathcal{B}(\bar x, \delta) $. 
+consider the evolution of the portfolio $X^{\pi=0}$ (subject to a null control), up to the exit time from the ball $ \mathcal{B}(\bar x, \delta) $. 
 Since the control is null, the jumps of $X^{\pi=0}$ correspond to the jumps of $S$.
 Let us indicate with $\tau_{\delta,0}$ the exit time of $X^{\pi=0}$ from $ \mathcal{B}(\bar x, \delta) $.
-Thanks to Theorem \ref{stochastic_theorem}, for $C>0$ we have $\PP( |X^{\pi=0}_{\tau_{\delta,0}} - \bar x| \geq \rho ) \leq C \sqrt{\tau_{\delta,0}}$. 
+Thanks to Theorem \ref{stochastic_theorem}, for $C>0$ we have that $\PP( |X^{\pi=0}_{\tau_{\delta,0}} - \bar x| \geq \rho ) \leq C \sqrt{\tau_{\delta,0}}$. 
 Therefore we can select the value of $\delta$ such that the probability that $X^{\pi=0}_{\tau_{\delta,0}}$ is not included in $ \mathcal{B}(\bar x, \rho) $ 
 can be made arbitrarily small.
 
