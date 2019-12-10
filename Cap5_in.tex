@@ -752,18 +752,20 @@ Since the test function is smooth by definition, there exists a closed ball $\ma
 where the three previous conditions are satisfied $\forall x \in \mathcal{B}(\bar x, \rho)$. 
 We can define the exit time of the process $\{X^{\pi}_t\}_{t \in [\bar t, T\wedge \tau_{\SI}]}$, with $X^{\pi}_{\bar t} = \bar x$, from the ball $\mathcal{B}(\bar x, \rho)$ as
 \begin{equation}
- \tau_{\rho} := \inf \{ t \in [t_0,T] : X^{\pi}_t \not \in \mathcal{B}(\bar x, \rho) \} \wedge T^{\rho},
+ \tau_{\rho} := \inf \{ t \in [\bar t,T] : X^{\pi}_t \not \in \mathcal{B}(\bar x, \rho) \} \wedge T^{\rho},
 \end{equation}
-with $T^{\rho}>0$ fixed.
+with $T^{\rho}>0$.
 Since $\mathcal{B}(\bar x, \rho) \subset \SI$ it follows that $\PP( \tau_{\rho} \leq \tau_{\SI}) =1$.\\
 We want to localize the problem, inside the ball $\mathcal{B}(\bar x, \rho) $ where the three conditions above are satisfied.
 For this purpose, let us define the ball $\mathcal{B}(\bar x, \delta) \subset \mathcal{B}(\bar x, \rho) $ for $\delta < \rho$,
 and the exit time
 \begin{equation}\label{tau_delta0}
- \tau_{\delta} := \inf \{ t \in [t_0,T] : X^{\pi}_t \not \in \mathcal{B}(\bar x, \delta) \} \wedge T^{\delta},
+ \tau_{\delta} := \inf \{ t \in [\bar t,T] : X^{\pi}_t \not \in \mathcal{B}(\bar x, \delta) \} \wedge T^{\delta},
 \end{equation}
-with $T^{\delta} < T^{\rho}$. 
+with $T^{\delta} < T^{\rho}$.   
 It follows that $\PP(\tau_{\delta} \leq \tau_{\rho}) = 1$. \\
+It is reasonable to assume that $| T^{\delta}-\bar t | = C \delta^k$, for some $C,k>0$.
+
 Let us denote with $t_k$ the jump times of $\{\pi_t\}_{t \in [\bar t, \tau_{\delta}]}$ and indicate the continuous parts of $\pi$ as 
 $\pi^c = (L^c, M^c)$ with
 \begin{equation}
@@ -781,8 +783,8 @@ Let us indicate with $\tau_{\delta,0}$ the exit time of $X^{\pi=0}$ from $ \math
 \end{equation}
 Thanks to Theorem \ref{stochastic_theorem}, Eq. (\ref{cond_2}) and using $\tau_{\delta,0} \in [\bar t, T^{\delta}]$, for $K>0$ we have that 
 $$\PP(\tau_{\delta,0} = \tau_{\rho}) = 
-\PP( |X^{\pi=0}_{\tau_{\delta,0}} - \bar x| \geq \rho ) \leq \frac{K}{\rho} \sqrt{T^{\delta} - \bar t}. $$ 
-Therefore we can select the values of $\delta$ and $T^{\delta}$ such that the probability that $X^{\pi=0}_{\tau_{\delta,0}}$ is not included in $ \mathcal{B}(\bar x, \rho) $ 
+\PP( |X^{\pi=0}_{\tau_{\delta,0}} - \bar x| \geq \rho ) \leq \frac{K}{\rho} \sqrt{T^{\delta} - \bar t} \leq \frac{K\,C}{\rho}\delta^{\frac{k}{2}} . $$ 
+Therefore we can select the values of $\delta$ such that the probability that $X^{\pi=0}_{\tau_{\delta,0}}$ is not included in $ \mathcal{B}(\bar x, \rho) $ 
 can be made arbitrarily small.
 In Theorem (\ref{ball_theorem}) below, we prove that when the 
 control is not the cause of the exit form $\mathcal{B}(\bar x, \delta)$,  
@@ -870,7 +872,7 @@ It follows that all the expectation terms inside the round parenthesis are posit
 
 \begin{Theorem}\label{ball_theorem}
 For any fixed $\gamma>0$ the following holds: 
-$$ \PP \biggl( \big| X^{\pi^b}_{\tau_{\delta}} - X^{\pi = 0}_{\tau_{\delta,0}} \big| > \gamma \biggr) \to 0 \quad \mbox{for} \quad \delta, T^{\delta} \to 0. $$ 
+$$ \PP \biggl( \big| X^{\pi^b}_{\tau_{\delta}} - X^{\pi = 0}_{\tau_{\delta,0}} \big| > \gamma \biggr) \to 0 \quad \mbox{for} \quad \delta \to 0. $$ 
 where $X^{\pi = 0}$ and $X^{\pi^b}$ satisfy Eq. (\ref{porfolio_dynamics}) for $\pi=0$ and for controls $\pi^b$ that do not cause the exit from $ \mathcal{B}(\bar x, \delta) $, 
 i.e. $\Delta \pi^b_{\tau_{\delta}} = 0$. 
 The exit times $\tau_{\delta}$ and $\tau_{\delta,0}$ are defined in (\ref{tau_delta0}), (\ref{tau_delta}).
@@ -906,14 +908,15 @@ We can write
      &\leq |\tilde{X}_{\tau_{\delta}}| + \big| X^{\pi = 0}_{\tau_{\delta}} - X^{\pi = 0}_{\tau_{\delta,0}} \big| \\ \nonumber 
      &\leq \sqrt{2}\delta + \big| X^{\pi = 0}_{\tau_{\delta}} - X^{\pi = 0}_{\tau_{\delta,0}} \big|. \\ \nonumber 
 \end{align}
-Using Markov inequality and Eq. (\ref{cond_2}), and knowing that $\bar t < \tau_{\delta}, \tau_{\delta,0} \leq T^{\delta}$ we obtain
+Using Markov inequality and Eq. (\ref{cond_2}), and knowing that $\bar t < \tau_{\delta}, \tau_{\delta,0} \leq T^{\delta}$, for $K>0$ we obtain
 \begin{align}
  \PP \biggl( \big| X^{\pi^b}_{\tau_{\delta}} - X^{\pi = 0}_{\tau_{\delta,0}} \big| > \gamma  \biggr) 
       & \leq \frac{1}{\gamma} \E \biggl[ \big| X^{\pi^b}_{\tau_{\delta}} - X^{\pi = 0}_{\tau_{\delta,0}} \big| \biggr] \\ \nonumber
       & \leq \frac{\sqrt{2}\delta}{\gamma} + \frac{1}{\gamma} \E \biggl[ \big| X^{\pi = 0}_{\tau_{\delta}} - X^{\pi = 0}_{\tau_{\delta,0}} \big| \biggr] \\ \nonumber
-      & \leq \frac{\sqrt{2}\delta}{\gamma} + \frac{C}{\gamma} \sqrt{T^{\delta} - \bar t}.
+      & \leq \frac{\sqrt{2}\delta}{\gamma} + \frac{K}{\gamma} \sqrt{T^{\delta} - \bar t} \\ \nonumber
+      & \leq \frac{\sqrt{2}\delta}{\gamma} + \frac{K\, C}{\gamma} \delta^{\frac{k}{2}}.
 \end{align}
-By sending $\delta \to 0$ and $T^{\delta} \to 0$ we conclude the proof.
+By sending $\delta \to 0$ we conclude the proof.
 \end{proof}
 
 \begin{Remark}
