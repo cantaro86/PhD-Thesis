@@ -754,17 +754,19 @@ We can define the exit time of the process $\{X^{\pi}_t\}_{t \in [\bar t, T\wedg
 \begin{equation}
  \tau_{\rho} := \inf \{ t \in [\bar t,T] : X^{\pi}_t \not \in \mathcal{B}(\bar x, \rho) \} \wedge T^{\rho},
 \end{equation}
-with $T^{\rho}>0$.
+with $T^{\rho}>0$ a fixed time, dependent on $\rho$.
+We can write the distance as $| T^{\rho}-\bar t | = f(\rho)$ where $f(\rho)$ is an increasing, non-negative function such that $\lim_{\rho \to 0} f(\rho) = 0$.
 Since $\mathcal{B}(\bar x, \rho) \subset \SI$ it follows that $\PP( \tau_{\rho} \leq \tau_{\SI}) =1$.\\
-We want to localize the problem, inside the ball $\mathcal{B}(\bar x, \rho) $ where the three conditions above are satisfied.
+
+It is convenient to localize the problem inside the ball $\mathcal{B}(\bar x, \rho) $, where the three conditions above are satisfied.
 For this purpose, let us define the ball $\mathcal{B}(\bar x, \delta) \subset \mathcal{B}(\bar x, \rho) $ for $\delta < \rho$,
 and the exit time
 \begin{equation}\label{tau_delta0}
  \tau_{\delta} := \inf \{ t \in [\bar t,T] : X^{\pi}_t \not \in \mathcal{B}(\bar x, \delta) \} \wedge T^{\delta},
 \end{equation}
 with $T^{\delta} < T^{\rho}$.   
-It follows that $\PP(\tau_{\delta} \leq \tau_{\rho}) = 1$. \\
-It is reasonable to assume that $| T^{\delta}-\bar t | = C \delta^k$, for some $C,k>0$.
+It follows that $\PP(\tau_{\delta} \leq \tau_{\rho}) = 1$.
+As done before, we can write $| T^{\delta}-\bar t | = f(\delta)$.
 
 Let us denote with $t_k$ the jump times of $\{\pi_t\}_{t \in [\bar t, \tau_{\delta}]}$ and indicate the continuous parts of $\pi$ as 
 $\pi^c = (L^c, M^c)$ with
@@ -781,16 +783,25 @@ Let us indicate with $\tau_{\delta,0}$ the exit time of $X^{\pi=0}$ from $ \math
 \begin{equation}\label{tau_delta}
  \tau_{\delta,0} := \inf \{ t \in [t_0,T] : X^{\pi=0}_t \not \in \mathcal{B}(\bar x, \delta) \} \wedge T^{\delta}.
 \end{equation}
+Analogously, we define $\tau_{\rho,0}$ as the first exit time of $X^{\pi=0}$ from $ \mathcal{B}(\bar x, \rho) $.
 Thanks to Theorem \ref{stochastic_theorem}, Eq. (\ref{cond_2}) and using $\tau_{\delta,0} \in [\bar t, T^{\delta}]$, for $K>0$ we have that 
-$$\PP(\tau_{\delta,0} = \tau_{\rho}) = 
-\PP( |X^{\pi=0}_{\tau_{\delta,0}} - \bar x| \geq \rho ) \leq \frac{K}{\rho} \sqrt{T^{\delta} - \bar t} \leq \frac{K\,C}{\rho}\delta^{\frac{k}{2}} . $$ 
-Therefore we can select the values of $\delta$ such that the probability that $X^{\pi=0}_{\tau_{\delta,0}}$ is not included in $ \mathcal{B}(\bar x, \rho) $ 
+\begin{align}\label{P_X_0}
+ \PP(\tau_{\delta,0} = \tau_{\rho,0} ) &= \PP \bigl( |X^{\pi=0}_{\tau_{\delta,0}} - \bar x| \geq \rho \bigr) \\ \nonumber
+   & \leq \frac{1}{\rho} \E \biggl[ \big| X^{\pi=0}_{\tau_{\delta,0}} - \bar x \big| \biggr] \\ \nonumber
+   & \leq \frac{K}{\rho} \sqrt{T^{\delta} - \bar t} \; \leq \;  \frac{K}{\rho}\sqrt{f(\delta)} .
+\end{align} 
+Thus, we can select an appropriate value of $\delta$ such that $\PP \bigl( X^{\pi=0}_{\tau_{\delta,0}} \not \in \mathcal{B}(\bar x, \rho) \bigr) $ 
 can be made arbitrarily small.
-In Theorem (\ref{ball_theorem}) below, we prove that when the 
-control is not the cause of the exit form $\mathcal{B}(\bar x, \delta)$,  
-the controlled process $X^{\pi}_{\tau_{\delta}}$ is close to $X^{\pi=0}_{\tau_{\delta,0}}$ for a small enough $\delta$. 
-It follows that the exit probability of $X^{\pi}_{\tau_{\delta}}$ from   
-$\mathcal{B}(\bar x, \rho)$ can again be made arbitrarily small.
+In Lemma (\ref{ball_theorem}) below, we prove that when the 
+control is not the cause of the exit from $\mathcal{B}(\bar x, \delta)$,  
+the value of $X^{\pi^b}_{\tau_{\delta}}$ is close to $X^{\pi=0}_{\tau_{\delta,0}}$ for a small enough $\delta$. 
+We indicate such controls with $\pi^b$ (where the superscript \emph{b} stays for ``bounded", since the control 
+jumps are not big enough to cause the exit from $\mathcal{B}(\bar x, \delta)$). 
+\begin{equation}\label{bounded_controls}
+ \pi^b = \bigl\{ \pi \in \Pi : \Delta \pi_{\tau_{\delta}} = 0 \bigr\}. 
+\end{equation}
+A consequence of this lemma is that $\PP \bigl( X^{\pi^b}_{\tau_{\delta}} \not \in \mathcal{B}(\bar x, \rho) \bigr)$ can again be made arbitrarily small (see Corollary 
+\ref{Corollary_P_exit}).\\
 
 On the other hand, in order to prevent the exit due to a jump in $\pi$ we can take advantage from the linearity of the control terms in Eq. (\ref{DPZ_porfolio_dynamics}). 
 In other words, any transaction can be split into two or more simultaneous smaller transactions.
@@ -850,7 +861,7 @@ where the expectation of the martingale terms is zero\footnote{
 The martingale terms have the same expression as (\ref{term1}) and (\ref{term2}). 
 Thanks to the smoothness assumption of $\phi$, the derivatives of $\phi$ are continuous in $[\bar t, \tau_{\delta}] \times \mathcal{B}(\bar x, \delta)$ and therefore are bounded.
 Using the same arguments as in Theorem \ref{Theorem_PIDE} it follows that the expectations are zero. }. 
-Let us express the terms in the sums in an integral form. We obtain
+Let us express the terms in the sums in integral form. We obtain
 \begin{align}\label{second_inequality}
  0 \; \leq & \; \E_{\bar t, \bar x} \biggl[ \int_{\bar t}^{\tau_{\delta}} -\LL \phi(t,X^{\tilde \pi}_t) dt \\ \nonumber
     & + \int_{\bar t}^{\tau_{\delta}} \left(\frac{\partial \phi}{\partial y}(t, X^{\tilde \pi}_t) -(1+\theta_b) S_{t^-} \frac{\partial \phi}{\partial b}( t, X^{\tilde \pi}_t)\right) dL^c_t \\ \nonumber
@@ -864,19 +875,24 @@ Let us express the terms in the sums in an integral form. We obtain
     & + \sum_{\bar t \leq t_k \leq \tau_{\delta}}  \E_{\bar t, \bar x} \bigl[ \Delta \tilde L_{t_k} + \Delta \tilde M_{t_k} \bigr]   \biggr) + \epsilon \\ \nonumber
     \underset{\epsilon \to 0}{<} & \quad 0.   
 \end{align}
-Let us recall that $\tau_{\delta} \geq \bar t$, and that by definition the control processes are non-decreasing function. 
-When $\tau_{\delta} = \bar t$, it is because or $\Delta \tilde L_{\bar t} > 0$ or $\Delta \tilde M_{\bar t} > 0$. 
-It follows that all the expectation terms inside the round parenthesis are positive. For $\epsilon \to 0$ we obtain a contradiction.
+Let us recall that the ray $\delta$ is fixed and does not depend on $\epsilon$, the inequality $\tau_{\delta} \geq \bar t$ is always true, and 
+by definition the control processes are non-decreasing functions.
+There are two possibilities:
+\begin{enumerate}
+ \item When $\epsilon \to 0$, the exit time satisfies $\tau_{\delta} > \bar t$.  
+ \item When $\epsilon \to 0$, the exit time $\tau_{\delta} \to \bar t$. In this case the exit from $\mathcal{B}(\bar x, \delta)$ is immediate, and must be caused by the action 
+ of the discontinuous part of the control i.e. or $\Delta \tilde L_{\bar t} > 0$ or $\Delta \tilde M_{\bar t} > 0$.   
+\end{enumerate}
+It follows that at least one expectation term in the penultimate line above is positive. When $\epsilon \to 0$, we obtain a contradiction.
 \end{proof}
 
 
-\begin{Theorem}\label{ball_theorem}
+\begin{Lemma}\label{ball_theorem}
 For any fixed $\gamma>0$ the following holds: 
 $$ \PP \biggl( \big| X^{\pi^b}_{\tau_{\delta}} - X^{\pi = 0}_{\tau_{\delta,0}} \big| > \gamma \biggr) \to 0 \quad \mbox{for} \quad \delta \to 0. $$ 
-where $X^{\pi = 0}$ and $X^{\pi^b}$ satisfy Eq. (\ref{porfolio_dynamics}) for $\pi=0$ and for controls $\pi^b$ that do not cause the exit from $ \mathcal{B}(\bar x, \delta) $, 
-i.e. $\Delta \pi^b_{\tau_{\delta}} = 0$. 
+where $X^{\pi = 0}$ and $X^{\pi^b}$ satisfy Eq. (\ref{porfolio_dynamics}) for $\pi=0$ and for controls $\pi^b$ defined in (\ref{bounded_controls}). 
 The exit times $\tau_{\delta}$ and $\tau_{\delta,0}$ are defined in (\ref{tau_delta0}), (\ref{tau_delta}).
-\end{Theorem}
+\end{Lemma}
 
 \begin{proof}
 From the state equation (\ref{porfolio_dynamics}) and from (\ref{BT}) we see that
@@ -909,12 +925,12 @@ We can write
      &\leq \sqrt{2}\delta + \big| X^{\pi = 0}_{\tau_{\delta}} - X^{\pi = 0}_{\tau_{\delta,0}} \big|. \\ \nonumber 
 \end{align}
 Using Markov inequality and Eq. (\ref{cond_2}), and knowing that $\bar t < \tau_{\delta}, \tau_{\delta,0} \leq T^{\delta}$, for $K>0$ we obtain
-\begin{align}
+\begin{align}\label{P_X_pi}
  \PP \biggl( \big| X^{\pi^b}_{\tau_{\delta}} - X^{\pi = 0}_{\tau_{\delta,0}} \big| > \gamma  \biggr) 
       & \leq \frac{1}{\gamma} \E \biggl[ \big| X^{\pi^b}_{\tau_{\delta}} - X^{\pi = 0}_{\tau_{\delta,0}} \big| \biggr] \\ \nonumber
       & \leq \frac{\sqrt{2}\delta}{\gamma} + \frac{1}{\gamma} \E \biggl[ \big| X^{\pi = 0}_{\tau_{\delta}} - X^{\pi = 0}_{\tau_{\delta,0}} \big| \biggr] \\ \nonumber
       & \leq \frac{\sqrt{2}\delta}{\gamma} + \frac{K}{\gamma} \sqrt{T^{\delta} - \bar t} \\ \nonumber
-      & \leq \frac{\sqrt{2}\delta}{\gamma} + \frac{K\, C}{\gamma} \delta^{\frac{k}{2}}.
+      & \leq \frac{\sqrt{2}\delta}{\gamma} + \frac{K}{\gamma} \sqrt{f(\delta)}.
 \end{align}
 By sending $\delta \to 0$ we conclude the proof.
 \end{proof}
@@ -926,6 +942,23 @@ By sending $\delta \to 0$ we conclude the proof.
  push the process towards the center of $\mathcal{B}(\bar x, \delta)$, we would have $\tau_{\delta} \geq \tau_{\delta,0}$.\\
  For $r=0$ the problem would have been easier, with $\tau_{\delta} \leq \tau_{\delta,0}$.
 \end{Remark}
+
+\begin{Corollary}\label{Corollary_P_exit}
+For a control $\pi^b$ defined in (\ref{bounded_controls}), and for $\tau_{\delta}$ defined in (\ref{tau_delta0}),
+ $$ \PP \bigl( X^{\pi^b}_{\tau_{\delta}} \not \in \mathcal{B}(\bar x, \rho) \bigr) \to 0 \quad \mbox{as} \quad \delta \to 0 .$$ 
+\end{Corollary}
+
+\begin{proof}
+We can use the results of Eqs. (\ref{P_X_0}) and (\ref{P_X_pi}).
+\begin{align}
+ \PP \bigl( X^{\pi^b}_{\tau_{\delta}} \not \in \mathcal{B}(\bar x, \rho) \bigr) &= \PP \biggl( \bigl| X^{\pi^b}_{\tau_{\delta}} - \bar x \bigr| \geq \rho \biggr) \\ \nonumber
+      & \leq \frac{1}{\rho} \E \biggl[ \big| X^{\pi^b}_{\tau_{\delta}} - \bar x \big| \biggr] \\ \nonumber
+      & \leq \frac{1}{\rho} \E \biggl[ \big| X^{\pi^b}_{\tau_{\delta}} - X^{\pi = 0}_{\tau_{\delta,0}} \big| + \big| X^{\pi = 0}_{\tau_{\delta,0}} - \bar x \big| \biggr] \\ \nonumber
+      & \leq \frac{\sqrt{2}\delta}{\rho} + \frac{K_1}{\rho} \sqrt{f(\delta)} + \frac{K_2}{\rho}\sqrt{f(\delta)},
+\end{align}  
+for two suitable positive constants $K_1$ and $K_2$.
+By sending $\delta \to 0$ we conclude the proof.
+\end{proof}
 
 
 
