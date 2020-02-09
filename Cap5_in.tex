@@ -732,11 +732,11 @@ V(\bar t,\bar x) = \phi(\bar t,\bar x)
 \end{equation}
 so we can write:
 \begin{equation}\label{max_point2}
-V(t,x) \leq \phi(t, x) 
+V(t,x) \leq \phi(t, x) .
 \end{equation}
 We want to prove that
 $$ F(\bar t,\bar x,V(\bar t, \bar x),D_t \phi(\bar t, \bar x),D_x \phi(\bar t, \bar x),D_{xx}\phi(\bar t, \bar x),
-\I(\bar t, \bar x,\phi(\bar t, \bar x))) \leq 0  $$
+\I(\bar t, \bar x,\phi(\bar t, \bar x))) \leq 0.  $$
 \textbf{Reductio ad absurdum:}\\
 Let us assume that 
 $$F(\bar t,\bar x,V(\bar t, \bar x),D_t \phi(\bar t, \bar x),D_x \phi(\bar t, \bar x),D_{xx}\phi(\bar t, \bar x),
@@ -755,7 +755,7 @@ We can define the exit time of the process $\{X^{\pi}_t\}_{t \in [\bar t, T\wedg
  \tau_{\rho} := \inf \{ t \in [\bar t,T] : X^{\pi}_t \not \in \mathcal{B}(\bar x, \rho) \} \wedge T^{\rho},
 \end{equation}
 with $T^{\rho}>0$ a fixed time, dependent on $\rho$.
-We can write the distance as $| T^{\rho}-\bar t | = f(\rho)$ where $f(\rho)$ is an increasing, non-negative function such that $\lim_{\rho \to 0} f(\rho) = 0$.
+We can express the time difference as $| T^{\rho}-\bar t | = f(\rho)$ where $f(\rho)$ is an increasing, non-negative function such that $\lim_{\rho \to 0} f(\rho) = 0$.
 Since $\mathcal{B}(\bar x, \rho) \subset \SI$ it follows that $\PP( \tau_{\rho} \leq \tau_{\SI}) =1$.\\
 
 It is convenient to localize the problem inside the ball $\mathcal{B}(\bar x, \rho) $, where the three conditions above are satisfied.
@@ -766,7 +766,7 @@ and the exit time
 \end{equation}
 with $T^{\delta} < T^{\rho}$.   
 It follows that $\PP(\tau_{\delta} \leq \tau_{\rho}) = 1$.
-As done before, we can write $| T^{\delta}-\bar t | = f(\delta)$.
+As before, we can write $| T^{\delta}-\bar t | = f(\delta)$.
 
 Let us denote with $t_k$ the jump times of $\{\pi_t\}_{t \in [\bar t, \tau_{\delta}]}$ and indicate the continuous parts of $\pi$ as 
 $\pi^c = (L^c, M^c)$ with
@@ -774,7 +774,7 @@ $\pi^c = (L^c, M^c)$ with
  L^c_t = L_t - \sum_{\bar t \leq t_k \leq \tau_{\delta}} \Delta L_{t_k} \quad \mbox{ and } \quad  M^c_t = M_t - \sum_{\bar t \leq t_k \leq \tau_{\delta}} \Delta M_{t_k}.
 \end{equation}
 The state process $X^{\pi}$ may exit from $ \mathcal{B}(\bar x, \rho) $ or because of
-the uncontrolled portfolio dynamics or due to the action of the control.
+the uncontrolled portfolio dynamics or because of the action of the control.
 
 In order to prevent the exit due to the uncontrolled dynamics, we can take advantage from the stochastic continuity property of the stock process $S$. 
 For this purpose, we can 
@@ -800,8 +800,8 @@ jumps are not big enough to cause the exit from $\mathcal{B}(\bar x, \delta)$).
 \begin{equation}\label{bounded_controls}
  \pi^b = \bigl\{ \pi \in \Pi : \Delta \pi_{\tau_{\delta}} = 0 \bigr\}. 
 \end{equation}
-A consequence of this lemma is that $\PP \bigl( X^{\pi^b}_{\tau_{\delta}} \not \in \mathcal{B}(\bar x, \rho) \bigr)$ can again be made arbitrarily small (see Corollary 
-\ref{Corollary_P_exit}).\\
+A consequence of this lemma is that $\PP \bigl( X^{\pi^b}_{\tau_{\delta}} \not \in \mathcal{B}(\bar x, \rho) \bigr)$ can again be made arbitrarily small (see Lemma 
+\ref{Corollary_P_exit} below).\\
 
 On the other hand, in order to prevent the exit due to a jump in $\pi$ we can take advantage from the linearity of the control terms in Eq. (\ref{DPZ_porfolio_dynamics}). 
 In other words, any transaction can be split into two or more simultaneous smaller transactions.
@@ -840,10 +840,10 @@ By the DPP (\ref{DPP22}), for every $\epsilon > 0$, there exists an an $\epsilon
 \end{align}
 where in the second line we used the iterated conditional expectation property.
 Using (\ref{max_point}) and (\ref{max_point2}) we can write:
-\begin{equation*}
- \phi(\bar t, \bar x) = V(\bar t, \bar x) \; \leq \E_{\bar t, \bar x}[V(\tau_{\delta}, X^{\tilde \pi}_{\tau_{\delta}})] + \epsilon \; 
- \leq \E_{\bar t, \bar x}[\phi(\tau_{\delta}, X^{\tilde \pi}_{\tau_{\delta}})] + \epsilon.
-\end{equation*}
+\begin{align*}
+ \phi(\bar t, \bar x) = V(\bar t, \bar x) \; & \leq \E_{\bar t, \bar x}[V(\tau_{\delta}, X^{\tilde \pi}_{\tau_{\delta}})] + \epsilon \\  
+ & \leq \E_{\bar t, \bar x}[\phi(\tau_{\delta}, X^{\tilde \pi}_{\tau_{\delta}})] + \epsilon.
+\end{align*}
 Since the test function $\phi$ is smooth, we can use the generalized It\=o formula (see Appendix A in \cite{OkSu01}).
 \begin{align}\label{first_inequality}
  0 \; \leq & \; \E_{\bar t, \bar x} \biggl[ \phi(\tau_{\delta}, X^{\tilde \pi}_{\tau_{\delta}}) - \phi(\bar t, \bar x) \biggr] + \epsilon \\ \nonumber
@@ -861,7 +861,7 @@ where the expectation of the martingale terms is zero\footnote{
 The martingale terms have the same expression as (\ref{term1}) and (\ref{term2}). 
 Thanks to the smoothness assumption of $\phi$, the derivatives of $\phi$ are continuous in $[\bar t, \tau_{\delta}] \times \mathcal{B}(\bar x, \delta)$ and therefore are bounded.
 Using the same arguments as in Theorem \ref{Theorem_PIDE} it follows that the expectations are zero. }. 
-Let us express the terms in the sums in integral form. We obtain
+Let us express the terms inside the sums in an integral form. We obtain
 \begin{align}\label{second_inequality}
  0 \; \leq & \; \E_{\bar t, \bar x} \biggl[ \int_{\bar t}^{\tau_{\delta}} -\LL \phi(t,X^{\tilde \pi}_t) dt \\ \nonumber
     & + \int_{\bar t}^{\tau_{\delta}} \left(\frac{\partial \phi}{\partial y}(t, X^{\tilde \pi}_t) -(1+\theta_b) S_{t^-} \frac{\partial \phi}{\partial b}( t, X^{\tilde \pi}_t)\right) dL^c_t \\ \nonumber
@@ -876,14 +876,14 @@ Let us express the terms in the sums in integral form. We obtain
     \underset{\epsilon \to 0}{<} & \quad 0.   
 \end{align}
 Let us recall that the ray $\delta$ is fixed and does not depend on $\epsilon$, the inequality $\tau_{\delta} \geq \bar t$ is always true, and 
-by definition the control processes are non-decreasing functions.
+by definition the control processes are non-decreasing.
 There are two possibilities:
 \begin{enumerate}
  \item When $\epsilon \to 0$, the exit time satisfies $\tau_{\delta} > \bar t$.  
  \item When $\epsilon \to 0$, the exit time $\tau_{\delta} \to \bar t$. In this case the exit from $\mathcal{B}(\bar x, \delta)$ is immediate, and must be caused by the action 
  of the discontinuous part of the control i.e. or $\Delta \tilde L_{\bar t} > 0$ or $\Delta \tilde M_{\bar t} > 0$.   
 \end{enumerate}
-It follows that at least one expectation term in the penultimate line above is positive. When $\epsilon \to 0$, we obtain a contradiction.
+It follows that at least one expectation term in the penultimate line is positive. When $\epsilon \to 0$, we obtain a contradiction.
 \end{proof}
 
 
@@ -905,7 +905,7 @@ From the state equation (\ref{porfolio_dynamics}) and from (\ref{BT}) we see tha
   0 \\
   \end{array} \right).
 \end{align}
-Since the controls do not cause the exit from $ \mathcal{B}(\bar x, \delta) $, the following bounds are satisfied for every $(L^b,M^b)$ and for every $t>\bar t$:
+Since the control $\pi^b$ does not cause the exit from $ \mathcal{B}(\bar x, \delta) $, the following bounds are satisfied for every $(L^b,M^b)$ and for every $t>\bar t$:
 \begin{equation}
 \bigg| - \int_{\bar t}^t (1+\theta_b)\frac{S_u}{\delta(u,t)} dL^b_u + \int_{\bar t}^t (1-\theta_s) \frac{S_u}{\delta(u,t)} dM^b_u \bigg| \leq \delta, 
 \end{equation}
@@ -936,17 +936,17 @@ By sending $\delta \to 0$ we conclude the proof.
 \end{proof}
 
 \begin{Remark}
- In this problem we are assuming an interest rate $r>0$. For this reason we cannot specify in advance which exit times is bigger between $\tau_{\delta}$ and 
- $\tau_{\delta,0}$. If the controls push the process towards the boundaries of $\mathcal{B}(\bar x, \delta)$, 
- we would have $\tau_{\delta} \leq \tau_{\delta,0}$. If the controls 
- push the process towards the center of $\mathcal{B}(\bar x, \delta)$, we would have $\tau_{\delta} \geq \tau_{\delta,0}$.\\
- For $r=0$ the problem would have been easier, with $\tau_{\delta} \leq \tau_{\delta,0}$.
+ In this problem we are assuming an interest rate $r>0$. For this reason we cannot specify in advance which exit time is bigger between $\tau_{\delta}$ and 
+ $\tau_{\delta,0}$. If the control pushes the process towards the boundaries of $\mathcal{B}(\bar x, \delta)$, 
+ we would have $\tau_{\delta} \leq \tau_{\delta,0}$. If the control 
+ pushes the process towards the center of $\mathcal{B}(\bar x, \delta)$, we would have $\tau_{\delta} \geq \tau_{\delta,0}$.\\
+ For $r=0$ the problem becomes simpler, with $\tau_{\delta} \leq \tau_{\delta,0}$.
 \end{Remark}
 
-\begin{Corollary}\label{Corollary_P_exit}
+\begin{Lemma}\label{Corollary_P_exit}
 For a control $\pi^b$ defined in (\ref{bounded_controls}), and for $\tau_{\delta}$ defined in (\ref{tau_delta0}),
  $$ \PP \bigl( X^{\pi^b}_{\tau_{\delta}} \not \in \mathcal{B}(\bar x, \rho) \bigr) \to 0 \quad \mbox{as} \quad \delta \to 0 .$$ 
-\end{Corollary}
+\end{Lemma}
 
 \begin{proof}
 We can use the results of Eqs. (\ref{P_X_0}) and (\ref{P_X_pi}).
