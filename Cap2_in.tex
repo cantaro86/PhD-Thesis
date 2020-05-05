@@ -569,10 +569,10 @@ The discretized equation becomes
 \end{align}
 Rearranging the terms: 
 \begin{align*}
- V^{n+1}_{i} &= V^{n}_{i} \biggl( 1 + r\Delta t + \sigma^2 \frac{\Delta t}{h_x^2} \biggr)  \\
-& + V^{n}_{i+1} \biggl( -(r -\frac{1}{2}\sigma^2)\frac{\Delta t}{2 \Delta x} +
+ V^{n+1}_{i} &= V^{n}_{i} \biggl( 1 + r\Delta t + \sigma^2 \frac{\Delta t}{\Delta x^2} \biggr)  \\
+& + V^{n}_{i+1} \biggl( -(r -\frac{1}{2}\sigma^2)\frac{\Delta t}{2 \Delta x} -
 \frac{1}{2}\sigma^2 \frac{\Delta t}{\Delta x^2}  \biggr)  \\
-& + V^{n}_{i-1} \biggl( (r -\frac{1}{2}\sigma^2)\frac{\Delta t}{2 \Delta x} + 
+& + V^{n}_{i-1} \biggl( (r -\frac{1}{2}\sigma^2)\frac{\Delta t}{2 \Delta x} - 
 \frac{1}{2}\sigma^2 \frac{\Delta t}{\Delta x^2}  \biggr).
 \end{align*}
 We can rename the coefficients such that:
@@ -691,9 +691,9 @@ Rearranging the terms:
 \begin{align*}
 \underbrace{ V^{n+1}_{i} + \Delta t \sum_{k = -K_1}^{K_2} \nu_k V^{n+1}_{i+k} }_{\tilde V^{n+1}_i} &= 
 	V^{n}_{i} \biggl( 1 + (r+\hat \lambda)\Delta t + \sigma^2 \frac{\Delta t}{\Delta x^2} \biggr)  \\
-& + V^{n}_{i+1} \biggl( -(r -\frac{1}{2}\sigma^2 -\hat m )\frac{\Delta t}{2 \Delta x} +
+& + V^{n}_{i+1} \biggl( -(r -\frac{1}{2}\sigma^2 -\hat m )\frac{\Delta t}{2 \Delta x} -
 \frac{1}{2}\sigma^2 \frac{\Delta t}{\Delta x^2}  \biggr)  \\
-& + V^{n}_{i-1} \biggl( (r -\frac{1}{2}\sigma^2 - \hat m)\frac{\Delta t}{2 \Delta x} + 
+& + V^{n}_{i-1} \biggl( (r -\frac{1}{2}\sigma^2 - \hat m)\frac{\Delta t}{2 \Delta x} - 
 \frac{1}{2}\sigma^2 \frac{\Delta t}{\Delta x^2}  \biggr).
 \end{align*}
 We can rename the coefficients:
