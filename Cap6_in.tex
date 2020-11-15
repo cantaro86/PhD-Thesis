@@ -176,7 +176,7 @@ such that $l\in \{0,...,K_4-j\}$ and $m\in \{0,...,K_3+j\}$ for each fixed $j$.
     \REQUIRE $r, (b,\sigma,\nu), X_0, K, T, \theta_b, \theta_s, \gamma, N, \bar L, \bar M, $
     \ENSURE $Q^j(t_0,y,X_0)$ for $j=0,w,b$
       \STATE Create the lattice for (\ref{log_sde_discr}) with appropriate discrete steps $\Delta t, h_y, h_x$.
-      \STATE Create the vector of probabilities $p_k$ as defined in \ref{pK}.  
+      \STATE Create the vector of probabilities $p_k$ as defined in Eq. (\ref{pK}).  
       \STATE Use (\ref{terminal_c}) or (\ref{terminal_w}) or (\ref{terminal_b}) to initialize a $\bar M \times \bigl( N(\bar L-1)+1 \bigl)$ grid for $Q^N_{j,i}$.  
       \FOR {n = N-1 to 0}
       \STATE $W_{j,i} = \sum_{k = -K_1}^{K_2} p_k \; Q^{n+1}_{j,i+k}$
@@ -229,7 +229,7 @@ The number of jumps of a jump-diffusion process is Poisson distributed $N_t \sim
 \end{equation}
 For a small $\Delta t$, we can compute the first order approximated probabilities:
 \begin{itemize}
- \item $\PP( N_{t+\Delta t} - N_t = 0) \overset{d}{=} \PP( N_{\Delta t} = 0) = e^{-\lambda \Delta t } \approx 1-\lambda \Delta t $,
+ \item $\PP( N_{t+\Delta t} - N_t = 0) = \PP( N_{\Delta t} = 0) = e^{-\lambda \Delta t } \approx 1-\lambda \Delta t $,
  \item $\PP( N_{\Delta t} = 1) = e^{-\lambda \Delta t } (\lambda \Delta t) \approx \lambda \Delta t $,
  \item $\PP( N_{\Delta t} > 0) = 1-\PP( N_{\Delta t} = 0) \approx \lambda \Delta t $.
 \end{itemize}
@@ -383,6 +383,8 @@ Let us indicate the Eq. (\ref{HJB2}) by:
  F\bigl(\xx, Q(\xx), DQ(\xx), D^2Q(\xx), \I(\xx,Q) \bigr) = 0,
 \end{equation}
 where $\xx := (t,y,x)$.
+We assume that Eq. (\ref{HJB2}) has a \textbf{unique} viscosity solution. This is an important assumption because we are going to prove that the solution 
+of scheme [\ref{scheme}] converges to it, when $\rho \to 0$. 
 
 \begin{Theorem}\label{theorem1}
  The scheme [\ref{scheme}] (with transition probabilities $p_k$ defined in \ref{pK}) is monotone, stable and consistent. 
@@ -424,8 +426,8 @@ with $\xx_{\rho} := (t_n,y_j,x_i)$.
 1) For some $l>0$, it holds
   \begin{align*}
    0 &= e^{\bigl(\frac{\gamma}{\delta(t_n,T)} (1+\theta_b) e^{x_i} lh_y \bigr)}  \phi \bigl( t_n,y_j + lh_y,x_i\bigr) - \phi \bigl(t_n,y_j,x_i\bigr) \\
-     &= \biggl( 1 + \frac{\gamma (1+\theta_b) e^{x_i}}{\delta(t_n,T)} lh_y + \mathcal{O}(h_y) \biggr) 
-     \biggl( \phi(t_n,y_j,x_i) + \frac{\partial \phi}{\partial y}\bigg|_{y_j} l h_y + \mathcal{O}(h_y) \biggr) 
+     &= \biggl( 1 + \frac{\gamma (1+\theta_b) e^{x_i}}{\delta(t_n,T)} lh_y + \mathcal{O}(h_y^2) \biggr) 
+     \biggl( \phi(t_n,y_j,x_i) + \frac{\partial \phi}{\partial y}\bigg|_{y_j} l h_y + \mathcal{O}(h_y^2) \biggr) 
           - \phi(t_n,y_j,x_i) \\
      &= \frac{\partial \phi}{\partial y}\bigl(t_n,y_j,x_i\bigr)  + \frac{\gamma}{\delta(t_n,T)} (1+\theta_b) e^{x_i} \, \phi \bigl(t_n,y_j,x_i\bigr) + \mathcal{O}(h_y).     
   \end{align*}
@@ -554,7 +556,7 @@ We compute the option prices using the standard
 and by solving the respective PIDE (see Table \ref{tab:prices_BS_M_VG}). 
 The PIDE prices are obtained by solving the equations (\ref{BS_PDE}), (\ref{Merton_PIDE}) and (\ref{VG_PIDE}).
 Of course, the parameter $\mu$ has not been used to compute the prices in Tab. \ref{tab:ATM_price}. 
-In Section (\ref{properties_model}), we prove with a numerical experiment that
+In Section (\ref{properties_model}), we show with a numerical experiment that
 even in the model with transaction costs, the drift $\mu$ does not play an important role for the option price.
 In the following analysis, we consider the PIDE prices as our benchmarks for comparisons.   
 In all the computations we use equal transaction costs for buying and selling, $\theta_b = \theta_s$.
@@ -620,7 +622,7 @@ Their argument can be extended also to PIDEs.
 
 In the Figure \ref{Fig2} we show the diffusion writer and buyer prices with different
 transaction costs.  
-We can see that a higher transaction cost corresponds to a higher writer price, while a lower transaction cost corresponds to a lower buyer price.
+We can see that a higher transaction cost corresponds to a higher price for the writer and a lower price for the buyer.
 In fact, the writer and buyer prices are respectively increasing and decreasing functions of the transaction cost, as already verified in \cite{ClHo97}.
 The prices Figures \ref{Fig2}, are calculated with $N=1500$ time steps and $\bar M = N$. 
 In the Table \ref{tab:convergence} we show ATM option prices for different values of $N$, with $\theta_s = \theta_b = 0$ and different risk aversion coefficients.
@@ -986,7 +988,7 @@ In the points $(b,y,x)$ such that $\mathcal{W}(b,y,x) = -C$ the function is not 
     \REQUIRE $r, (b,\sigma,\nu), X_0, K, T, \theta_b, \theta_s, \gamma, N, \bar L, \bar M, \bar B. $
     \ENSURE $V^j(t_0,b,y,X_0)$ for $j=0,w,b$
       \STATE Create the lattice for (\ref{log_sde_discr}) and (\ref{Bn}) with appropriate discrete steps $\Delta t, h_y, h_x, h_b$.
-      \STATE Create the vector of probabilities $p_k$ as defined in \ref{pK}.  
+      \STATE Create the vector of probabilities $p_k$ as defined in Eq. (\ref{pK}).  
       \STATE Use (\ref{terminal_conditions}) to initialize a $\bar B \times \bar M \times \bigl( N(\bar L-1)+1 \bigl)$ grid for $V^N_{h,j,i}$.  
       \FOR {n = N-1 to 0}
       \STATE $W_{h,j,i} = \sum_{k = -K_1}^{K_2} p_k \; V^{n+1}_{h,j,i+k}$
@@ -1116,7 +1118,7 @@ Assuming $\bar M = N$ and $\bar L = 5$, the computational time is reduced to $\m
 % \begin{minipage}{0.5\linewidth}
   \centering
    \includegraphics[scale=0.6]{Multinom_1.png}
-   \caption{Multinomial VG writer and buyer prices for different transaction costs.}
+   \caption{Plot of the log-errors as function of $\log(N)$ for VG writer prices computed by pentanomial method.}
    \label{Fig37}
 % \end{minipage}
 % \end{center}

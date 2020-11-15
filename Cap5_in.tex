@@ -96,7 +96,7 @@ The parameters $\theta_b$, $\theta_s \geq 0$ are the proportional transaction co
 This portfolio equation is a generalization of the portfolio in the Merton problem (\ref{Merton_problem1}), 
 where a new state variable $Y$ is considered.
 The control process $\{\pi_t\}_{t \in [t_0,T]} := \{(L_t,M_t)\}_{t \in [t_0,T]}$ represents the trading strategy and indicates the 
-cumulative number of shares bought and sold respectively in $[t_0,T]$.
+cumulative number of shares bought and sold, respectively, in $[t_0,T]$.
 The strategy $\pi_t$ is a cádlág, $\mathcal{F}^W_t$-progressively measurable, nondecreasing process with bounded variation in every finite time interval and such that
 $ \pi_{t_0^-} = ( L_{t_0^-} , M_{t_0^-} ) = (0,0) $, allowing for an initial transaction at $t_0$.\\
 In the discontinuity points of $L_t$ and $M_t$ we indicate the process variation with $\Delta L_t= L_{t}-L_{t^-}$ and $\Delta M_t= M_{t}-M_{t^-}$.
@@ -112,7 +112,7 @@ In the discontinuity points of $L_t$ and $M_t$ we indicate the process variation
 
 
 \begin{Definition}
-We define the \textbf{cash value} function $c(y,s)$ as the value in cash when the shares in the portfolio are liquidated, i.e.  
+We define the \textbf{cash value} function $c(y,s)$ as the value in cash when the $y$ shares in the portfolio are liquidated, i.e.  
 long positions are sold and short positions are covered.
 \begin{equation}\label{cost_function}
 c(y,s) = \begin{cases} 
@@ -138,8 +138,9 @@ We define the \textbf{solvency region}:
 \end{Definition}
 \begin{Definition}\label{admissible_strategies1}
 The set of \textbf{admissible trading strategies} $\Pi(t_0,b,y,s)$, is defined   
-as the set of all right-continuous, nondecreasing, $\mathcal{F}_t$-progressively measurable processes  
-$\{\pi_t\}_{t \in [t_0,T]}$, such that $(B^\pi_t,Y^\pi_t,S_t)$ is a solution of (\ref{DPZ_porfolio_dynamics}) with initial values $(B^\pi_{t_0} = b, Y^\pi_{t_0} = y, S_{t_0} = s)$, 
+as the set of all right-continuous, nondecreasing, progressively measurable processes  
+$\{\pi_t\}_{t \in [t_0,T]}$ with respect to the filtration $\{\mathcal{F}_t\}_{t \in [t_0,T]}$, 
+such that $(B^\pi_t,Y^\pi_t,S_t)$ is a solution of (\ref{DPZ_porfolio_dynamics}) with initial values $(B^\pi_{t_0} = b, Y^\pi_{t_0} = y, S_{t_0} = s)$, 
 and 
 \begin{equation}
  (B^\pi_t,Y^\pi_t,S_t) \in \mathcal{S}
@@ -668,7 +669,7 @@ The general fact that value functions of control problems can be characterized a
 viscosity solutions of certain partial differential equations is a direct consequence of the dynamic
 programming principle. For singular control problems, however, the classical approach of \cite{PLL83}
 fails because the state process may jump due to the singular control and it needs thus not stay
-in a small ball\footnote{For processes of type (\ref{singular_SDE}) it is not possible to apply the theorem (\ref{stochastic_theorem}).} 
+in a small ball\footnote{For processes of type (\ref{singular_SDE}) it is not possible to apply the Corollary (\ref{stochastic_theorem}).} 
 for a small $\Delta t$.
 This problem can be circumvented by relying on the
 existence of the optimal control, as done in \cite{DaPaZa93}. However, in our proof we will not assume the existence of the optimal control, because 
@@ -718,7 +719,7 @@ In order to prove that $V(t,x)$ is a viscosity solution we need to verify both t
 In this section we prove that the value function can be interpreted as a viscosity subsolution of the HJB equation associated to the maximization problem. 
 We enunciate the following theorem:
 \begin{Theorem}\label{subsolution_th}
- The value function of the maximization problem (\ref{max_probl1}), is a viscosity subsolution of the Eq. (\ref{qvi_min}).
+ The value function of the maximization problem (\ref{max_probl1}) is a viscosity subsolution of the Eq. (\ref{qvi_min}).
 \end{Theorem}
 \begin{proof}
 Let us consider a test function $ \phi \in C^2([t_0,T] \times \R^2\times \R^+) \bigcap \mathcal{C}_2([t_0,T] \times \R^2\times \R^+)$ such that 
@@ -781,10 +782,10 @@ For this purpose, we can
 consider the evolution of the portfolio $X^{\pi=0}$ (subject to a null control), up to the exit time from the ball $ \mathcal{B}(\bar x, \delta) $. 
 Let us indicate with $\tau_{\delta,0}$ the exit time of $X^{\pi=0}$ from $ \mathcal{B}(\bar x, \delta) $:
 \begin{equation}\label{tau_delta}
- \tau_{\delta,0} := \inf \{ t \in [t_0,T] : X^{\pi=0}_t \not \in \mathcal{B}(\bar x, \delta) \} \wedge T^{\delta}.
+ \tau_{\delta,0} := \inf \{ t \in [\bar t, T] : X^{\pi=0}_t \not \in \mathcal{B}(\bar x, \delta) \} \wedge T^{\delta}.
 \end{equation}
 Analogously, we define $\tau_{\rho,0}$ as the first exit time of $X^{\pi=0}$ from $ \mathcal{B}(\bar x, \rho) $.
-Thanks to Theorem \ref{stochastic_theorem}, Eq. (\ref{cond_2}) and using $\tau_{\delta,0} \in [\bar t, T^{\delta}]$, for $K>0$ we have that 
+Thanks to Corollary \ref{stochastic_theorem}, Eq. (\ref{cond_2}) and using $\tau_{\delta,0} \in [\bar t, T^{\delta}]$, for $K>0$ we have that 
 \begin{align}\label{P_X_0}
  \PP(\tau_{\delta,0} = \tau_{\rho,0} ) &= \PP \bigl( |X^{\pi=0}_{\tau_{\delta,0}} - \bar x| \geq \rho \bigr) \\ \nonumber
    & \leq \frac{1}{\rho} \E \biggl[ \big| X^{\pi=0}_{\tau_{\delta,0}} - \bar x \big| \biggr] \\ \nonumber
@@ -883,7 +884,7 @@ There are two possibilities:
  \item When $\epsilon \to 0$, the exit time $\tau_{\delta} \to \bar t$. In this case the exit from $\mathcal{B}(\bar x, \delta)$ is immediate, and must be caused by the action 
  of the discontinuous part of the control i.e. or $\Delta \tilde L_{\bar t} > 0$ or $\Delta \tilde M_{\bar t} > 0$.   
 \end{enumerate}
-It follows that at least one expectation term in the penultimate line is positive. When $\epsilon \to 0$, we obtain a contradiction.
+It follows that at least one expectation term must be positive. When $\epsilon \to 0$, we obtain a contradiction.
 \end{proof}
 
 
@@ -967,7 +968,7 @@ By sending $\delta \to 0$ we conclude the proof.
 Let us prove that the value function is a viscosity supersolution of the HJB equation (\ref{qvi_min}). 
 
 \begin{Theorem}\label{supersolution_th}
- The value function of the maximization problem (\ref{max_probl1}), is a viscosity supersolution of the Eq. (\ref{qvi_min}).
+ The value function of the maximization problem (\ref{max_probl1}) is a viscosity supersolution of the Eq. (\ref{qvi_min}).
 \end{Theorem}
 
 \begin{proof}

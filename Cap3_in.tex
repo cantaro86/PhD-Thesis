@@ -148,7 +148,7 @@ higher order terms in the moment matching condition together with the condition 
 Recall that the well known binomial model \cite{CRR79} assumes the value $\alpha(\Delta t) = \sigma \sqrt{\Delta t}$,
 that represents the volatility of the increments in the time interval $\Delta t$.
 In the trinomial model, the parameter $\alpha(\Delta t)$ assumes the value $\alpha(\Delta t) = \frac{1}{2} \sigma \sqrt{3\Delta t}$, see for instance \cite{YaPr01}.
-For the multinomial method a good representation for $\alpha(\Delta t)$ is:
+For the pentanomial method a good representation for $\alpha(\Delta t)$ is:
 \begin{equation}\label{alphat}
  \alpha(\Delta t) = \sqrt{c_2} \sqrt{\frac{3+\bar \kappa}{12}},
 \end{equation}
@@ -202,13 +202,13 @@ We can expand the exponential function in Taylor series and use the moment match
 H_{\Delta Y}(u) &= iu \bar b \Delta t + \log \biggl( \sum_{k=0}^{\infty} \frac{(iu)^k}{k!} 
 \bigl(\alpha(\Delta t)\bigr)^k \E \biggl[ \bigl( L-2l+1  \bigr)^k \biggr] \biggr) \\ \nonumber
                 &= iu \bar b \Delta t + \log \biggl( \sum_{k=0}^{\infty} \frac{(iu)^k}{k!} \mu_k \biggr) \\ \nonumber
-                &= iu c_1 + \sum_{k=0}^{\infty} \frac{(iu)^k}{k!} c_k \\ \nonumber 
+                &= iu c_1 + \sum_{k=2}^{\infty} \frac{(iu)^k}{k!} c_k \\ \nonumber 
                 &= H_{\Delta X^{A}}(u),
 \end{align}
 \end{proof}
 \begin{Remark}
 All the cumulants of $\Delta X^A$ are equal to the cumulants of the Markov chain (\ref{Discr_Y}) by construction, but only the first four are equal to the VG cumulants.
-When all the cumulants $c_i$, for $0 \leq i \leq n$, are equal to the VG cumulants, the approximated process $X^A$ converges to
+When all the cumulants $c_i$, for $0 \leq i \leq n$, are equal to the VG cumulants, the approximated process $X^A$ converges in distribution to
 the original VG process for $n \to \infty$.
 In order to describe $n$ cumulants, we need $n+1$ branches. Therefore, when the number of cumulants of $\Delta X^A$ that are equal to those of the VG goes to infinity, 
 the number of branches has to go to infinity as well.

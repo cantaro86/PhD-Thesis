@@ -13,7 +13,7 @@ This principle was introduced in the 1950s by Bellman, see \cite{Bellman}.
 For controlled Lévy processes,
 the approach yields a certain nonlinear PIDE, usually of first or second order, called \textbf{Hamilton-Jacobi-Bellman} (HJB) equation. 
 
-The theory of viscosity solutions, provides a convenient framework in which to study HJB equations.
+The theory of viscosity solutions provides a convenient framework in which to study HJB equations.
 Typically, the value function is not smooth enough to satisfy the HJB in the classical sense. However, under certain assumptions, it is the unique viscosity
 solution of the HJB equation with appropriate boundary conditions. A general review of the theory of viscosity solutions is presented in \cite{CIL92}.
 
@@ -31,7 +31,7 @@ the solution of linear PIDEs derived from option pricing problems (plain vanilla
 
 \section{Optimal control framework}\label{Optimal_control_framework}
 
-We consider a framework where the state of the system $X_t$, is governed by the following controlled SDE with values in $\R^n$:
+We consider a framework where the state of the system $\{X_t\}_{t \geq 0}$, is governed by the following controlled SDE with values in $\R^n$:
 \begin{align}\label{controlled_SDE}
  dX_t =& \; b(t,X_{t-},\alpha_t) dt + \sigma (t,X_{t-},\alpha_t) dW_t \\ \nonumber
       &+ \int_{\R^n} \gamma(t,X_{t-},\alpha_t,z) \tilde N(dt,dz).
@@ -211,7 +211,7 @@ We define the first exit time from $Q$ as
 \begin{equation}\label{exit_time_def}
  \tau = \inf \{ s \geq t_0: (s,X_s) \not\in Q \}. 
 \end{equation}
-Note that $\tau$ is the exit time from $O$ if $X_s$ exits before time $T$. If $X_s \in \OO$ $\forall s \in [t_0,T)$ than $\tau = T$. If $\OO = \R^n$, than the set $Q$ 
+Note that $\tau$ is the exit time from $O$ if $X_s$ exits before time $T$. If $X_s \in \OO$ $\forall s \in [t_0,T)$ then $\tau = T$. If $\OO = \R^n$, then the set $Q$ 
 does not have lateral boundaries but only a terminal boundary at $\{ T \} \times \R^n$.
 
 \noindent
@@ -243,7 +243,8 @@ Our goal is to maximize the objective function over the set $\mathcal{A}_{t,x}$.
 \begin{equation}\label{general_value_function}
  V(t,x) = \sup_{\alpha \in \mathcal{A}_{t,x}} J(t,x,\alpha).
 \end{equation}
-If the optimal control $\alpha^*$ exists, we can write $V(t,x) = J(t,x, \alpha^*)$.
+If the supremum is attained for a control $\alpha \in \mathcal{A}_{t,x}$, then this control is called the 
+\textbf{optimal control} and is indicated by $\alpha^*$. We can write $V(t,x) = J(t,x; \alpha^*)$.\\
 We also always assume that the value function is 
 measurable. The continuity of $V(t,x)$ can be proved under different assumptions. For instance, in Lemma 3.15 of \cite{Skorohod} the continuity is proved 
 for $p=0$ in (\ref{linear_growth_f}). In Proposition 3.3 of \cite{Ph98} the authors prove the continuity of $V(t,x)$ assuming Lipschitz $f$ and $g$. 
@@ -254,7 +255,7 @@ The dynamic programming principle (DPP) is a fundamental principle in the theory
 \textbf{Dynamic Programming Principle}:
 \emph{
 \begin{itemize}
-  \item For all $\alpha \in \mathcal{A}_{t,x}$ and all stopping time $\theta \in \mathcal{T}_{t,\tau}$
+  \item For all $\alpha \in \mathcal{A}_{t,x}$ and all stopping times $\theta \in \mathcal{T}_{t,\tau}$
   \begin{equation}\label{DPP1}
    V(t,x) \geq \E_{t,x} \biggl[ \int_t^{\theta} f(s,X_s,\alpha_s) ds + V(\theta, X_{\theta}) \biggr]. 
   \end{equation}
@@ -428,7 +429,7 @@ The value function is
  V(t,x) := \sup_{\Pi} J^{\xi}(t,x).
 \end{equation}
 
-A straightforward modification of (\ref{DPP1}) and (\ref{DPP2}) yields the: \\
+A straightforward modification of (\ref{DPP1}) and (\ref{DPP2}) yields the
 \textbf{DPP for singular control}:
 \emph{
  \begin{itemize}

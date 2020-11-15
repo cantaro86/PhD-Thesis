@@ -27,13 +27,13 @@ Under this assumption, the dynamics  of log-returns follows the Brownian motion 
 \begin{equation}\label{GBM}
  \log \left( \frac{S_t}{S_0} \right) = \mu t + \sigma W_t ,
 \end{equation}
-with constant drift $\mu \in \R$ and constant volatility $\sigma >0$.\\
+with constant drift $\mu \in \R$ and constant volatility $\sigma >0$, where $\{W_t\}_{t \geq0}$ is a \emph{standard Brownian motion}.\\
 This model guarantees positiveness of the prices. By It\={o} formula, we obtain the stochastic differential equation for the price
 \begin{equation}\label{GBM_sde}
  \frac{d S_t}{S_t} = (\mu + \frac{1}{2} \sigma^2) d t + \sigma dW_t  .
 \end{equation}
-The process $S_t$ is called \emph{geometric Brownian motion}.\\
-By the way, a thorough look at data collections from various areas of finance, reveals that the normality assumption 
+The process $\{S_t\}_{t \geq0}$ is called \emph{geometric Brownian motion}.\\
+A thorough look at data collections from various areas of finance reveals that the normality assumption 
 is not a very good approximation of reality.
 Indeed, empirical return distributions have substantially 
 more mass around the origin and along the tails (\emph{heavy tails}), see \cite{Cont01}.
@@ -50,7 +50,7 @@ Lévy processes belong to the bigger family of semimartingales.
 If $\{X_t\}_{t \ge 0}$ is a Lévy process, there are relevant quantities such as the stochastic integral $\int_0^t \phi dX_t$ or any non-linear function
 $f(t,X_t)$ that are not Lévy processes anymore. For some applications it is important to consider the larger class of processes of \emph{semimartingales}, which is closed
 with respect to integration and non-linear transformations.
-A general theory for semimartingales, is presented in the books 
+A general theory for semimartingales is presented in the books 
 of \cite{Protter} and \cite{JacodShi}.\\
 \cite{Sato} is a complete reference book for the theory of Lévy
 processes and their analytical properties. 
@@ -96,13 +96,13 @@ paths, i.e. paths which are right-continuous and have left limits. \\
 Lévy processes are intrinsically connected with infinitely divisible distributions. In particular the Lévy-Khintchine formula 
 for infinitely divisible random variables, is an essential tool for the classification of the Lévy processes by the form of their
 characteristic functions.\\
-In the following, let us present some basic definitions. In $\R^n$ we indicate a vector of random variables with $X = (X^1, ..., X^n)$.\footnote{ 
+In the following, let us present some definitions. In $\R^n$ we indicate a vector of random variables with $X = (X^1, ..., X^n)$.\footnote{ 
 Let us recall some basic definitions. We denote the inner product for $x,y \in \R^n$ by
 $$(x,y) := \sum_{i=1}^n x_i y_i ,$$ and the Euclidean norm by $$|x| := \sqrt{(x,x)}.$$ }
 
 \begin{Definition} \label{chf}
 Let $X$ be a random variable taking values in $\R^n$.\\ 
-The \textbf{Characteristic function} $\phi_X:\R^n \to \C$  of $X$, is defined by
+The \textbf{Characteristic function} $\phi_X:\R^n \to \C$  of $X$ is defined by
 \begin{align}
 \phi_{X}(u) &= \E [e^{i(u,X)}] \nonumber \\
             &= \int_{\Omega} e^{i(u,X)} \PP(d\omega) \nonumber \\
@@ -169,9 +169,9 @@ The characteristic function of an infinitely divisible random variable has the f
  and a Lévy measure $\nu$ on $\R^n$, such that $\forall u \in \R^n$:
 \begin{align}
 \phi_X(u)  &= \mathbb{E} [e^{i(u,X)}]  \\ 
-	   &= e^{\eta(u)} \nonumber \\
 	   &= \exp \left[ \left( i(b,u) - \frac{1}{2}(u,Au) + \int_{\R^n} 
-	   ( e^{i(u,x)} -1 -i(u,x) \mathbbm{1}_{(|x|<1)}(x) ) \nu(dx) \right) \right]. \nonumber		      
+	   ( e^{i(u,x)} -1 -i(u,x) \mathbbm{1}_{(|x|<1)}(x) ) \nu(dx) \right) \right]. \nonumber \\		      
+	   &= e^{\eta(u)} \nonumber
 \end{align}
 \end{Theorem}
 A proof can be found in \cite{Applebaum} (Theorem 1.2.14).
@@ -231,14 +231,14 @@ We can also define the \textbf{Compensated Poisson random measure}. For each $t 
 \begin{equation}
  \tilde{N}(t,A) = N(t,A) - t\mu(A). 
 \end{equation}
-This is a martingale-valued measure, i.e. for each $A$ the process $\bigl \{ \tilde{N}(t,A) \bigr \}_{t\geq 0} $ is a martingale.  
+This is a martingale-valued measure, i.e. for each $A$ the process $\bigl \{ \tilde{N}(t,A) \bigr \}_{t\geq 0} $ is a martingale with respect to the natural filtration.  
 
 
 \noindent
 Now we can define the integration with respect to a random measure:
 \begin{Definition} \label{Poisson_int}
  Let $N$ be the Poisson random measure associated to a Lévy process $\{X_t\}_{t \geq 0}$, and let $f:\R^n \to \R^n$ be a Borel-measurable
- function. For any $A$ bounded below, we define the \textbf{Poisson integral} of $f$ as
+ function. For any $A$ bounded below, $\omega \in \Omega$ and $t\geq0$, we define the \textbf{Poisson integral} of $f$ as
  \begin{equation}
   \int_A f(x) N(t,dx)(\omega) = \sum_{x\in A} f(x) N(t,\{x\})(\omega). 
  \end{equation}
@@ -360,7 +360,7 @@ The Lévy-Khintchine formula \ref{Levy_Kint} becomes
 \phi_X(u) = \mbox{exp} \left[ t \left( i(u,b') - \frac{1}{2}(u,Au) + \int_{\R^n} 
 	   \bigl( e^{i(u,x)} -1 -i(u,x) \bigr) \nu(dx) \right) \right]. 
 \end{equation}
-Because in (\ref{Levy_Ito2}) the only non martingale term is the drift, we see that the drift term $b' = \E[ X_{t=1} ]$.
+Because in (\ref{Levy_Ito2}) the only non martingale term is the drift, we see that the drift term $b' = \E[ X_{1} ]$.
 
 
 \section{Infinitesimal Generator and stochastic calculus}\label{Infinitesimal_generator_stoch_calc}
@@ -546,7 +546,7 @@ and $K^i(s,x)$ have to be predictable.
 
 Now let us introduce the most important formula in stochastic calculus: the \textbf{It\={o}'s formula}.
 \begin{Theorem}
-If $Y_t$ is the Lévy stochastic integral (\ref{Levy_int}), for each $f \in C^2(\R^n)$ we have  
+If $\{Y_t\}_{t \ge 0}$ is the Lévy stochastic integral (\ref{Levy_int}), for each $f \in C^2(\R^n)$ we have  
 \begin{align} \label{Ito_form}
  df(Y_t) &=  \sum_{j=1}^n \frac{\partial f}{\partial y_j}(Y_{t^-}) G^j_t  dt  + \sum_{j=1}^n \frac{\partial f}{\partial y_j}(Y_{t^-}) F^j_t dW_t \\ \nonumber
           &+ \frac{1}{2} \sum_{j=1}^n \frac{\partial^2 f}{\partial y_j^2}(Y_{t^-}) (F^j_t)^2 dt \\ \nonumber 
@@ -622,10 +622,10 @@ Let us introduce two conditions:
  \item[(C2)] \textbf{Linear growth condition}. There exist $K_2>0$, such that $\forall y \in \R^n$,
  \begin{align}\label{Growth}
   |b(y)|^2 + ||\sigma(y)||^2 
-   + \int_{\R^n} |F(y,x)|^2 \nu(dx) \; \leq \; K_2 (1+|y|^2).    % \label{Growth2}
+   + \int_{\R^n} |F(y,x)|^2 \nu(dx) \; \leq \; K_2 (1+|y|^2),    % \label{Growth2}
  \end{align}
 \end{itemize}
-Where for every $(d\times n)$ matrix, the norm is defined as
+where for every $(d\times n)$ matrix, the norm is defined as
 \begin{equation}
  || \sigma ||^2 = \sum_{i=1}^d \sum_{j=1}^n [\sigma_{i,j}]^2 .
 \end{equation}
@@ -637,11 +637,11 @@ $\rho$ satisfying:
 \end{equation}
 then again the growth condition is a consequence of the Lipschitz condition.
 \begin{Theorem}
- Given the conditions \textbf{C1}, \textbf{C2}, there exists a unique strong solution $Y_t$ of (\ref{modSDE}) with initial condition $Y_{t=0}=Y_{0}$.
- The process $\{Y_t\}_{t\geq 0}$ is cádlág and $\mathcal{F}_t$-adapted.
+ Given the conditions \textbf{C1}, \textbf{C2}, there exists a unique strong solution $Y_t$ of (\ref{modSDE}) with initial condition $Y_{0}$.
+ The process $\{Y_t\}_{t\geq 0}$ is cádlág and adapted to $\{\mathcal{F}_t\}_{t\geq 0}$.
 \end{Theorem}
-A proof of existence and uniqueness based on Picard iteration, can be found in \cite{Applebaum} (Theorem 6.2.3). For more information we refer to Chapter 3.2 of
-\cite{Skorohod} (Theorem 3.4) where the time inhomogeneous case is considered.
+A proof of existence and uniqueness based on Picard iteration can be found in \cite{Applebaum} (Theorem 6.2.3). For more information we refer to Chapter 3.2 of
+\cite{Skorohod} (Theorem 3.4), where the time inhomogeneous case is considered.
 
 
 \begin{Theorem}
@@ -720,7 +720,7 @@ The same equation can be derived quickly by considering the Lévy-It\={o} form (
           =& \; S_{t^-} \biggl[ \mu dt +  \sigma dW_t \; + \int_{\R} (e^{x} - 1) \tilde N(dt,dx) \biggr].\\
 \end{align*}
 It is easy to check that the coefficients of this equation satisfy the conditions (\ref{Lipschitz})
-(\ref{Growth}) 
+(\ref{Growth}). 
 For this purpose let us define $\rho(x) = e^x-1$
 and let us verify that it satisfies the integrability condition (\ref{rho}):
 We write $$ \int_{\R} (e^x-1)^2 \nu(dx) = \int_{|x|\geq1} (e^x-1)^2 \nu(dx) + \int_{|x| < 1} (e^x-1)^2 \nu(dx),$$
@@ -729,7 +729,7 @@ We write $$ \int_{\R} (e^x-1)^2 \nu(dx) = \int_{|x|\geq1} (e^x-1)^2 \nu(dx) + \i
   $\int_{|x|\geq1} \nu(dx)$ are finite by assumption \textbf{EM} and by (\ref{Levy_m}).
   \item For $|x| < 1$: 
   $$(e^x-1)^2 \; = \; x^2 \left(\frac{e^x-1}{x}\right)^2 \; < \; x^2 (e-1)^2. $$ 
-The Definition \ref{Levy_m} of Lévy measure says $ \int_{|x|<1} |x|^2 \nu(dx) < \infty $, so
+The Lévy measure definition \ref{Levy_m} says that $ \int_{|x|<1} |x|^2 \nu(dx) < \infty $, so
 $$ \int_{|x|<1} (e^x-1)^2 \nu(dx) \; < \; (e-1)^2 \int_{|x|<1} |x|^2 \nu(dx) \; < \; \infty. $$  
  \end{itemize}
 So we have checked that the equation (\ref{exp_sde2}) admits a unique solution which is given by the exponential 
@@ -897,8 +897,8 @@ Let us call $$A = \frac{\theta}{\bar\sigma^2} \hspace{2em} \mbox{and} \hspace{2e
 B=\frac{|\theta|}{\bar\sigma^2}\sqrt{1+\frac{2\bar\sigma^2}{\kappa \theta^2}}$$
 with $A<B$, and solve the integral:
 \begin{align*}
- \int_{\R} \frac{x}{\kappa |x|} e^{Ax-B|x|} &= \int_{0}^{\infty} \frac{1}{\kappa} e^{(A-B)x} 
- - \int_{-\infty}^0 \frac{1}{\kappa} e^{(A+B)x} \\
+ \int_{\R} \frac{x}{\kappa |x|} e^{Ax-B|x|} \, dx &= \int_{0}^{\infty} \frac{1}{\kappa} e^{(A-B)x} \, dx
+ - \int_{-\infty}^0 \frac{1}{\kappa} e^{(A+B)x} \, dx \\
  &= \frac{1}{\kappa} \frac{2A}{B^2-A^2} \\
  &= \theta.
 \end{align*}
@@ -924,7 +924,7 @@ The SDE for the stock price following an \textbf{exponential VG} is
 
 This section derives the infinitesimal generator for the stock price process under the \emph{Merton} and the \emph{Variance Gamma} models.\\
 
-The stock price SDE (\ref{exp_sde2}), has the form (\ref{SDE}) with $c=\infty$. Using (\ref{gen_jumpdiff}), the corresponding infinitesimal generator is:
+The stock price SDE (\ref{exp_sde2}) has the form (\ref{SDE}), with $c=\infty$. Using (\ref{gen_jumpdiff}), the corresponding infinitesimal generator is:
 \begin{align}\label{inf_gen_exp_levy}
  \LL^S f(s) =& \; \mu s \frac{\partial f(s)}{\partial s}
 + \frac{1}{2} \sigma^2 s^2 \frac{\partial^2  f(s)}{\partial s^2}  \\ \nonumber
@@ -934,13 +934,14 @@ Let us derive the infinitesimal generators for
 the Merton and VG processes described by the SDEs (\ref{Merton_sde}) and (\ref{VG_sde}): \\
 \begin{itemize}
  \item \textbf{Merton model generator}:\\
+\noindent
  Under the representation with $c=\infty$, the 1-dim generator $\LL^{M}$ has the form:  
  \begin{align}\label{Merton_gen}
   (\LL^{M} f)(s)  &= \;  \bar \mu s \frac{\partial f(s)}{\partial s} + \frac{1}{2} \sigma^2 s^2 \frac{\partial^2 f(s)}{\partial s^2} \\ \nonumber
   &+ \; \int_{\R} \bigl( f(s e^x) - f(s) - s(e^x-1)\frac{\partial f(s)}{\partial s} \bigr) \nu(dx), 
  \end{align}
-with $$ \bar \mu = \bar b + \frac{1}{2}\sigma^2 + m $$
-and we defined the parameter 
+where $\nu(dx)$ is the Merton Lévy measure and with $$ \bar \mu = \bar b + \frac{1}{2}\sigma^2 + m $$
+and we introduced the parameter 
 \begin{equation}\label{parameter_m} 
  m := \int_{\R} ( e^{x} - 1 ) \nu(dx) = \lambda \biggl( e^{\alpha + \frac{1}{2} \xi^2} -1 \biggr).
 \end{equation}
@@ -951,7 +952,8 @@ Under the equivalent representation with $c=0$, the generator is:
   &+ \; \int_{\R} \bigl( f(se^x) - f(s) \bigr) \nu(dx). 
  \end{align}
  \item \textbf{Variance Gamma generator}:\\
- Using the representation with $c = 0$, the generator $\LL^{VG}$ is:
+\noindent
+ Using the representation with $c = 0$, and the VG Lévy measure, the generator $\LL^{VG}$ is:
  \begin{equation}\label{VG_gen}
   (\LL^{VG} f)(s) = \int_{\R} \bigl( f(se^x) - f(s) \bigr) \nu(dx).
  \end{equation}
@@ -974,9 +976,8 @@ This relation is presented by \cite{Cont} in Chapter 3.6, and a proof can be fou
 Let us compute first the expected value of the exponential VG process
 \begin{align*}
 \E[ e^{X_t}] &= \phi_{X_t}(-i) = \exp \biggl( -\frac{t}{\kappa} \log(1-\theta \kappa -\frac{1}{2}\bar\sigma^2 \kappa ) \biggr)\\
- &= e^{w t}
+ &= e^{w t}.
 \end{align*}
-where we called $w = - \frac{1}{\kappa} \log(1-\theta \kappa -\frac{1}{2}\bar\sigma^2 \kappa)$.
 The integral becomes
 \begin{align*}
  \int_{\R} (e^x-1) \nu(dx) &= \int_{\R} (e^x-1) \lim_{t\to 0} \frac{1}{t} p_{0,t}(0,dx) \\ 
@@ -1001,9 +1002,9 @@ H_{X_t}(u) &= \log(\phi_{X_t}(u)) \\ \nonumber
            &= t \eta(u) \\ \nonumber
            &= \sum_{n=1}^{\infty} c_n \frac{(iu)^n}{n!}
 \end{align}
-The \textbf{cumulants} of a Lévy process are thus defined by
+where the coefficients $c_n$ are called \textbf{cumulants} and are defined as
 \begin{equation}\label{cumulants}
- c_n = \frac{t}{i^n} \frac{\partial^n \eta(u) }{\partial u^{n}} \biggr|_{u=0} .
+ c_n := \frac{t}{i^n} \frac{\partial^n \eta(u) }{\partial u^{n}} \biggr|_{u=0} .
 \end{equation}
 The cumulants are closely related to the central moments $\mu_n$: 
 \begin{equation}\label{moment_cumulants}
@@ -1030,12 +1031,12 @@ with $c_1= t \bigl( b+\int_{|x|\geq 1} x \nu(dx) \bigr)$.
 In this chapter we present the main theoretical features of Lévy processes in a quite general setting. 
 In this thesis we model the log-price dynamics by using stochastic differential equations involving Lévy processes. 
 For this purpose it is important to present a complete framework containing all the tools needed in the next chapters.
-Starting with the basic definition of a Lévy process and the form of its characteristic function, we then introduce the concept of \emph{random measures}
-which is a method to describe the jumps of the process, and the important \emph{Lévy-It\=o decomposition} that permits to decompose any Lévy process into 
+Starting with the basic definition of a Lévy process and the form of its characteristic function, we then introduce the concept of \emph{random measures},
+which is a method to describe the jumps of the process, and the important \emph{Lévy-It\=o decomposition}, that permits to decompose any Lévy process into 
 the superposition of a Brownian motion with drift and two jump processes.
 We then introduce the assumption of finite exponential second moment, called assumption \textbf{EM}, which is recurrent throughout the thesis.\\
-The concept of \emph{infinitesimal generator} and the \emph{It\=o formula} are presented in a general form in Section \ref{Infinitesimal_generator_stoch_calc}, where we 
-also discussed the hypothesis for the existence of a unique solution of the Lévy-type SDE. 
+The concepts of \emph{infinitesimal generator} and the \emph{It\=o formula} are presented in a general form in Section \ref{Infinitesimal_generator_stoch_calc}, where we 
+also discuss the hypothesis for the existence of a unique solution of the Lévy-type SDE. 
 All these concepts are applied in Section \ref{Section_ELM} to the specific case of exponential Lévy processes. 
 We derive the exponential Lévy SDE and the form of the infinitesimal generator associated to the process.   
 These formulas are fundamental in the thesis and will be used several times in Chapter \ref{Chapter2} 

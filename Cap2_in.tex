@@ -84,7 +84,7 @@ optimal stopping theory.
 \begin{Definition}
  Let us consider a stock with (cádlág) price process $\{S_t\}_{t\geq0}$ and a risk free asset with process $\{B_t\}_{t\geq0}$.
  \begin{enumerate}
-  \item A \textbf{portfolio} is a pair of predictable processes $(\alpha_t, \beta_t)_{t\geq0}$ describing the amount of each asset held by the investor. 
+  \item A \textbf{portfolio} is a pair of predictable processes $\{ \alpha_t, \beta_t \}_{t\geq0}$ describing the amount of each asset held by the investor. 
   \item The value of such a portfolio at time $t$ is
   $$ \varTheta_t = \alpha_t S_t + \beta_t B_t. $$
   The process $\{\varTheta_t\}_{t\geq0}$ is called \textbf{portfolio value process}.
@@ -149,7 +149,7 @@ considering discontinuous processes, we refer to \cite{Cont} (Chapter 9.1).
 
 Another important concept originating in the Black-Scholes model is the concept of perfect hedge.
 \begin{Definition}
- A self-financing portfolio $(\alpha_t,\beta_t)$ is said to be a \textbf{perfect hedge} (or \textbf{replicating portfolio}) for a derivative  
+ A self-financing portfolio $\{ \alpha_t, \beta_t \}_{t\geq0}$ is said to be a \textbf{perfect hedge} (or \textbf{replicating portfolio}) for a derivative  
  $\mathcal{X}$ if the associated portfolio value process $\{\varTheta_t\}_{t\geq0}$ satisfies
  \begin{equation}\label{perfect-hedge}
     \mathcal{X}  = \varTheta_T   \quad \quad \PP \mbox{ - almost surely}. 
@@ -160,10 +160,11 @@ If the market is arbitrage-free and
 
 The initial value $\varTheta_0$ is the price of the derivative at time $0$.
 Using (\ref{perfect-hedge}) and (\ref{self_financing}), under $\Q$ we can write  
-$D(0,T) \mathcal{X} = \varTheta_0 + \int_{0+}^T \alpha_t \, d\bigr( D(0,t)S_t \bigr)$. Since the discounted price $D(0,t)S_t$ under $\Q$ is a martingale, the stochastic integral  
-$\int_{0+}^T \alpha_t \, d\bigr( D(0,t)S_t \bigr)$ is a martingale as well. By taking the expectation we obtain:
+$D(0,T) \mathcal{X} = \varTheta_0 + \int_{0+}^T \alpha_t \, d\bigr( D(0,t)S_t \bigr)$. Since the discounted price, $D(0,t)S_t$, is a martingale under $\Q$, the stochastic integral  
+$\int_{0+}^T \alpha_t \, d\bigr( D(0,t)S_t \bigr)$ (assuming that $\{ \alpha_t \}_{t\geq0}$ is bounded) is a martingale as well (see Proposition 8.1 in 
+\cite{Cont} and the following discussion). By taking the expectation we obtain:
 \begin{equation}
-   \Pi_0(\mathcal{X}) = \E^{\Q} \bigl[ D(0,T) \mathcal{X} \big| \F_t \bigr] = \varTheta_0.
+   \Pi_0(\mathcal{X}) = \E^{\Q} \bigl[ D(0,T) \mathcal{X} \big| \F_0 \bigr] = \varTheta_0.
 \end{equation}
 Moreover, the initial value $\varTheta_0$ is unique, since two replicating strategies with different initial values lead to an arbitrage.
 \begin{Definition}
@@ -197,7 +198,7 @@ Therefore the hedging strategy will only approximate the payoff of the derivativ
 ways to hedge the derivative. In this thesis we focus on the approach based on the concept of \emph{utility maximization} (see Chapter \ref{Chapter5}).
 
 In the following of this chapter we consider a frictionless market where the stock price follows an exponential Lévy process. 
-In in such a market, the class of EMM is infinite, 
+In such a market, the class of EMM is infinite, 
 i.e. there are infinite EMMs such that the discounted stock prices are martingales.
 This means that for every financial derivative there are infinite prices satisfying the condition of no-arbitrage. 
 
@@ -206,7 +207,7 @@ see \cite{Cont}, Chapter 10).
 However, the best approach is to derive the model parameters directly from the prices of derivatives (usually European call and put options with different strikes and maturities) 
 already quoted in the market.
 The process of choosing the risk neutral parameters for a model, such that it reproduces the prices in the market is called \emph{model calibration}.
-In this chapter all the parameters of the Lévy processes used for the pricing purpose, are intended to be risk neutral parameters obtained by a calibration process.
+In this chapter all the parameters of the Lévy processes used for the pricing purpose are intended to be risk neutral parameters obtained by a calibration process.
 
 
 
@@ -280,7 +281,7 @@ For $f \in C^{2}(\R^+) \bigcap \mathcal{C}_2(\R^+)$, the associated infinitesima
 &+ \int_{\R} \biggl[ f(se^z) - f(s) - s(e^z-1)\frac{\partial f(s)}{\partial s} \biggr] \nu(dz).
 \end{align}
 
-The derivative pricing function $V(t,s)$ with $t \in [0,T]$ and $s\in \R^+$, can be obtain by solving a pricing PIDE according to the following theorem.
+The derivative pricing function $V(t,s)$ with $t \in [0,T]$ and $s\in \R^+$ can be obtain by solving a pricing PIDE according to the following theorem.
 \begin{Theorem}\label{Theorem_PIDE}
  Let us consider an arbitrage free market, where the underlying stock price follows the exponential Lévy process (\ref{ELM2}). 
  Let also assume that $V(t,s) \in C^{1,2}([t_0,T] \times \R^+)$ and the derivatives   %\bigcap \mathcal{C}_2([t_0,T] \times \R^+)$,
@@ -297,7 +298,7 @@ where $\LL^S$ is the infinitesimal generator in (\ref{RN_inf_gen}).
 \begin{proof}
  Let us consider the formula 
  (\ref{derivative_price}) together with the Markov property (\ref{Markov_prop}). 
- For any stopping time $\tau$ such that $0 \leq t \leq \tau \leq T$, we can use the law of iterated expectations:
+ For any stopping time $\tau$ such that $0 \leq t \leq \tau \leq T$ with respect to $\{\mathcal{F}_u\}_{t \le u \le T}$, we can use the law of iterated expectations:
  \begin{align*}
    D(0,t) V(t,s) &= \E^{\Q}  \biggl[ \E^{\Q} \bigl[ D(0,T) V(T,S_T) \big| S_{\tau} \bigr] \bigg| S_t=s \biggr] \\ 
                  &= \E^{\Q} \bigl[ D(0,\tau) V(\tau,S_{\tau}) \big| S_t=s \bigr]. 
@@ -397,7 +398,7 @@ and considering Eq. (\ref{exp_sde2}) representing the dynamics of $S_t$, we obta
  &  + \int_{\R} \bigl( \log(S_t+S_t(e^z-1)) - \log(S_t) -\frac{1}{S_t} S_t (e^z-1) \bigr) \nu(dz)dt \\
  =& (\mu-\frac{1}{2}\sigma^2)dt + \sigma dW + \int_{\R} z \tilde N(dt,dz) \\
  &  + \int_{\R} \bigl( z - (e^z-1) \bigr) \nu(dz) dt \\
- =& \biggl( \mu-\frac{1}{2}\sigma^2 - \int_{\R} \bigl( e^z-1-z \bigr) \nu(dz) \biggr)dt + \sigma dW + + \int_{\R} z \tilde N(dt,dz).
+ =& \biggl( \mu-\frac{1}{2}\sigma^2 - \int_{\R} \bigl( e^z-1-z \bigr) \nu(dz) \biggr)dt + \sigma dW + \int_{\R} z \tilde N(dt,dz).
 \end{align*}
 For $f \in C^{2}(\R) \bigcap \mathcal{C}_2(\R)$, the corresponding infinitesimal generator is:
 \begin{align}\label{RN_log_gen}
@@ -658,7 +659,7 @@ Following Eq. (\ref{PIDE_log}), the Merton PIDE in log-variables has the followi
 &  \frac{\partial V(t,x)}{\partial t} - r V(t,x) 
           + \biggl( r -\frac{1}{2}\sigma^2 -m \biggr) \frac{\partial V(t,x)}{\partial x} \\ \nonumber
           &+ \frac{1}{2} \sigma^2 \frac{\partial^2 V(t,x)}{\partial x^2} 
-          + \int_{\R} V(t,x+z) \nu(dz) - \lambda V(t,x)  = 0.
+          + \int_{\R} V(t,x+z) \nu(dz) - \lambda V(t,x)  = 0
 \end{align}
 with $m$ defined in (\ref{parameter_m}).
 Since we have to restrict the problem to a bounded region, we consider the equation (\ref{restricted_domain}):
@@ -666,7 +667,7 @@ Since we have to restrict the problem to a bounded region, we consider the equat
 &  \frac{\partial V(t,x)}{\partial t} - r V(t,x) 
           + \biggl( r -\frac{1}{2}\sigma^2 - \hat m \biggr) \frac{\partial V(t,x)}{\partial x} \\
           &+ \frac{1}{2} \sigma^2 \frac{\partial^2 V(t,x)}{\partial x^2} 
-          + \int_{-B_1}^{B_2} V(t,x+z) \nu(dz) - \hat \lambda V(t,x)  = 0.
+          + \int_{-B_1}^{B_2} V(t,x+z) \nu(dz) - \hat \lambda V(t,x)  = 0
 \end{align*}
 with $\hat m = \int_{-B_1}^{B_2} \bigl( e^z-1 \bigr) \nu(dz)$ and $\hat \lambda = \int_{-B_1}^{B_2} \nu(dz)$.
 
@@ -773,7 +774,7 @@ The authors propose to approximate the process $\{X_t\}_{t\geq0}$ by an
 appropriate finite activity process with a modified diffusion component.
 The ``small jumps'' martingale component is approximated by a Brownian motion with same variance.
 After fixing a truncation parameter $\epsilon >0$, the integrals in the SDE are split in two domains: $\{|z|<\epsilon\}$ and $\{|z|\geq \epsilon\}$.
-The integrand on the domain $\{ |z|<\epsilon \}$, is approximated by the Taylor expansion 
+The integrand on the domain $\{ |z|<\epsilon \}$ is approximated by the Taylor expansion 
  $e^z-1-z = \frac{z^2}{2} + \mathcal{O}(z^3)$ such that
 \begin{align}\label{log_sde_inf_act}\nonumber
   dX_t =& \biggl( \mu-\frac{1}{2}\sigma^2 - \int_{\R} \bigl( e^z-1-z \bigr) \nu(dz) \biggr)dt + \sigma dW + + \int_{\R} z \tilde N(dt,dz) \\ \nonumber
@@ -790,7 +791,7 @@ where we defined the new parameters
 The process $\int_{|z|\geq \epsilon} z \tilde N(dt,dz)$ is a compensated Poisson process with finite activity $\lambda_{\epsilon}$ 
 and variance $\sigma_J^2 = \int_{|z| \geq \epsilon} z^2 \nu(dz) $.
 
-For the VG process, where $\sigma = 0$ the approximated dynamics is thus
+For the VG process, where $\sigma = 0$, the approximated dynamics is thus
 \begin{equation}\label{log_sde_VG}
 dX_t = \biggl( \mu - \frac{1}{2} \sigma_{\epsilon}^2 - w_{\epsilon} + \lambda_{\epsilon} \theta_{\epsilon}  \biggr) dt 
        + \sigma_{\epsilon} dW_t + \int_{|z|\geq \epsilon} z \tilde N(dt,dz),
